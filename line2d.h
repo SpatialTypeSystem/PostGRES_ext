@@ -1,6 +1,6 @@
 class Line2D{
 private:
-		Private vector<RGPSegment2D> listOfSegments;
+	vector<RGPSegment2D> listOfSegments;
 public:
 	Line2D(); //Empty constructor
 	Line2D(vector <RGPSegment2D> listOfSegments);

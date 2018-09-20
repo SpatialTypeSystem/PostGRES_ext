@@ -1,7 +1,7 @@
 class Point2d{
-	private:
-		vector<RGPPoint2D> listOfPoints;
-	public:
+private:
+	vector<RGPPoint2D> listOfPoints;
+public:
 	Point2D();
 	Point2D(vector<RGPPoint2D> listOfPoints);
 	Point2D(ifstream& file);
