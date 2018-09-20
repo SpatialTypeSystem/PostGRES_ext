@@ -2,6 +2,7 @@ class Region2d{
 private:
   vector<vector<RGPSegment2D>> listOfRegions;
 public:
+  static bool isValidRegion(Region2d region);
   Region2D(); //Empty constructor
   Region2D(vector<vector<RGPSegment2D>> listOfRegions);
   Region2D(string listOfRegion2DString);
