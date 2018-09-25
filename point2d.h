@@ -1,4 +1,4 @@
-class Point2d{
+class Point2D{
 private:
 	vector<RGPPoint2D> listOfPoints;
 public:

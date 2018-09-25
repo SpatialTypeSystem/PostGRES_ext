@@ -1,4 +1,4 @@
-class Region2d{
+class Region2D{
 private:
   vector<vector<RGPSegment2D>> listOfRegions;
 public:
