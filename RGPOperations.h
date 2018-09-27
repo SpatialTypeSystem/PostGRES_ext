@@ -8,7 +8,7 @@
 
 struct RGPOperations {
 
-    static optional<RGPPoint2D> intersectionOf(RGPSegment2D s1, RGPSegment2D s2);
+    static std::optional<RGPPoint2D> intersectionOf(RGPSegment2D s1, RGPSegment2D s2);
 
 };
 

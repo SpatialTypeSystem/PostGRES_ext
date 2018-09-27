@@ -6,28 +6,30 @@
 #include <string>
 #include <vector>
 
+struct Line2DImplStruct {};
+
 class Line2D{
 
 private:
 	// Fields
-	Point2DImplStruct implstruct;
+	Line2DImplStruct implstruct;
 
 public:
 	// Constructors
 	Line2D();
 	Line2D(std::vector<RGPSegment2D> listOfSegments);
-	Line2D(string listOfLine2DString);
-	Line2D(ifstream& file); // Send in file for constructor
+	Line2D(std::string listOfLine2DString);
+	Line2D(std::ifstream& file); // Send in file for constructor
 	~Line2D();
 
 	// Methods
-	string getLineString(); // Get the line as human readable ASCII string
+	std::string getLineString(); // Get the line as human readable ASCII string
 	static bool isValidPoint();
 	int getNumberPoints();
 	std::vector<RGPSegment2D> getBoundingBox();
 	bool add(RGPSegment2D rgp2d);
-	// bool update(const iterator iter, RGPSegment2D rgp2d);
-	// bool remove(const iterator iter);
+	template <class T> bool remove(T it);
+	template <class T> bool update(T it, RGPSegment2D rgps2d);
 	bool operator==(const Line2D &l2d);
 	bool operator!=(const Line2D &l2d);
 };

@@ -4,8 +4,6 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
-
 /*
  * Interface for big rational numbers
  */
@@ -16,7 +14,7 @@ class Number {
         Number();
 
         // The string will be converted to a rational number
-        Number(string number);
+        Number(std::string number);
 
         // Fraction of the form n/1
         Number(int n);
@@ -48,8 +46,8 @@ class Number {
         Number& sqrt() const;
 
         // Overriding the output and input operator
-        friend ostream& operator<<(ostream& os, const Number& n);
-        friend istream& operator>>(istream& is, Number& n);
+        friend std::ostream& operator<<(std::ostream& os, const Number& n);
+        friend std::istream& operator>>(std::istream& is, Number& n);
 };
 
 #endif //NUMBER_H

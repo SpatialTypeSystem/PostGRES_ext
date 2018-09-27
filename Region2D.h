@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+struct Region2DImplStruct {};
+
 class Region2D{
 
 private:
@@ -16,19 +18,19 @@ public:
 	// Constructors
 	Region2D(); //Empty constructor
 	Region2D(std::vector<std::vector<RGPSegment2D>> listOfRegions);
-	Region2D(string listOfRegion2DString);
-	Region2D(ifstream& file); // Send in file for constructor (possibly .txt)
+	Region2D(std::string listOfRegion2DString);
+	Region2D(std::ifstream& file); // Send in file for constructor (possibly .txt)
 	~Region2D();
 
 	// Methods
-	string getRegionString(); // Get the region as human readable ASCII string
+	std::string getRegionString(); // Get the region as human readable ASCII string
 	Number area();
         static bool isValidRegion(Region2D region);
 	int getNumberOfFaces();
-	vector<RGPSegment2D> getBoundingBox();
-	// bool update(const iterator, vector<RGPSegment2D>);
-	bool addFace(vector<RGPSegment2D>);
-	// bool removeFace(const iterator);
+	std::vector<RGPSegment2D> getBoundingBox();
+	bool addFace(std::vector<RGPSegment2D>);
+	template <class T> bool update(T it, std::vector<RGPSegment2D>);
+	template <class T> bool remove(T it);
 	bool operator==(const Region2D &p2d);
 	bool operator!=(const Region2D &p2d);
 };
