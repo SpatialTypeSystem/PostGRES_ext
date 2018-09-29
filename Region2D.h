@@ -6,13 +6,13 @@
 #include <string>
 #include <vector>
 
-struct Region2DImplStruct {};
+struct Region2DImplStruct;
 
 class Region2D{
 
 private:
 	// Fields
-	Region2DImplStruct implStruct;
+	Region2DImplStruct *implStruct;
 
 public:
 	// Constructors

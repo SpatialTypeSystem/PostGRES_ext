@@ -6,13 +6,13 @@
 #include <string>
 #include <vector>
 
-struct Line2DImplStruct {};
+struct Line2DImplStruct;
 
 class Line2D{
 
 private:
 	// Fields
-	Line2DImplStruct implstruct;
+	Line2DImplStruct *implstruct;
 
 public:
 	// Constructors

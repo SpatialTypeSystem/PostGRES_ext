@@ -7,12 +7,12 @@
 #include <vector>
 #include <iterator>
 
-struct Line2DImplStruct {};
+struct Line2DImplStruct;
 
 class Point2D{
 private:
 	// Fields
-	Line2DImplStruct implStruct;
+	Line2DImplStruct *implStruct;
 
 public:
 	// Fields
