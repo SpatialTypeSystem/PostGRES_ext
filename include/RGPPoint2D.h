@@ -10,7 +10,8 @@ struct RGPPoint2D {
     Number x, y;
 
     // Constructors
-
+    
+    RGPPoint2D();
     RGPPoint2D(Number x, Number y);
     ~RGPPoint2D();
 

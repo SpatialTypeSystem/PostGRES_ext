@@ -1,4 +1,4 @@
-#include "Number.h"
+#include "../include/Number.h"
 
 // Constructors
 // Default number value is 0
@@ -38,5 +38,5 @@ bool Number::operator== (const Number& n) const {}
 Number& Number::sqrt() const {}
 
 // Overriding the output and input operator
-std::ostream& Number::operator<<(std::ostream& os, const Number& n) {}
-std::istream& Number::operator>>(std::istream& is, Number& n) {}
+// std::ostream& Number::operator<<(std::ostream& os, const Number& n) {}
+// std::istream& Number::operator>>(std::istream& is, Number& n) {}
