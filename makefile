@@ -1,8 +1,19 @@
-CFLAGS = -std=c++17 -O
-CC = g++
-SRC = *.cpp
-OBJ = $(SRC:.cpp = .o)
-NumTest: $(OBJ)
-	$(CC) $(CFLAGS) -o Postgres_ext $(OBJ) 
+SRC_DIR := ./src
+INC_DIR := ./include
+OBJ_DIR := ./obj
+CC := g++
+CFLAGS := -std=c++17 -g
+TARGET := postgres_ext
+
+SRCS := $(wildcard $(SRC_DIR)/*.cpp postgres_ext.cpp)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
+
+all: $(TARGET)
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CC) $(CFLAGS) -o $@ -c $<
 clean:
-	rm -f core *.o
+	rm -rf $(TARGET) $(OBJ_DIR)/*.o
+	
+.PHONY: all clean
