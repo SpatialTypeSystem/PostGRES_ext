@@ -6,11 +6,10 @@
 #include <string>
 #include <vector>
 
-struct Region2DImplStruct;
-
 class Region2D{
 
 private:
+	struct Region2DImplStruct;
 	// Fields
 	Region2DImplStruct *implStruct;
 

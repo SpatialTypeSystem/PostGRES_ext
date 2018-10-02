@@ -1,6 +1,6 @@
 #include "../include/Point2D.h"
 
-struct Line2DImplStruct {};
+struct Point2DImplStruct {};
 
 Point2D::Point2D() {}
 

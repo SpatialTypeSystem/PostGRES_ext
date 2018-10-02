@@ -7,13 +7,7 @@
 #include <vector>
 #include <iterator>
 
-struct Line2DImplStruct;
-
 class Point2D{
-private:
-	// Fields
-	Line2DImplStruct *implStruct;
-
 public:
 	// Fields
 
@@ -34,6 +28,11 @@ public:
 	bool add(RGPPoint2D rgpp2d);
 	template <class T> bool update(T it, RGPPoint2D rgpp2d);
 	template <class T> bool remove(T it);
+
+private:
+	struct Point2DImplStruct;
+	// Fields
+	Point2DImplStruct *implStruct;
 };
 
 #endif //POINT2D_H
