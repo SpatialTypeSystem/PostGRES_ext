@@ -6,13 +6,8 @@
 #include <string>
 #include <vector>
 
-class Region2D{
-
-private:
-	struct Region2DImplStruct;
-	// Fields
-	Region2DImplStruct *implStruct;
-
+class Region2D
+{
 public:
 	// Constructors
 	Region2D(); //Empty constructor
@@ -32,6 +27,13 @@ public:
 	template <class T> bool remove(T it);
 	bool operator==(const Region2D &p2d);
 	bool operator!=(const Region2D &p2d);
+	template <class T> std::vector<RGPSegment2D> getCycle(T it);
+	template <class T> std::vector<RGPSegment2D> getFace(T it);
+
+private:
+	struct Region2DImplStruct;
+	// Fields
+	Region2DImplStruct *implStruct;
 };
 
 #endif // REGION2D_H
