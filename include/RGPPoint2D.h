@@ -3,7 +3,8 @@
 
 #include "Number.h"
 
-struct RGPPoint2D {
+class RGPPoint2D {
+public:
 
     // Members
 

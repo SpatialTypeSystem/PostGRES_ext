@@ -6,7 +6,8 @@
 #include "RGPHalfSegment2D.h"
 #include <optional>
 
-struct RGPOperations {
+class RGPOperations {
+public:
 
     static std::optional<RGPPoint2D> intersectionOf(RGPSegment2D s1, RGPSegment2D s2);
 

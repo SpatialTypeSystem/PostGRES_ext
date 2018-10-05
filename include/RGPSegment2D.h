@@ -3,7 +3,8 @@
 
 #include "RGPPoint2D.h"
 
-struct RGPSegment2D {
+class RGPSegment2D {
+public:
 
     // Members
 
