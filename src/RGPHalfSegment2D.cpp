@@ -3,7 +3,7 @@
 // RGPHalfSegment2D
 // Constructors
 
-RGPHalfSegment2D::RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp) : segment(RGPSegment2D(s)), dominantPoint(RGPPoint2D(dp)) {}
+RGPHalfSegment2D::RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp) : segment(s), dominantPoint(dp) {}
 RGPHalfSegment2D::~RGPHalfSegment2D() {}
 
 

@@ -2,7 +2,7 @@
 
 // Constructors
 
-RGPSegment2D::RGPSegment2D(RGPPoint2D p1, RGPPoint2D p2) : point1(RGPPoint2D(p1)), point2(RGPPoint2D(p2)) {}
+RGPSegment2D::RGPSegment2D(RGPPoint2D p1, RGPPoint2D p2) : point1(p1), point2(p2) {}
 RGPSegment2D::~RGPSegment2D() {}
 
 // Methods
