@@ -12,7 +12,7 @@ RGPHalfSegment2D::~RGPHalfSegment2D() {}
 // Constructors
 
 RGPAnnotatedHalfSegment2D::RGPAnnotatedHalfSegment2D(RGPSegment2D s, RGPPoint2D dp, bool regAbove) {
-    this->regionIsAbove = regAbove;
+    this->insideIsAbove = regAbove;
 }
 
 RGPAnnotatedHalfSegment2D::~RGPAnnotatedHalfSegment2D() {}
