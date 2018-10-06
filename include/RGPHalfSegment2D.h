@@ -14,8 +14,7 @@ public:
     RGPPoint2D dominantPoint;
 
     // Constructors
-    
-    RGPHalfSegment2D();
+
     RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp);
     ~RGPHalfSegment2D();
 
