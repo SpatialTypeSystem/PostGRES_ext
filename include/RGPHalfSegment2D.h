@@ -4,7 +4,8 @@
 #include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
 
-struct RGPHalfSegment2D {
+class RGPHalfSegment2D {
+public:
 
     // Members
 
@@ -21,7 +22,8 @@ struct RGPHalfSegment2D {
 
 };
 
-struct RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D {
+class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D {
+public:
 
     // Members
 
