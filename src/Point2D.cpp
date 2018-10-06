@@ -1,33 +1,75 @@
 #include "../include/Point2D.h"
 
-struct Line2DImplStruct {};
+struct Point2DImplStruct {};
 
-Point2D::Point2D() {}
+Point2D::Point2D()
+{
+	// Emtpy
+}
 
-Point2D::Point2D(std::vector<RGPPoint2D> listOfPoints) {}
+Point2D::Point2D(std::vector<RGPPoint2D> listOfPoints)
+{
+	// Emtpy
+}
 
-Point2D::Point2D(std::ifstream& file) {}
+Point2D::Point2D(std::ifstream& file)
+{
+	// Emtpy
+}
 
-Point2D::Point2D(std::string listOfPoint2DString) {}
+Point2D::Point2D(std::string listOfPoint2DString)
+{
+	// Emtpy
+}
 
-Point2D::~Point2D() {}
+Point2D::~Point2D()
+{
+	// Emtpy
+}
 
 
-std::string getPointString() {}  // Get the point as human readable ASCII string
+std::string getPointString() // Get the point as human readable ASCII string
+{
+	// Emtpy
+}
 
 // static
-bool Point2D::isValidPoint() {}
+bool Point2D::isValidPoint()
+{
+	// Emtpy
+}
 
-bool Point2D::operator==(const Point2D &p2d) {}
+bool Point2D::operator==(const Point2D &p2d)
+{
+	// Emtpy
+}
 
-bool Point2D::operator!=(const Point2D &p2d) {}
+bool Point2D::operator!=(const Point2D &p2d)
+{
+	// Emtpy
+}
 
-int Point2D::getNumberPoints() {}
+int Point2D::getNumberPoints()
+{
+	// Emtpy
+}
 
-std::vector<RGPSegment2D> Point2D::getBoundingBox() {}
+std::vector<RGPSegment2D> Point2D::getBoundingBox()
+{
+	// Emtpy
+}
 
-bool Point2D::add(RGPPoint2D rgpp2d) {}
+bool Point2D::add(RGPPoint2D rgpp2d)
+{
+	// Emtpy
+}
 
-template <class T> bool Point2D::update(T it, RGPPoint2D rgpp2d) {}
+template <class T> bool Point2D::update(T it, RGPPoint2D rgpp2d)
+{
+	// Emtpy
+}
 
-template <class T> bool Point2D::remove(T it) {}
+template <class T> bool Point2D::remove(T it)
+{
+	// Emtpy
+}

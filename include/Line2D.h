@@ -6,14 +6,7 @@
 #include <string>
 #include <vector>
 
-struct Line2DImplStruct;
-
 class Line2D{
-
-private:
-	// Fields
-	Line2DImplStruct *implstruct;
-
 public:
 	// Constructors
 	Line2D();
@@ -32,6 +25,11 @@ public:
 	template <class T> bool update(T it, RGPSegment2D rgps2d);
 	bool operator==(const Line2D &l2d);
 	bool operator!=(const Line2D &l2d);
+
+private:
+	struct Line2DImplStruct;
+	// Fields
+	Line2DImplStruct *implstruct;
 };
 
 #endif //LINE2D
