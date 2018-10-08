@@ -18,6 +18,7 @@ public:
 	// Methods
 	std::string getLineString(); // Get the line as human readable ASCII string
 	static bool isEmptyLine();
+	static bool isValidLine();
 	int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
 	std::vector<RGPSegment2D> getBoundingBox();
 	bool operator==(const Line2D &l2d);	// Override of operator == to check equality of two Line2Ds
@@ -27,17 +28,11 @@ public:
 	bool remove(int index);	// Removes a RGPSegment2D at specified index
 	RGPSegment2D operator[](int index);	// Retrieves a RGPSegment2D at specified index
 
-	class Line2DImpl {
-		public:
-			Line2DImpl(Line2D *l2D);
-			
-		private:
-			std::vector<RGPSegment2D> vecOfRGPSegments;
-	};
-	
-	private:	
+	private:
+		struct Line2DImplStruct;
+		
 		// Fields
-		std::vector<RGPSegment2D> vecOfRGPSegments;
+		Line2DImplStruct *implstruct;
 };
 
 #endif //LINE2D
