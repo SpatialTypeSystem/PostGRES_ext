@@ -7,6 +7,6 @@
 #include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
 #include "RGPHalfSegment2D.h"
-#include "RGPOperations.h"
+#include "RGPOperations2D.h"
 
 #endif //RGP_H

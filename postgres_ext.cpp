@@ -3,7 +3,7 @@
 // Including all headers to test
 #include "include/Region2D.h"
 #include "include/RGPHalfSegment2D.h"
-#include "include/RGPOperations.h"
+#include "include/RGPOperations2D.h"
 #include "include/RGPPoint2D.h"
 #include "include/RGPSegment2D.h"
 
