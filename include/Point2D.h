@@ -21,6 +21,7 @@ public:
 	// Methods
 	std::string getPointString();  // Get the point as human readable ASCII string
 	static bool isEmptyPoint();	// Checks if the Point2D object is empty
+	static bool isValidPoint();	// Checks if the Point2D object is empty
 	bool operator==(const Point2D &p2d);	// Override of operator == to check equality of two Point2Ds
 	bool operator!=(const Point2D &p2d);	// Override of operator != to check inequality of two Point2Ds
 	int getNumberOfPoints();	// Get the total number of RGPPoint2Ds listed
@@ -30,17 +31,11 @@ public:
 	bool remove(int index);	// Removes a RGPPoint2D at specified index
 	RGPPoint2D operator[](int index);	// Retrieves a RGPPoint2D at specified index
 	
-	class Point2DImpl {
-		public:
-			Point2DImpl(Point2D *p2D);
-			
-		private:
-			std::vector<RGPPoint2D> vecOfRGPPoints;
-	};
-	
-	private:	
+	private:
+		struct Point2DImplStruct;
+		
 		// Fields
-		std::vector<RGPPoint2D> vecOfRGPPoints;
+		Point2DImplStruct *implstruct;
 };
 
 #endif //POINT2D_H
