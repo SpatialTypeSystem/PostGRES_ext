@@ -20,6 +20,7 @@ public:
 	std::string getRegionString(); // Get the region as human readable ASCII string
 	Number area();
     static bool isEmptyRegion(Region2D region);
+	static bool isValidRegion(Region2D region);
 	int getNumberOfFaces();
 	std::vector<RGPSegment2D> getBoundingBox();
 	bool operator==(const Region2D &p2d);
@@ -31,17 +32,11 @@ public:
 	bool remove(int index);	// Removes a region at specified index
 	std::vector<RGPSegment2D> operator[](int index);	// Retrieves a region at specified index
 	
-	class Region2DImpl {
-		public:
-			Region2DImpl(Region2D *r2D);
-			
-		private:
-			std::vector<std::vector<RGPSegment2D>> listOfRegions;
-	};
-	
-	private:	
+	private:
+		struct Region2DImplStruct;
+		
 		// Fields
-		std::vector<std::vector<RGPSegment2D>> listOfRegions;
+		Region2DImplStruct *implstruct;
 		
 };
 
