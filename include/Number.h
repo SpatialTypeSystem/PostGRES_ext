@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+struct PrivateRec;
+
 class Number
 {
 public:
@@ -41,6 +43,9 @@ public:
   // Overriding the output and input operator
   friend std::ostream& operator<<(std::ostream& os, const Number& n);
   friend std::istream& operator>>(std::istream& is, Number& n);
+
+private:
+  PrivateRec* p;
 };
 
 #endif // NUMBER_H
