@@ -1,13 +1,13 @@
 #include "Region2D.h"
 
-//struct Region2DImplStruct {};
+class Region2D::Region2DImpl {};
 
 Region2D::Region2D()
 {
 	// Emtpy
 }
 
-Region2D::Region2D(std::vector<std::vector<RGPSegment2D>> listOfRegions)
+Region2D::Region2D(std::vector<std::vector<RGPAnnotatedHalfSegment2D>> listOfRegions)
 {
 	// Emtpy
 }

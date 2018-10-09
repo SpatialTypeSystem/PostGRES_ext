@@ -30,12 +30,11 @@ public:
 	bool update(int index, RGPPoint2D rgpp2d);	// Updates RGPPoint2D existing at specified index
 	bool remove(int index);	// Removes a RGPPoint2D at specified index
 	RGPPoint2D operator[](int index);	// Retrieves a RGPPoint2D at specified index
-	
-	private:
-		struct Point2DImplStruct;
-		
-		// Fields
-		Point2DImplStruct *implstruct;
+
+private:
+	class Point2DImpl;
+	// Fields
+	Point2DImpl *impl;
 };
 
 #endif //POINT2D_H

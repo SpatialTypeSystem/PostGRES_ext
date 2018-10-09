@@ -10,7 +10,7 @@ class Line2D{
 public:
 	// Constructors
 	Line2D();
-	Line2D(std::vector<RGPSegment2D> listOfSegments);
+	Line2D(std::vector<RGPHalfSegment2D> listOfSegments);
 	Line2D(std::string listOfLine2DString);
 	Line2D(std::ifstream& file); // Send in file for constructor
 	~Line2D();
@@ -28,11 +28,11 @@ public:
 	bool remove(int index);	// Removes a RGPSegment2D at specified index
 	RGPSegment2D operator[](int index);	// Retrieves a RGPSegment2D at specified index
 
-	private:
-		struct Line2DImplStruct;
-		
-		// Fields
-		Line2DImplStruct *implstruct;
+private:
+	class Line2DImpl;
+
+	// Fields
+	Line2DImpl *impl;
 };
 
 #endif //LINE2D

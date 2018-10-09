@@ -11,7 +11,7 @@ class Region2D
 public:
 	// Constructors
 	Region2D(); //Empty constructor
-	Region2D(std::vector<std::vector<RGPSegment2D>> listOfRegions);
+	Region2D(std::vector<std::vector<RGPAnnotatedHalfSegment2D>> listOfRegions);
 	Region2D(std::string listOfRegion2DString);
 	Region2D(std::ifstream& file); // Send in file for constructor (possibly .txt)
 	~Region2D();
@@ -31,12 +31,12 @@ public:
 	bool update(int index, std::vector<RGPSegment2D>);	// Updates a whole region at specified index
 	bool remove(int index);	// Removes a region at specified index
 	std::vector<RGPSegment2D> operator[](int index);	// Retrieves a region at specified index
-	
-	private:
-		struct Region2DImplStruct;
-		
-		// Fields
-		Region2DImplStruct *implstruct;
+
+private:
+	class Region2DImpl;
+
+	// Fields
+	Region2DImpl *impl;
 		
 };
 

@@ -1,13 +1,13 @@
 #include "Line2D.h"
 
-//struct Line2DImplStruct {};
+class Line2D::Line2DImpl {};
 
 Line2D::Line2D()
 {
 	// Emtpy
 }
 
-Line2D::Line2D(std::vector<RGPSegment2D> listOfSegments)
+Line2D::Line2D(std::vector<RGPHalfSegment2D> listOfSegments)
 {
 	// Emtpy
 }
