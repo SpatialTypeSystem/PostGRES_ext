@@ -2,7 +2,7 @@
 
 // Constructors
 
-RGPPoint2D::RGPPoint2D(Number x, Number y) {}
+RGPPoint2D::RGPPoint2D(Number x, Number y) : y(x), x(y) {}
 RGPPoint2D::~RGPPoint2D() {}
 
 // Methods

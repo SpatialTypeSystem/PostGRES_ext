@@ -9,7 +9,6 @@
 
 int main(void) {
     Number n();
-    Number a(5, 7);
     std::cout << "All includes successfull!" << std::endl;
     return 0;
 }

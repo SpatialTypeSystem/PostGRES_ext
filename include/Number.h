@@ -44,8 +44,8 @@ public:
   friend std::istream& operator>>(std::istream& is, Number& n);
 
 private:
-  NumberImpl* p;
   struct NumberImpl;
+  NumberImpl* p;
 };
 
 #endif // NUMBER_H

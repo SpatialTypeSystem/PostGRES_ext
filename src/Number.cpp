@@ -1,17 +1,17 @@
-#include "../include/Number.h"
+#include "Number.h"
 
 // Constructors
 // Default number value is 0
-Number::Number() {}
+// Number::Number() {}
 
 // The string will be converted to a rational number
 Number::Number(std::string number) {}
 
 // Fraction of the form n/1
-Number::Number(int n) {}
+// Number::Number(int n) {}
 
 // Fraction of the form n/d
-Number::Number(int n, int d) {}
+// Number::Number(int n, int d) {}
 
 // Destructor
 Number::~Number() {}
