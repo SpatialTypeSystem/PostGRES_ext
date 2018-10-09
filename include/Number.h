@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-struct PrivateRec;
 
 class Number
 {
@@ -45,7 +44,8 @@ public:
   friend std::istream& operator>>(std::istream& is, Number& n);
 
 private:
-  PrivateRec* p;
+  NumberImpl* p;
+  struct NumberImpl;
 };
 
 #endif // NUMBER_H
