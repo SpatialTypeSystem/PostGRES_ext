@@ -30,12 +30,12 @@ public:
     bool operator>=(const RGPSegment2D &rhs);
 
     // Allows ouptut of an RGPSegment2D in the format of "(x1,y1),(x2,y2)"
-    friend std::ostream& operator<<(std::ostream& os, const RGPSegment2D p);
+    friend std::ostream& operator<<(std::ostream& os, const RGPSegment2D &s);
 
     // Allows input of an RGPSegment2D in the format of "(x1,y1),(x2,y2)"
     // where ',' will be the delimiter between the x and y values of point1
     // and point2
-    friend std::istream& operator>>(std::istream& is, const RGPSegment2D p);
+    friend std::istream& operator>>(std::istream& is, const RGPSegment2D &s);
 
 };
 

@@ -33,8 +33,15 @@
 class RGPOperations2D
 {
 public:
+
+    static bool intersecting(RGPSegment2D s1, RGPSegment2D s2);
+
     static optional <RGPPoint2D> intersectionOf(RGPSegment2D s1,
         RGPSegment2D s2);
+
+private:
+
+    static Number orientation(RGPPoint2D p1, RGPPoint2D p2, RGPPoint2D p3);
 };
 
 #endif //RGPOPERATIONS2D_H
