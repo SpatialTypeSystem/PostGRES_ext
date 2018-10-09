@@ -16,6 +16,8 @@ Number::Number(int n, int d) {}
 // Destructor
 Number::~Number() {}
 
+// Number Impl Struct
+struct NumberImpl {}
 
 // Override arithmetic operators
 Number& Number::operator+ (const Number& n) const {}
