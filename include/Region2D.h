@@ -17,19 +17,19 @@ public:
 	~Region2D();
 
 	// Methods
-	std::string getRegionString(); // Get the region as human readable ASCII string
+	std::string getRegionString();                          // Get the region as human readable ASCII string
 	Number area();
-    static bool isEmptyRegion(Region2D region);
+	static bool isEmptyRegion(Region2D region);
 	static bool isValidRegion(Region2D region);
 	int getNumberOfFaces();
 	std::vector<RGPSegment2D> getBoundingBox();
 	bool operator==(const Region2D &p2d);
 	bool operator!=(const Region2D &p2d);
-	template <class T> std::vector<RGPSegment2D> getCycle(T it);
-	template <class T> std::vector<RGPSegment2D> getFace(T it);
+	std::vector<RGPSegment2D> getCycle(int index);
+	std::vector<RGPAnnotatedHalfSegment2D> getFace(int index);
 	bool addFace(std::vector<RGPSegment2D>);
 	bool update(int index, std::vector<RGPSegment2D>);	// Updates a whole region at specified index
-	bool remove(int index);	// Removes a region at specified index
+	bool remove(int index);	                                // Removes a region at specified index
 	std::vector<RGPSegment2D> operator[](int index);	// Retrieves a region at specified index
 
 private:
@@ -37,7 +37,6 @@ private:
 
 	// Fields
 	Region2DImpl *impl;
-		
 };
 
 #endif // REGION2D_H
