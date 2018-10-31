@@ -1,3 +1,5 @@
+#include "RGP.h"
+
 #ifndef PLANESWEEP_H
 #define PLANESWEEP_H
 

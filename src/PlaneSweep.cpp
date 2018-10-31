@@ -1,3 +1,5 @@
+#include "PlaneSweep.h"
+
 class PlaneSweep {
 public:
 
