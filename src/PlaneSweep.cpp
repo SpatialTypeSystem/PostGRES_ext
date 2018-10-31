@@ -1,99 +1,103 @@
 #include "PlaneSweep.h"
 
-class PlaneSweep {
-public:
+PlaneSweep::PlaneSweep()
+{
 
-private:
-// Explore
-	void Explore(Point2D  spatialObj_F, Point2D   spatialObj_G, bool[] &featureVectorF, bool[] &featureVectorG)
-	{
+}
 
-	}
+PlaneSweep::~PlaneSweep()
+{
 
-	void Explore(Point2D  spatialObj_F, Line2D    spatialObj_G, bool[] &featureVectorF, bool[] &featureVectorG)
-	{
+}
 
-	}
+void PlaneSweep::Explore(Point2D  spatialObj_F, Point2D   spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
 
-	void Explore(Point2D  spatialObj_F, Segment2D spatialObj_G, bool[] &featureVectorF, bool[] &featureVectorG)
-	{
+}
 
-	}
+void PlaneSweep::Explore(Point2D  spatialObj_F, Line2D    spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
 
-	void Explore(SegmentD spatialObj_F, Segment2D spatialObj_G, bool[] &featureVectorF, bool[] &featureVectorG)
-	{
+}
 
-	}
+void PlaneSweep::Explore(Point2D  spatialObj_F, Region2D spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
 
-	void Explore(SegmentD spatialObj_F, Region2D  spatialObj_G, bool[] &featureVectorF, bool[] &featureVectorG)
-	{
+}
 
-	}
+void PlaneSweep::Explore(Line2D spatialObj_F, Line2D spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
 
-	void Explore(Region2D spatialObj_F, Region2D  spatialObj_G, bool[] &featureVectorF, bool[] &featureVectorG)
-	{
+}
 
-	}
+void PlaneSweep::Explore(Line2D spatialObj_F, Region2D  spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
+
+}
+
+void PlaneSweep::Explore(Region2D spatialObj_F, Region2D  spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
+
+}
 
 // Select Next
-	Point2D select_next(Point2D  spatialObj_F, Point2D   spatialObj_G, SmallestSelected object, SweepStatus status)
-	{
+Point2D PlaneSweep::select_next(Point2D  spatialObj_F, Point2D   spatialObj_G, SmallestSelected object, SweepStatus status)
+{
 
-	}
+}
 
-	Point2D select_next(Point2D  spatialObj_F, Line2D    spatialObj_G, SmallestSelected object, SweepStatus status)
-	{
+Point2D PlaneSweep::select_next(Point2D  spatialObj_F, Line2D    spatialObj_G, SmallestSelected object, SweepStatus status)
+{
 
-	}
-	
-	Point2D select_next(Point2D  spatialObj_F, Line2D spatialObj_G, SmallestSelected object, SweepStatus status)
-	{
+}
 
-	}
+Point2D PlaneSweep::select_next(Point2D  spatialObj_F, Region2D spatialObj_G, SmallestSelected object, SweepStatus status)
+{
 
-	RGPHalfSegment2D select_next(Line2D spatialObj_F, Line2D spatialObj_G, SmallestSelected object, SweepStatus status)
-	{
+}
 
-	}
+RGPHalfSegment2D PlaneSweep::select_next(Line2D spatialObj_F, Line2D spatialObj_G, SmallestSelected object, SweepStatus status)
+{
 
-	RGPHalfSegment2D select_next(Line2D spatialObj_F, Region2D  spatialObj_G, SmallestSelected object, SweepStatus status)
-	{
+}
 
-	}
+RGPHalfSegment2D PlaneSweep::select_next(Line2D spatialObj_F, Region2D  spatialObj_G, SmallestSelected object, SweepStatus status)
+{
 
-	RGPHalfSegment2D select_next(Region2D spatialObj_F, Region2D  spatialObj_G, SmallestSelected object, SweepStatus status)
-	{
+}
 
-	}
+RGPHalfSegment2D PlaneSweep::select_next(Region2D spatialObj_F, Region2D  spatialObj_G, SmallestSelected object, SweepStatus status)
+{
+
+}
 
 // Select first
-	Point2D select_first(Point2D  spatialObj_F, Point2D   spatialObj_G,SmallestSelected object, SweepStatus status)
-	{
+Point2D PlaneSweep::select_first(Point2D  spatialObj_F, Point2D   spatialObj_G,SmallestSelected object, SweepStatus status)
+{
 
-	}
+}
 
-	Point2D select_first(Point2D  spatialObj_F, Line2D    spatialObj_G,SmallestSelected object, SweepStatus status)
-	{
+Point2D PlaneSweep::select_first(Point2D  spatialObj_F, Line2D    spatialObj_G,SmallestSelected object, SweepStatus status)
+{
 
-	}
+}
 
-	Point2D select_first(Point2D  spatialObj_F, Line2D spatialObj_G,SmallestSelected object, SweepStatus status)
-	{
+Point2D PlaneSweep::select_first(Point2D  spatialObj_F, Region2D spatialObj_G,SmallestSelected object, SweepStatus status)
+{
 
-	}
+}
 
-	RGPHalfSegment2D select_first(Line2D spatialObj_F, Line2D spatialObj_G,SmallestSelected object, SweepStatus status)
-	{
+RGPHalfSegment2D PlaneSweep::select_first(Line2D spatialObj_F, Line2D spatialObj_G,SmallestSelected object, SweepStatus status)
+{
 
-	}
+}
 
-	RGPHalfSegment2D select_first(Line2D spatialObj_F, Region2D  spatialObj_G,SmallestSelected object, SweepStatus status)
-	{
+RGPHalfSegment2D PlaneSweep::select_first(Line2D spatialObj_F, Region2D  spatialObj_G,SmallestSelected object, SweepStatus status)
+{
 
-	}
+}
 
-	RGPHalfSegment2D select_first(Region2D spatialObj_F, Region2D  spatialObj_G,SmallestSelected object, SweepStatus status)
-	{
+RGPHalfSegment2D PlaneSweep::select_first(Region2D spatialObj_F, Region2D  spatialObj_G,SmallestSelected object, SweepStatus status)
+{
 
-	}
 }
