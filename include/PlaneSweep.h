@@ -28,10 +28,9 @@ private:
 	RGPHalfSegment2D select_first(Region2D spatialObj_F, Region2D  spatialObj_G,SmallestSelected object, SweepStatus status);
 
 	// Object - SmallestSelected
-	enum first object smallest segment, second object smallest segment, both, none
+	enum SmallestSelect { firstObjSmallestSegment = 0; secondObjSmallestSegment = 1; both = 2; none = 3 };
 	// Status - SweepStatus
-	enum end of none, end of first, end of second, end of both
-
+	enum SweepStatus { endOfNone = 0; endOfFirst = 1; endOfSecond = 2; endOfBoth = 3 }
 }
 
 #endif //PLANESWEEP
