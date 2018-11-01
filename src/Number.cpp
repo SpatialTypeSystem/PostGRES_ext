@@ -108,7 +108,14 @@ bool Number::operator!=(const Number &n) const {
     return p->num != n.p->num;
 }
 
-Number &Number::sqrt() const {}
+Number &Number::sqrt() const {
+    // TODO: Temporary implementation, limited precision
+    Number *ret = new Number();
+    mpf_class float_num(p->num);
+    mpf_sqrt(float_num.get_mpf_t(), float_num.get_mpf_t());
+    ret->p->num = mpq_class(float_num);
+    return *ret;
+}
 
 // Overriding the output and input operator
 std::ostream &operator<<(std::ostream &os, const Number &n) {
