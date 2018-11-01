@@ -9,3 +9,8 @@ make clean
 make
 ./postgres_ext
 ```
+
+# File structure
+*include - Contains all *.h files
+*src - Contains all *.cpp files 
+*obj - Contains compiled obj code; makefile outputs here

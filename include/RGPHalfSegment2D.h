@@ -4,7 +4,8 @@
 #include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
 
-class RGPHalfSegment2D {
+class RGPHalfSegment2D
+{
 public:
 
     // Members
@@ -13,21 +14,28 @@ public:
     RGPPoint2D dominantPoint;
 
     // Constructors
-    
-    RGPHalfSegment2D();
+
     RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp);
     ~RGPHalfSegment2D();
 
     // Methods
 
+    bool operator==(const RGPHalfSegment2D &rhs);
+    bool operator!=(const RGPHalfSegment2D &rhs);
+    bool operator<(const RGPHalfSegment2D &rhs);
+    bool operator<=(const RGPHalfSegment2D &rhs);
+    bool operator>(const RGPHalfSegment2D &rhs);
+    bool operator>=(const RGPHalfSegment2D &rhs);
+
 };
 
-class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D {
+class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D
+{
 public:
 
     // Members
 
-    bool regionIsAbove;
+    bool insideIsAbove;
 
     // Constructors
 

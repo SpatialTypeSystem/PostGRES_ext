@@ -1,13 +1,13 @@
-#include "../include/Line2D.h"
+#include "Line2D.h"
 
-struct Line2DImplStruct {};
+class Line2D::Line2DImpl {};
 
 Line2D::Line2D()
 {
 	// Emtpy
 }
 
-Line2D::Line2D(std::vector<RGPSegment2D> listOfSegments)
+Line2D::Line2D(std::vector<RGPHalfSegment2D> listOfSegments)
 {
 	// Emtpy
 }
@@ -35,12 +35,12 @@ std::string Line2D::getLineString() // Get the line as human readable ASCII stri
 }
 
 // static
-bool Line2D::isValidPoint()
+bool Line2D::isEmptyLine()
 {
 	// Emtpy
 }
 
-int Line2D::Line2D::getNumberPoints()
+int Line2D::Line2D::getNumberOfSegments()
 {
 	// Emtpy
 }
@@ -55,12 +55,12 @@ bool Line2D::add(RGPSegment2D rgp2d)
 	// Emtpy
 }
 
-template <class T> bool Line2D::remove(T it)
+bool Line2D::remove(int index)
 {
 	// Emtpy
 }
 
-template <class T> bool update(T it, RGPSegment2D rgps2d)
+bool update(int index, RGPSegment2D rgps2d)
 {
 	// Emtpy
 }
@@ -75,3 +75,7 @@ bool Line2D::operator!=(const Line2D &l2d)
 	// Emtpy
 }
 
+RGPSegment2D Line2D::operator[](int index)
+{
+	// Emtpy
+}
