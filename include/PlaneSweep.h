@@ -13,17 +13,26 @@ public:
 	PlaneSweep();
 	~PlaneSweep();
 private:
+    // Object - ObjectSelected
+    enum class ObjectSelected {F, G, BOTH, NONE};
+    // Status - TraversalStatus
+    enum class TraversalStatus {END_OF_F, END_OF_G, END_OF_BOTH, END_OF_NONE};
 
-    std::queue<RGPPoint2D> event_point_schedule;	// Stores event points
+    int pointerF, pointerG; // Logical pointers where a value >= 0 indicates an index in the sequence
+
+    std::queue<RGPPoint2D> eventPointSchedule;  // Stores event points
 
     void new_sweep(); // Creates a new empty sweep line status
-    void add_left(RGPHalfSegment2D left_half); // Adds a segment to the sweep line status when a left half segment is encountered
-    void del_right(RGPHalfSegment2D right_half); // Removes a segment from the sweep line status when it's right half segment is encountered
+    void add_left(RGPHalfSegment2D leftHalf); // Adds a segment to the sweep line status when a left half segment is encountered
+    void del_right(RGPHalfSegment2D rightHalf); // Removes a segment from the sweep line status when it's right half segment is encountered
 
-	// Object - SmallestSelected
-	enum SmallestSelected { first, second, both, none};
-	// Status - SweepStatus
-	enum SweepStatus { end_of_first, end_of_second, end_of_both, end_of_none};
+    // Get event returns the element to which the logical pointer of a point or half segment sequence of an object points to
+    RGPPoint2D get_event_F(Point2D &spatialObj_F);
+    RGPHalfSegment2D get_event_F(Line2D &spatialObj_F);
+    RGPHalfSegment2D get_event_G(Line2D &spatialObj_G);
+    RGPAnnotatedHalfSegment2D get_event_F(Region2D &spatialObj_F);
+    RGPAnnotatedHalfSegment2D get_event_G(Region2D &spatialObj_G);
+
 
 	// F and G are spatial objects where F is of same or lower dimension then G
 	void explore(Point2D  &spatialObj_F, Point2D   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
@@ -33,19 +42,19 @@ private:
 	void explore(Line2D   &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
 	void explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
 
-	Point2D select_next(Point2D  &spatialObj_F, Point2D   &spatialObj_G, SmallestSelected object, SweepStatus status);
-	Point2D select_next(Point2D  &spatialObj_F, Line2D    &spatialObj_G, SmallestSelected object, SweepStatus status);
-	Point2D select_next(Point2D  &spatialObj_F, Region2D &spatialObj_G, SmallestSelected object, SweepStatus status);
-	RGPHalfSegment2D select_next(Line2D &spatialObj_F, Line2D &spatialObj_G, SmallestSelected object, SweepStatus status);
-	RGPHalfSegment2D select_next(Line2D &spatialObj_F, Region2D  &spatialObj_G, SmallestSelected object, SweepStatus status);
-	RGPHalfSegment2D select_next(Region2D &spatialObj_F, Region2D  &spatialObj_G, SmallestSelected object, SweepStatus status);
+	void select_next(Point2D  &spatialObj_F, Point2D   &spatialObj_G, ObjectSelected &object, TraversalStatus &status);
+	void select_next(Point2D  &spatialObj_F, Line2D    &spatialObj_G, ObjectSelected &object, TraversalStatus &status);
+	void select_next(Point2D  &spatialObj_F, Region2D &spatialObj_G, ObjectSelected &object, TraversalStatus &status);
+	void select_next(Line2D &spatialObj_F, Line2D &spatialObj_G, ObjectSelected &object, TraversalStatus &status);
+	void select_next(Line2D &spatialObj_F, Region2D  &spatialObj_G, ObjectSelected &object, TraversalStatus &status);
+	void select_next(Region2D &spatialObj_F, Region2D  &spatialObj_G, ObjectSelected &object, TraversalStatus &status);
 
-	Point2D select_first(Point2D  &spatialObj_F, Point2D   &spatialObj_G,SmallestSelected object, SweepStatus status);
-	Point2D select_first(Point2D  &spatialObj_F, Line2D    &spatialObj_G,SmallestSelected object, SweepStatus status);
-	Point2D select_first(Point2D  &spatialObj_F, Region2D &spatialObj_G,SmallestSelected object, SweepStatus status);
-	RGPHalfSegment2D select_first(Line2D &spatialObj_F, Line2D &spatialObj_G,SmallestSelected object, SweepStatus status);
-	RGPHalfSegment2D select_first(Line2D &spatialObj_F, Region2D  &spatialObj_G,SmallestSelected object, SweepStatus status);
-	RGPHalfSegment2D select_first(Region2D &spatialObj_F, Region2D  &spatialObj_G,SmallestSelected object, SweepStatus status);
+	void select_first(Point2D  &spatialObj_F, Point2D   &spatialObj_G,ObjectSelected &object, TraversalStatus &status);
+	void select_first(Point2D  &spatialObj_F, Line2D    &spatialObj_G,ObjectSelected &object, TraversalStatus &status);
+	void select_first(Point2D  &spatialObj_F, Region2D &spatialObj_G,ObjectSelected &object, TraversalStatus &status);
+	void select_first(Line2D &spatialObj_F, Line2D &spatialObj_G,ObjectSelected &object, TraversalStatus &status);
+	void select_first(Line2D &spatialObj_F, Region2D  &spatialObj_G,ObjectSelected &object, TraversalStatus &status);
+	void select_first(Region2D &spatialObj_F, Region2D  &spatialObj_G,ObjectSelected &object, TraversalStatus &status);
 };
 
 #endif //PLANESWEEP
