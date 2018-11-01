@@ -6,24 +6,32 @@
 #include "Line2D.h"
 #include "Region2D.h"
 #include <vector>
+#include <queue>
 
 class PlaneSweep {
 public:
 	PlaneSweep();
 	~PlaneSweep();
 private:
+
+    std::queue<RGPPoint2D> event_point_schedule;	// Stores event points
+
+    void new_sweep(); // Creates a new empty sweep line status
+    void add_left(RGPHalfSegment2D left_half); // Adds a segment to the sweep line status when a left half segment is encountered
+    void del_right(RGPHalfSegment2D right_half); // Removes a segment from the sweep line status when it's right half segment is encountered
+
 	// Object - SmallestSelected
-	enum SmallestSelected { firstObjSmallestSegment = 0, secondObjSmallestSegment = 1, both = 2, none = 3 };
+	enum SmallestSelected { first, second, both, none};
 	// Status - SweepStatus
-	enum SweepStatus { endOfNone = 0, endOfFirst = 1, endOfSecond = 2, endOfBoth = 3 };
+	enum SweepStatus { end_of_first, end_of_second, end_of_both, end_of_none};
 
 	// F and G are spatial objects where F is of same or lower dimension then G
-	void Explore(Point2D  &spatialObj_F, Point2D   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-	void Explore(Point2D  &spatialObj_F, Line2D    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-	void Explore(Point2D  &spatialObj_F, Region2D    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-	void Explore(Line2D   &spatialObj_F, Line2D    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-	void Explore(Line2D   &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-	void Explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+	void explore(Point2D  &spatialObj_F, Point2D   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+	void explore(Point2D  &spatialObj_F, Line2D    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+	void explore(Point2D  &spatialObj_F, Region2D    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+	void explore(Line2D   &spatialObj_F, Line2D    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+	void explore(Line2D   &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+	void explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
 
 	Point2D select_next(Point2D  &spatialObj_F, Point2D   &spatialObj_G, SmallestSelected object, SweepStatus status);
 	Point2D select_next(Point2D  &spatialObj_F, Line2D    &spatialObj_G, SmallestSelected object, SweepStatus status);
