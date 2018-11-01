@@ -76,11 +76,11 @@ Number &Number::operator/=(const Number &n) {
 }
 
 Number &Number::operator^(const int n) const {
-    // TODO: Optimize!
-    mpq_class val = p->num;
-    for(int i = 0; i < n; i++) {
-        p->num = p->num * val;
-    }
+    Number *ret = new Number();
+    mpz_pow_ui(ret->p->num.get_num_mpz_t(), p->num.get_num_mpz_t(), (unsigned long) n);
+    mpz_pow_ui(ret->p->num.get_den_mpz_t(), p->num.get_den_mpz_t(), (unsigned long) n);
+    ret->p->num.canonicalize();
+    return *ret;
 }
 
 // Override comparison operators
