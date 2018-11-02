@@ -47,6 +47,8 @@ void PlaneSweep::explore(Point2D  &spatialObj_F, Point2D   &spatialObj_G, std::v
   {
     featureVectorF[poi_disjoint] = true;
   }
+
+  return;
 }
 
 // Point x Line
@@ -166,7 +168,7 @@ void PlaneSweep::select_next(Point2D  &spatialObj_F, Point2D   &spatialObj_G, Ob
 
 void PlaneSweep::select_next(Point2D  &spatialObj_F, Line2D    &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
 {
-
+  
 }
 
 void PlaneSweep::select_next(Point2D  &spatialObj_F, Region2D &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
@@ -190,7 +192,7 @@ void PlaneSweep::select_next(Region2D &spatialObj_F, Region2D  &spatialObj_G, Ob
 }
 
 // Select first
-void PlaneSweep::select_first(Point2D  &spatialObj_F, Point2D   &spatialObj_G,ObjectSelected &object, TraversalStatus &status)
+void PlaneSweep::select_first(Point2D  &spatialObj_F, Point2D   &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
 {
   pointerF = 0;
   pointerG = 0;
@@ -230,27 +232,202 @@ void PlaneSweep::select_first(Point2D  &spatialObj_F, Point2D   &spatialObj_G,Ob
   return;
 }
 
-void PlaneSweep::select_first(Point2D  &spatialObj_F, Line2D    &spatialObj_G,ObjectSelected &object, TraversalStatus &status)
+void PlaneSweep::select_first(Point2D  &spatialObj_F, Line2D    &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
 {
-
+//  pointerF = 0;
+//  pointerG = 0;
+//
+//  if (!spatialObj_F.isEmptyPoint())
+//  {
+//    if (!spatialObj_G.isEmptyLine())
+//    {
+//      if (spatialObj_F[pointerF] < spatialObj_G[pointerG].dominantPoint)
+//      {
+//        object = ObjectSelected::F;
+//      }
+//      else if (spatialObj_F[pointerF] > spatialObj_G[pointerG].dominantPoint)
+//      {
+//        object = ObjectSelected::G;
+//      }
+//      else
+//      {
+//        object = ObjectSelected::BOTH;
+//      }
+//      status = TraversalStatus::END_OF_NONE;
+//    }
+//    else
+//    {
+//      status = TraversalStatus::END_OF_G;
+//    }
+//  }
+//  else if (!spatialObj_G.isEmptyLine())
+//  {
+//    status = TraversalStatus::END_OF_F;
+//  }
+//  else
+//  {
+//    status = TraversalStatus::END_OF_BOTH;
+//  }
+//
+//  return;
 }
 
-void PlaneSweep::select_first(Point2D  &spatialObj_F, Region2D &spatialObj_G,ObjectSelected &object, TraversalStatus &status)
+void PlaneSweep::select_first(Point2D  &spatialObj_F, Region2D &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
 {
-
+//  pointerF = 0;
+//  pointerG = 0;
+//
+//  if (!spatialObj_F.isEmptyPoint())
+//  {
+//    if (!spatialObj_G.isEmptyRegion())
+//    {
+//      if (spatialObj_F[pointerF] < spatialObj_G[pointerG].dominantPoint)
+//      {
+//        object = ObjectSelected::F;
+//      }
+//      else if (spatialObj_F[pointerF] > spatialObj_G[pointerG].dominantPoint)
+//      {
+//        object = ObjectSelected::G;
+//      }
+//      else
+//      {
+//        object = ObjectSelected::BOTH;
+//      }
+//      status = TraversalStatus::END_OF_NONE;
+//    }
+//    else
+//    {
+//      status = TraversalStatus::END_OF_G;
+//    }
+//  }
+//  else if (!spatialObj_G.isEmptyRegion())
+//  {
+//    status = TraversalStatus::END_OF_F;
+//  }
+//  else
+//  {
+//    status = TraversalStatus::END_OF_BOTH;
+//  }
+//
+//  return;
 }
 
-void PlaneSweep::select_first(Line2D &spatialObj_F, Line2D &spatialObj_G,ObjectSelected &object, TraversalStatus &status)
+void PlaneSweep::select_first(Line2D &spatialObj_F, Line2D &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
 {
-
+//  pointerF = 0;
+//  pointerG = 0;
+//
+//  if (!spatialObj_F.isEmptyLine())
+//  {
+//    if (!spatialObj_G.isEmptyLine())
+//    {
+//      if (spatialObj_F[pointerF] < spatialObj_G[pointerG])
+//      {
+//        object = ObjectSelected::F;
+//      }
+//      else if (spatialObj_F[pointerF] > spatialObj_G[pointerG])
+//      {
+//        object = ObjectSelected::G;
+//      }
+//      else
+//      {
+//        object = ObjectSelected::BOTH;
+//      }
+//      status = TraversalStatus::END_OF_NONE;
+//    }
+//    else
+//    {
+//      status = TraversalStatus::END_OF_G;
+//    }
+//  }
+//  else if (!spatialObj_G.isEmptyLine())
+//  {
+//    status = TraversalStatus::END_OF_F;
+//  }
+//  else
+//  {
+//    status = TraversalStatus::END_OF_BOTH;
+//  }
+//
+//  return;
 }
 
-void PlaneSweep::select_first(Line2D &spatialObj_F, Region2D  &spatialObj_G,ObjectSelected &object, TraversalStatus &status)
+void PlaneSweep::select_first(Line2D &spatialObj_F, Region2D  &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
 {
-
+//  pointerF = 0;
+//  pointerG = 0;
+//
+//  if (!spatialObj_F.isEmptyLine())
+//  {
+//    if (!spatialObj_G.isEmptyRegion())
+//    {
+//      if (spatialObj_F[pointerF] < spatialObj_G[pointerG])
+//      {
+//        object = ObjectSelected::F;
+//      }
+//      else if (spatialObj_F[pointerF] > spatialObj_G[pointerG])
+//      {
+//        object = ObjectSelected::G;
+//      }
+//      else
+//      {
+//        object = ObjectSelected::BOTH;
+//      }
+//      status = TraversalStatus::END_OF_NONE;
+//    }
+//    else
+//    {
+//      status = TraversalStatus::END_OF_G;
+//    }
+//  }
+//  else if (!spatialObj_G.isEmptyRegion())
+//  {
+//    status = TraversalStatus::END_OF_F;
+//  }
+//  else
+//  {
+//    status = TraversalStatus::END_OF_BOTH;
+//  }
+//
+//  return;
 }
 
-void PlaneSweep::select_first(Region2D &spatialObj_F, Region2D  &spatialObj_G,ObjectSelected &object, TraversalStatus &status)
+void PlaneSweep::select_first(Region2D &spatialObj_F, Region2D  &spatialObj_G, ObjectSelected &object, TraversalStatus &status)
 {
-
+//  pointerF = 0;
+//  pointerG = 0;
+//
+//  if (!spatialObj_F.isEmptyRegion())
+//  {
+//    if (!spatialObj_G.isEmptyRegion())
+//    {
+//      if (spatialObj_F[pointerF] < spatialObj_G[pointerG])
+//      {
+//        object = ObjectSelected::F;
+//      }
+//      else if (spatialObj_F[pointerF] > spatialObj_G[pointerG])
+//      {
+//        object = ObjectSelected::G;
+//      }
+//      else
+//      {
+//        object = ObjectSelected::BOTH;
+//      }
+//      status = TraversalStatus::END_OF_NONE;
+//    }
+//    else
+//    {
+//      status = TraversalStatus::END_OF_G;
+//    }
+//  }
+//  else if (!spatialObj_G.isEmptyRegion())
+//  {
+//    status = TraversalStatus::END_OF_F;
+//  }
+//  else
+//  {
+//    status = TraversalStatus::END_OF_BOTH;
+//  }
+//
+//  return;
 }
