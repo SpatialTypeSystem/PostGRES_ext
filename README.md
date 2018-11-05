@@ -10,6 +10,11 @@ make
 ./postgres_ext
 ```
 
+# Convex hull analysis
+```bash
+make ch
+./convexHullAnalysis
+```
 # File structure
 *include - Contains all *.h files
 *src - Contains all *.cpp files 

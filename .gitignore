@@ -34,3 +34,4 @@
 *.out
 *.app
 postgres_ext
+convexHullAnalysis
