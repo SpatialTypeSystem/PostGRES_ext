@@ -15,6 +15,11 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) -o $@ -c $< $(INC)
+
+ch:
+	g++ -g -o ./obj/ConvexHull/DivideAndConquer.o ./src/ConvexHull/DivideAndConquer.cpp -c
+	g++ -g -o convexHullAnalysis obj/ConvexHull/DivideAndConquer.o ConvexHullAnalysis.cpp
+
 clean:
 	rm -rf $(TARGET) $(OBJ_DIR)/*.o
 	

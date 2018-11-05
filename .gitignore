@@ -26,6 +26,9 @@
 *.a
 *.lib
 
+# Custom ignores
+.vscode
+
 # Executables
 *.exe
 *.out
