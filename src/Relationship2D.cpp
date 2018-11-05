@@ -1,7 +1,14 @@
 #include "Relationship2D.h"
+#include "PlaneSweep.h"
+
+#include <vector>
 
 bool Relationship2D::disjoint(Point2D &leftOperand, Point2D &rightOperand)
 {
+    PlaneSweep ps;
+    std::vector<bool> rightFeature(1, false);
+    std::vector<bool> leftFeature(1, false); 
+    ps.explore(leftOperand, rightOperand, leftFeature, rightFeature);
 
 }
 
