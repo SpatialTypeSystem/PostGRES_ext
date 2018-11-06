@@ -1,3 +1,5 @@
+// PUBLIC HEADER FILE
+
 #ifndef POINT2D_H
 #define POINT2D_H
 
@@ -25,16 +27,17 @@ public:
 	bool operator==(const Point2D &p2d);	// Override of operator == to check equality of two Point2Ds
 	bool operator!=(const Point2D &p2d);	// Override of operator != to check inequality of two Point2Ds
 	int getNumberOfPoints();	// Get the total number of RGPPoint2Ds listed
-	std::vector<RGPSegment2D> getBoundingBox();	
+	std::vector<RGPSegment2D> getBoundingBox();
 	bool add(RGPPoint2D rgpp2d);	// Adds a new RGPPoint2D to the existing Point2D object
 	bool update(int index, RGPPoint2D rgpp2d);	// Updates RGPPoint2D existing at specified index
 	bool remove(int index);	// Removes a RGPPoint2D at specified index
 	RGPPoint2D operator[](int index);	// Retrieves a RGPPoint2D at specified index
 
-private:
-	class Point2DImpl;
+	struct Point2DStruct;
+	Point2DStruct *getStruct();
+	
 	// Fields
-	Point2DImpl *impl;
+	Point2DStruct *impl;
 };
 
 #endif //POINT2D_H

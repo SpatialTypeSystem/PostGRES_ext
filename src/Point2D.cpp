@@ -1,15 +1,25 @@
-#include "Point2D.h"
+// PRIVATE SOURCE FILE
 
-class Point2D::Point2DImpl {};
+#include "Point2D.h"
+#include "Point2DImpl.h"
+
+//class Point2D::Point2DImpl {};
+
+Point2D::Point2DStruct *getStruct()
+{
+	// return someObject->mystruct;
+}
 
 Point2D::Point2D()
 {
-	// Emtpy
+	// Will NOT be used. Never create Point2D object without points.
 }
 
 Point2D::Point2D(std::vector<RGPPoint2D> listOfPoints)
 {
-	// Emtpy
+	// 1) Takes in listOfPoints
+	// 2) gets '.points' vector from struct (call *getStruct())
+	// 3) re-assign struct vector to listOfPoints
 }
 
 Point2D::Point2D(std::ifstream& file)
@@ -19,12 +29,13 @@ Point2D::Point2D(std::ifstream& file)
 
 Point2D::Point2D(std::string listOfPoint2DString)
 {
-	// Emtpy
+	// Takes in listOfPoint2DString and converts to vector<RGPPoint2D>
+	// and assigns vector to vector in struct
 }
 
 Point2D::~Point2D()
 {
-	// Emtpy
+	// Assign vector in struct = null
 }
 
 
