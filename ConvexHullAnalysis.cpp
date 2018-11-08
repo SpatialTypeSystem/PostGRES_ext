@@ -4,8 +4,20 @@
 #include <vector>
 
 #include "include/ConvexHull/DivideAndConquer.h"
+#include "include/ConvexHull/Chans.h"
 
 void runConvexHullAlgorithm(std::vector < std::pair < double, double > > (*algorithmFunction)(std::vector < std::pair < double, double > >&), std::string algorithmName, std::vector < std::pair < double, double > > points);
+
+/*
+ * Prints the vector of points
+ */
+void printPoints(std::vector < std::pair < double, double > > points) {
+    for (int i = 0; i < (int)points.size(); i++) {
+        std::cout << "(" << points[i].first << "," << points[i].second << ") ";
+    }
+
+    std::cout << std::endl;
+}
 
 int main(void) {
     std::vector < std::pair < double, double > > points;
@@ -19,6 +31,7 @@ int main(void) {
     points.push_back(std::make_pair(5, 5));
 
     runConvexHullAlgorithm(getConvexHullDivideAndConquer, "DivideAndConquer", points);
+    runConvexHullAlgorithm(getConvexHullChans, "Chans", points);
 
     return 0;
 }

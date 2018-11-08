@@ -19,17 +19,6 @@ struct pointsComparator
 };
 
 /*
- * Prints the vector of points
- */
-void printPoints(std::vector < std::pair < double, double > > points) {
-    for (int i = 0; i < (int)points.size(); i++) {
-        std::cout << "(" << points[i].first << "," << points[i].second << ") ";
-    }
-
-    std::cout << std::endl;
-}
-
-/*
  * +1 : if p3 is left of line (p1, p2)
  * 0 : if p3 is on line (p1, p2)
  * -1 : if p3 is right of line (p1, p2)
