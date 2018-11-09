@@ -1,10 +1,11 @@
 #ifndef EXPLORE_H
 #define EXPLORE_H
 
+#include "RGP.h"
 #include "Point2D.h"
 #include "Line2D.h"
 #include "Region2D.h"
-#include "../include/PlaneSweep.h"
+#include "PlaneSweep.h"
 #include <vector>
 
 class Explore
