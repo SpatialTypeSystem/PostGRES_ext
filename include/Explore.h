@@ -2,7 +2,7 @@
 #define EXPLORE_H
 
 #include "RGP.h"
-#include "Point2DImpl.h"
+#include "../include/Point2DImpl.h"
 #include "Line2DImpl.h"
 #include "Region2DImpl.h"
 #include "PlaneSweep.h"

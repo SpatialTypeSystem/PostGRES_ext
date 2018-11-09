@@ -2,11 +2,14 @@
 #define REGION2DIMPL_H
 
 #include "RGP.h"
-#include "STO.h"
+#include "Region2D.h"
 #include <vector>
 
 class Region2DImpl : public Region2D {
 public:
+
+    Region2DImpl();
+    ~Region2DImpl();
 
     std::vector<RGPAnnotatedHalfSegment2D>* getSequence();
 

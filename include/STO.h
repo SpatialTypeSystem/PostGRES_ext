@@ -6,8 +6,5 @@
 #include "Point2D.h"
 #include "Line2D.h"
 #include "Region2D.h"
-#include "Point2DImpl.h"
-#include "Line2DImpl.h"
-#include "Region2DImpl.h"
 
 #endif //SPATIALTYPES_H
