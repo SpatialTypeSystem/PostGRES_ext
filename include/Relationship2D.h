@@ -12,7 +12,6 @@ public:
   Relationship2D();
   ~Relationship2D();
 
-private:
   // Disjoint
   static bool disjoint(Point2D &leftOperand, Point2D &rightOperand);
   static bool disjoint(Point2D &leftOperand, Line2D &rightOperand);
