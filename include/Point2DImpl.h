@@ -2,6 +2,7 @@
 #define POINT2DIMPL_H
 
 #include "RGP.h"
+#include "STO.h"
 #include <vector>
 
 class Point2DImpl : public Point2D {
