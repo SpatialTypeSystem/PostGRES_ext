@@ -11,29 +11,32 @@ class Region2D
 public:
 	// Constructors
 	Region2D(); //Empty constructor
-	Region2D(std::vector<std::vector<RGPSegment2D>> listOfRegions);
+	Region2D(std::vector<std::vector<RGPAnnotatedHalfSegment2D>> listOfRegions);
 	Region2D(std::string listOfRegion2DString);
 	Region2D(std::ifstream& file); // Send in file for constructor (possibly .txt)
 	~Region2D();
 
 	// Methods
-	std::string getRegionString(); // Get the region as human readable ASCII string
+	std::string getRegionString();                          // Get the region as human readable ASCII string
 	Number area();
-        static bool isValidRegion(Region2D region);
+	static bool isEmptyRegion(Region2D region);
+	static bool isValidRegion(Region2D region);
 	int getNumberOfFaces();
 	std::vector<RGPSegment2D> getBoundingBox();
-	bool addFace(std::vector<RGPSegment2D>);
-	template <class T> bool update(T it, std::vector<RGPSegment2D>);
-	template <class T> bool remove(T it);
 	bool operator==(const Region2D &p2d);
 	bool operator!=(const Region2D &p2d);
-	template <class T> std::vector<RGPSegment2D> getCycle(T it);
-	template <class T> std::vector<RGPSegment2D> getFace(T it);
+	std::vector<RGPSegment2D> getCycle(int index);
+	std::vector<RGPAnnotatedHalfSegment2D> getFace(int index);
+	bool addFace(std::vector<RGPSegment2D>);
+	bool update(int index, std::vector<RGPSegment2D>);	// Updates a whole region at specified index
+	bool remove(int index);	                                // Removes a region at specified index
+	std::vector<RGPSegment2D> operator[](int index);	// Retrieves a region at specified index
 
 private:
-	struct Region2DImplStruct;
+	class Region2DImpl;
+
 	// Fields
-	Region2DImplStruct *implStruct;
+	Region2DImpl *impl;
 };
 
 #endif // REGION2D_H

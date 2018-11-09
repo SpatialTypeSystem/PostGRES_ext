@@ -1,3 +1,4 @@
-#include "../include/RGPOperations.h"
+#include "../include/RGPOperations2D.h"
 
-std::optional<RGPPoint2D> RGPOperations::intersectionOf(RGPSegment2D s1, RGPSegment2D s2) {}
+optional<RGPPoint2D> RGPOperations2D::intersectionOf(RGPSegment2D s1,
+    RGPSegment2D s2) {}

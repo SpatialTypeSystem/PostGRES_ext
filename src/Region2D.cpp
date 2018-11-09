@@ -1,13 +1,13 @@
-#include "../include/Region2D.h"
+#include "Region2D.h"
 
-struct Region2DImplStruct {};
+class Region2D::Region2DImpl {};
 
 Region2D::Region2D()
 {
 	// Emtpy
 }
 
-Region2D::Region2D(std::vector<std::vector<RGPSegment2D>> listOfRegions)
+Region2D::Region2D(std::vector<std::vector<RGPAnnotatedHalfSegment2D>> listOfRegions)
 {
 	// Emtpy
 }
@@ -38,7 +38,7 @@ Number Region2D::area()
 }
 
 // static
-bool Region2D::isValidRegion(Region2D region)
+bool Region2D::isEmptyRegion(Region2D region)
 {
 	// Emtpy
 }
@@ -58,12 +58,12 @@ bool Region2D::addFace(std::vector<RGPSegment2D>)
 	// Emtpy
 }
 
-template <class T> bool Region2D::update(T it, std::vector<RGPSegment2D>)
+bool Region2D::update(int index, std::vector<RGPSegment2D>)
 {
 	// Emtpy
 }
 
-template <class T> bool Region2D::remove(T it)
+bool Region2D::remove(int index)
 {
 	// Emtpy
 }
@@ -76,6 +76,11 @@ bool Region2D::operator==(const Region2D &p2d)
 bool Region2D::operator!=(const Region2D &p2d)
 {
 	// Emtpy
+}
+
+std::vector<RGPSegment2D> Region2D::operator[](int index)
+{
+	// Empty
 }
 
 template <class T> std::vector<RGPSegment2D> getCycle(T it)
