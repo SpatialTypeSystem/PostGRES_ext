@@ -6,6 +6,36 @@
 RGPHalfSegment2D::RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp) : segment(s), dominantPoint(dp) {}
 RGPHalfSegment2D::~RGPHalfSegment2D() {}
 
+bool RGPHalfSegment2D::operator==(const RGPHalfSegment2D &rhs) const
+{
+
+}
+
+bool RGPHalfSegment2D::operator!=(const RGPHalfSegment2D &rhs) const
+{
+
+}
+
+bool RGPHalfSegment2D::operator<(const RGPHalfSegment2D &rhs) const
+{
+
+}
+
+bool RGPHalfSegment2D::operator<=(const RGPHalfSegment2D &rhs) const
+{
+
+}
+
+bool RGPHalfSegment2D::operator>(const RGPHalfSegment2D &rhs) const
+{
+
+}
+
+bool RGPHalfSegment2D::operator>=(const RGPHalfSegment2D &rhs) const
+{
+
+}
+
 
 // RGPAnnotatedHalfSegment2D
 // Constructors

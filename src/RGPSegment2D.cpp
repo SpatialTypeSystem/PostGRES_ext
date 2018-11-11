@@ -7,9 +7,9 @@ RGPSegment2D::~RGPSegment2D() {}
 
 // Methods
 
-bool RGPSegment2D::operator==(const RGPSegment2D &rhs) {}
-bool RGPSegment2D::operator!=(const RGPSegment2D &rhs) {}
-bool RGPSegment2D::operator<(const RGPSegment2D &rhs) {}
-bool RGPSegment2D::operator<=(const RGPSegment2D &rhs) {}
-bool RGPSegment2D::operator>(const RGPSegment2D &rhs) {}
-bool RGPSegment2D::operator>=(const RGPSegment2D &rhs) {}
+bool RGPSegment2D::operator==(const RGPSegment2D &rhs) const {}
+bool RGPSegment2D::operator!=(const RGPSegment2D &rhs) const {}
+bool RGPSegment2D::operator<(const RGPSegment2D &rhs) const {}
+bool RGPSegment2D::operator<=(const RGPSegment2D &rhs) const {}
+bool RGPSegment2D::operator>(const RGPSegment2D &rhs) const {}
+bool RGPSegment2D::operator>=(const RGPSegment2D &rhs) const {}

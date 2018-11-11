@@ -11,7 +11,7 @@ public:
     Region2DImpl();
     ~Region2DImpl();
 
-    std::vector<RGPAnnotatedHalfSegment2D>* getSequence();
+    std::vector<RGPAnnotatedHalfSegment2D> getSequence();
 
 private:
 

@@ -22,12 +22,12 @@ public:
 
     // Methods
 
-    bool operator==(const RGPSegment2D &rhs);
-    bool operator!=(const RGPSegment2D &rhs);
-    bool operator<(const RGPSegment2D &rhs);
-    bool operator<=(const RGPSegment2D &rhs);
-    bool operator>(const RGPSegment2D &rhs);
-    bool operator>=(const RGPSegment2D &rhs);
+    bool operator==(const RGPSegment2D &rhs) const;
+    bool operator!=(const RGPSegment2D &rhs) const;
+    bool operator<(const RGPSegment2D &rhs) const;
+    bool operator<=(const RGPSegment2D &rhs) const;
+    bool operator>(const RGPSegment2D &rhs) const;
+    bool operator>=(const RGPSegment2D &rhs) const;
 
     // Allows ouptut of an RGPSegment2D in the format of "(x1,y1),(x2,y2)"
     friend std::ostream& operator<<(std::ostream& os, const RGPSegment2D p);

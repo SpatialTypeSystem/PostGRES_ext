@@ -10,7 +10,7 @@ Region2DImpl::~Region2DImpl()
 
 }
 
-std::vector<RGPAnnotatedHalfSegment2D>* Region2DImpl::getSequence()
+std::vector<RGPAnnotatedHalfSegment2D> Region2DImpl::getSequence()
 {
 
 }

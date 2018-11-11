@@ -7,9 +7,9 @@ RGPPoint2D::~RGPPoint2D() {}
 
 // Methods
 
-bool RGPPoint2D::operator==(const RGPPoint2D &rhs) {}
-bool RGPPoint2D::operator!=(const RGPPoint2D &rhs) {}
-bool RGPPoint2D::operator<(const RGPPoint2D &rhs) {}
-bool RGPPoint2D::operator<=(const RGPPoint2D &rhs) {}
-bool RGPPoint2D::operator>(const RGPPoint2D &rhs) {}
-bool RGPPoint2D::operator>=(const RGPPoint2D &rhs) {}
+bool RGPPoint2D::operator==(const RGPPoint2D &rhs) const {}
+bool RGPPoint2D::operator!=(const RGPPoint2D &rhs) const {}
+bool RGPPoint2D::operator<(const RGPPoint2D &rhs) const {}
+bool RGPPoint2D::operator<=(const RGPPoint2D &rhs) const {}
+bool RGPPoint2D::operator>(const RGPPoint2D &rhs) const {}
+bool RGPPoint2D::operator>=(const RGPPoint2D &rhs) const {}

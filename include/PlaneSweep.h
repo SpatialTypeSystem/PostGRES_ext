@@ -17,7 +17,7 @@ public:
     ObjectSelected object;
     TraversalStatus status;
 
-    PlaneSweep(std::vector<F>* seqF, std::vector<G>* seqG);
+    PlaneSweep(const std::vector<F>& seqF, const std::vector<G>& seqG);
     ~PlaneSweep();
 
     void select_first();
@@ -25,16 +25,20 @@ public:
 
 private:
     // Pointers to the spatial object sequences
-    const std::vector<F>* sequenceF;
-    const std::vector<G>* sequenceG;
+    const std::vector<F>& staticSequenceF;
+    const std::vector<G>& staticSequenceG;
+    std::vector<F> dynamicSequenceF;
+    std::vector<G> dynamicSequenceG;
 
-    // Sequence sizes
+    // Static sequence sizes
     const int sizeF;
     const int sizeG;
 
     // Sequence index trackers
-    int indexF;
-    int indexG;
+    int staticIndexF;
+    int staticIndexG;
+    int dynamicIndexF;
+    int dynamicIndexG;
 
     //// NON-TEMPLATED CODE ////
 
@@ -67,7 +71,7 @@ private:
 
 template<class F, class G>
 inline
-PlaneSweep<F,G>::PlaneSweep(std::vector<F>* seqF, std::vector<G>* seqG) : sequenceF(seqF), sequenceG(seqG), sizeF(seqF->size()), sizeG(seqG->size())
+PlaneSweep<F,G>::PlaneSweep(const std::vector<F>& seqF, const std::vector<G>& seqG) : staticSequenceF(seqF), staticSequenceG(seqG), sizeF(seqF.size()), sizeG(seqG.size())
 {
     object = ObjectSelected::NONE;
     status = TraversalStatus::END_OF_NONE;
@@ -84,18 +88,18 @@ template<class F, class G>
 inline
 void PlaneSweep<F,G>::select_first()
 {
-    indexF = 0;
-    indexG = 0;
+    staticIndexF = 0;
+    staticIndexG = 0;
 
-    if (!sequenceF->empty())
+    if (!staticSequenceF.empty())
     {
-        if (!sequenceG->empty())
+        if (!staticSequenceG.empty())
         {
-            if (*sequenceF[indexF] < *sequenceG[indexG])
+            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if (*sequenceF[indexF] > *sequenceG[indexG])
+            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
             {
                 object = ObjectSelected::OBJ_G;
             }
@@ -110,7 +114,49 @@ void PlaneSweep<F,G>::select_first()
             status = TraversalStatus::END_OF_G;
         }
     }
-    else if (!sequenceG->empty())
+    else if (!staticSequenceG.empty())
+    {
+        status = TraversalStatus::END_OF_F;
+    }
+    else
+    {
+        status = TraversalStatus::END_OF_BOTH;
+    }
+
+    return;
+}
+
+template<>
+inline
+void PlaneSweep<RGPPoint2D,RGPHalfSegment2D>::select_first()
+{
+    staticIndexF = 0;
+    staticIndexG = 0;
+
+    if (!staticSequenceF.empty())
+    {
+        if (!staticSequenceG.empty())
+        {
+            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
+            {
+                object = ObjectSelected::OBJ_F;
+            }
+            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
+            {
+                object = ObjectSelected::OBJ_G;
+            }
+            else
+            {
+                object = ObjectSelected::BOTH;
+            }
+            status = TraversalStatus::END_OF_NONE;
+        }
+        else
+        {
+            status = TraversalStatus::END_OF_G;
+        }
+    }
+    else if (!staticSequenceG.empty())
     {
         status = TraversalStatus::END_OF_F;
     }
@@ -127,15 +173,15 @@ inline
 void PlaneSweep<F,G>::select_next() {
     if (object == ObjectSelected::OBJ_F)
     {
-        if (++indexF < sizeF)
+        if (++staticIndexF < sizeF)
         {
             if (status != TraversalStatus::END_OF_G)
             {
-                if (*sequenceF[indexF] < *sequenceG[indexG])
+                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if (*sequenceF[indexF] > *sequenceG[indexG])
+                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -154,7 +200,7 @@ void PlaneSweep<F,G>::select_next() {
             if (status == TraversalStatus::END_OF_G)
             {
                 object = ObjectSelected::NONE;
-                status == TraversalStatus::END_OF_BOTH;
+                status = TraversalStatus::END_OF_BOTH;
             }
             else
             {
@@ -165,15 +211,15 @@ void PlaneSweep<F,G>::select_next() {
     }
     else if (object == ObjectSelected::OBJ_G)
     {
-        if (++indexG < sizeG)
+        if (++staticIndexG < sizeG)
         {
             if (status != TraversalStatus::END_OF_F)
             {
-                if (*sequenceF[indexF] < *sequenceG[indexG])
+                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if (*sequenceF[indexF] > *sequenceG[indexG])
+                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -203,19 +249,139 @@ void PlaneSweep<F,G>::select_next() {
     }
     else if (object == ObjectSelected::BOTH)
     {
-        ++indexF;
-        ++indexG;
+        ++staticIndexF;
+        ++staticIndexG;
 
-        bool check_F = indexF < sizeF;
-        bool check_G = indexG < sizeG;
+        bool check_F = staticIndexF < sizeF;
+        bool check_G = staticIndexG < sizeG;
 
         if (check_F && check_G)
         {
-            if (*sequenceF[indexF] < *sequenceG[indexG])
+            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if (*sequenceF[indexF] > *sequenceG[indexG])
+            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
+            {
+                object = ObjectSelected::OBJ_G;
+            }
+            else
+            {
+                object = ObjectSelected::BOTH;
+            }
+        }
+        else if (check_F)
+        {
+            object = ObjectSelected::OBJ_F;
+            status = TraversalStatus::END_OF_G;
+        }
+        else if (check_G)
+        {
+            object = ObjectSelected::OBJ_G;
+            status = TraversalStatus::END_OF_F;
+        }
+        else
+        {
+            object = ObjectSelected::NONE;
+            status = TraversalStatus::END_OF_BOTH;
+        }
+    }
+}
+
+template<>
+inline
+void PlaneSweep<RGPPoint2D,RGPHalfSegment2D>::select_next() {
+    if (object == ObjectSelected::OBJ_F)
+    {
+        if (++staticIndexF < sizeF)
+        {
+            if (status != TraversalStatus::END_OF_G)
+            {
+                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
+                {
+                    object = ObjectSelected::OBJ_F;
+                }
+                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
+                {
+                    object = ObjectSelected::OBJ_G;
+                }
+                else
+                {
+                    object = ObjectSelected::BOTH;
+                }
+            }
+            else
+            {
+                object = ObjectSelected::OBJ_F;
+            }
+        }
+        else
+        {
+            if (status == TraversalStatus::END_OF_G)
+            {
+                object = ObjectSelected::NONE;
+                status = TraversalStatus::END_OF_BOTH;
+            }
+            else
+            {
+                object = ObjectSelected::OBJ_G;
+                status = TraversalStatus::END_OF_F;
+            }
+        }
+    }
+    else if (object == ObjectSelected::OBJ_G)
+    {
+        if (++staticIndexG < sizeG)
+        {
+            if (status != TraversalStatus::END_OF_F)
+            {
+                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
+                {
+                    object = ObjectSelected::OBJ_F;
+                }
+                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
+                {
+                    object = ObjectSelected::OBJ_G;
+                }
+                else
+                {
+                    object = ObjectSelected::BOTH;
+                }
+            }
+            else
+            {
+                object = ObjectSelected::OBJ_G;
+            }
+        }
+        else
+        {
+            if (status == TraversalStatus::END_OF_F)
+            {
+                object = ObjectSelected::NONE;
+                status = TraversalStatus::END_OF_BOTH;
+            }
+            else
+            {
+                object = ObjectSelected::OBJ_F;
+                status = TraversalStatus::END_OF_G;
+            }
+        }
+    }
+    else if (object == ObjectSelected::BOTH)
+    {
+        ++staticIndexF;
+        ++staticIndexG;
+
+        bool check_F = staticIndexF < sizeF;
+        bool check_G = staticIndexG < sizeG;
+
+        if (check_F && check_G)
+        {
+            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
+            {
+                object = ObjectSelected::OBJ_F;
+            }
+            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
             {
                 object = ObjectSelected::OBJ_G;
             }

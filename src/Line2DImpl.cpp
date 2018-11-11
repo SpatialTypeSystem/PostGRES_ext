@@ -10,7 +10,7 @@ Line2DImpl::~Line2DImpl()
 
 }
 
-std::vector<RGPHalfSegment2D>* Line2DImpl::getSequence()
+std::vector<RGPHalfSegment2D> Line2DImpl::getSequence()
 {
 
 }

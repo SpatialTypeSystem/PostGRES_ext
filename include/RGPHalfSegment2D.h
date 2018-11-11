@@ -20,12 +20,12 @@ public:
 
     // Methods
 
-    bool operator==(const RGPHalfSegment2D &rhs);
-    bool operator!=(const RGPHalfSegment2D &rhs);
-    bool operator<(const RGPHalfSegment2D &rhs);
-    bool operator<=(const RGPHalfSegment2D &rhs);
-    bool operator>(const RGPHalfSegment2D &rhs);
-    bool operator>=(const RGPHalfSegment2D &rhs);
+    bool operator==(const RGPHalfSegment2D &rhs) const;
+    bool operator!=(const RGPHalfSegment2D &rhs) const;
+    bool operator<(const RGPHalfSegment2D &rhs) const;
+    bool operator<=(const RGPHalfSegment2D &rhs) const;
+    bool operator>(const RGPHalfSegment2D &rhs) const;
+    bool operator>=(const RGPHalfSegment2D &rhs) const;
 
 };
 

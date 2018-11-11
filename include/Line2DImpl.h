@@ -11,7 +11,7 @@ public:
     Line2DImpl();
     ~Line2DImpl();
 
-    std::vector<RGPHalfSegment2D>* getSequence();
+    std::vector<RGPHalfSegment2D> getSequence();
 
 private:
 
