@@ -3,6 +3,7 @@
 
 #include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
+#include "Optional.h"
 
 class RGPHalfSegment2D
 {

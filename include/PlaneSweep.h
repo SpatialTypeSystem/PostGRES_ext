@@ -23,6 +23,22 @@ public:
     void select_first();
     void select_next();
 
+    // Get event returns the element to which the logical pointer of a point or half segment sequence of an object points to
+    F getEventF();
+    G getEventG();
+
+    // Checks whether a given point lies on/in any segment of the sweepLineStatus
+    bool pointOnSegment(RGPPoint2D p);
+    bool pointInSegment(RGPPoint2D p);
+
+    // Inserts/Removes a segment from the sweep line status when it's left/right half segment is encountered
+    void insert(RGPSegment2D s);
+    void remove(RGPSegment2D s);
+
+    // Check if the dominant points of the given halfsegment and the next halfsegment (after the current index) of the indicated sequence are equal
+    bool lookAheadF(RGPHalfSegment2D h);
+    bool lookAheadG(RGPHalfSegment2D h);
+
 private:
     // Pointers to the spatial object sequences
     const std::vector<F>& staticSequenceF;
@@ -406,6 +422,62 @@ void PlaneSweep<RGPPoint2D,RGPHalfSegment2D>::select_next() {
             status = TraversalStatus::END_OF_BOTH;
         }
     }
+}
+
+template <class F, class G>
+inline
+F PlaneSweep<F,G>::getEventF()
+{
+
+}
+
+template <class F, class G>
+inline
+G PlaneSweep<F,G>::getEventG()
+{
+
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::pointOnSegment(RGPPoint2D p)
+{
+
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::pointInSegment(RGPPoint2D p)
+{
+
+}
+
+template <class F, class G>
+inline
+void PlaneSweep<F,G>::insert(RGPSegment2D s)
+{
+
+}
+
+template <class F, class G>
+inline
+void PlaneSweep<F,G>::remove(RGPSegment2D s)
+{
+
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::lookAheadF(RGPHalfSegment2D h)
+{
+
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
+{
+
 }
 
 #endif //PLANESWEEP

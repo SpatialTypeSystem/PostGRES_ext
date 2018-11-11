@@ -6,26 +6,6 @@
 #ifndef RGPOPERATIONS2D_H
 #define RGPOPERATIONS2D_H
 
-// Optional definition
-#ifdef __has_include
-
-// Check for standard library
-#  if __has_include(<optional>)
-#    include<optional>
-     using std::optional;
-
-// Check for exprimental version (bug fix for Xcode on macOS)
-#  elif __has_include(<experimental/optional>)
-#    include <experimental/optional>
-     using std::experimental::optional;
-
-// Not found
-#  else
-#     error "Missing <optional>"
-#  endif
-#endif
-
-
 #include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
 #include "RGPHalfSegment2D.h"
