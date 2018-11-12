@@ -1,25 +1,26 @@
 #include <cmath>
 #include <vector>
 
+#include "../../include/RGPPoint2D.h"
 #include "../../include/ConvexHull/DivideAndConquer.h"
 
-std::vector < std::pair < double, double > > getHull(std::vector < std::pair < double, double > > points) {
+std::vector < RGPPoint2D* > getHull(std::vector < RGPPoint2D* > points) {
     // TODO: use graham scan when available
     return getConvexHullDivideAndConquer(points);
 }
 
-std::vector < std::pair < double, double > > mergeHulls(std::vector < std::vector < std::pair < double, double > > > hulls, int m, bool* isCompleteHullObtained) {
-    std::vector < std::pair < double, double > > convexHull;
+std::vector < RGPPoint2D* > mergeHulls(std::vector < std::vector < RGPPoint2D* > >& hulls, int m, bool* isCompleteHullObtained) {
+    std::vector < RGPPoint2D* > convexHull;
     
     // TODO: add merge hull code
     return convexHull;
 }
 
-std::vector < std::vector < std::pair < double, double > > > getSubHulls(std::vector < std::pair < double, double > >& points, int m) {
-    std::vector < std::vector < std::pair < double, double > > > subHulls;
+std::vector < std::vector < RGPPoint2D* > > getSubHulls(std::vector < RGPPoint2D* >& points, int m) {
+    std::vector < std::vector < RGPPoint2D* > > subHulls;
     int pointsSize = (int)points.size();
 
-    std::vector < std::pair < double, double > > currentPoints;
+    std::vector < RGPPoint2D* > currentPoints;
     for (int i = 0; i < pointsSize; i++) {
         currentPoints.push_back(points[i]);
 
@@ -37,12 +38,12 @@ std::vector < std::vector < std::pair < double, double > > > getSubHulls(std::ve
     return subHulls;
 }
 
-std::vector < std::pair < double, double > > getConvexHullChansInternal(std::vector < std::pair < double, double > >& points) {
+std::vector < RGPPoint2D* > getConvexHullChansInternal(std::vector < RGPPoint2D* >& points) {
     int t = 1;
     int m = pow(2, pow(2, t));
     bool isCompleteHullObtained = false;
-    std::vector < std::pair < double, double > > convexHullPoints;
-    std::vector < std::vector < std::pair < double, double > > > subHulls;
+    std::vector < RGPPoint2D* > convexHullPoints;
+    std::vector < std::vector < RGPPoint2D* > > subHulls;
 
     do {
         subHulls = getSubHulls(convexHullPoints, m);
@@ -56,9 +57,9 @@ std::vector < std::pair < double, double > > getConvexHullChansInternal(std::vec
 /*
  * Computes convex hull using divide and conquer method
  */
-std::vector < std::pair < double, double > > getConvexHullChans(std::vector < std::pair < double, double > >& points) {
-    std::vector < std::pair < double, double > > pointsCopy(points);
+std::vector < RGPPoint2D* > getConvexHullChans(std::vector < RGPPoint2D* > points) {
+    std::vector < RGPPoint2D* > pointsCopy(points);
 
-    std::vector < std::pair < double, double > > convexHullPoints = getConvexHullChansInternal(pointsCopy);
+    std::vector < RGPPoint2D* > convexHullPoints = getConvexHullChansInternal(pointsCopy);
     return convexHullPoints;
 }

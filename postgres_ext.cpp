@@ -1,6 +1,7 @@
 #include "iostream"
 
 // Including all headers to test
+#include "include/Number.h"
 #include "include/RGPHalfSegment2D.h"
 #include "include/RGPOperations2D.h"
 #include "include/RGPPoint2D.h"

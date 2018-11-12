@@ -1,3 +1,3 @@
 #include <vector>
 
-std::vector < std::pair < double, double > > getConvexHullChans(std::vector < std::pair < double, double > >& points);
+std::vector < RGPPoint2D* > getConvexHullChans(std::vector < RGPPoint2D* > points);
