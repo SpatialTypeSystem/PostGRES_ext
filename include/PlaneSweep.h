@@ -39,9 +39,7 @@ public:
     bool lookAheadF(RGPHalfSegment2D h);
     bool lookAheadG(RGPHalfSegment2D h);
 
-    RGPAnnotatedHalfSegment2D getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p); // Returns the nearest annotated halfsegment from either object below a given point
-
-    bool lineStatusContains(RGPSegment2D s); // Checks if the given segment is currently in the sweep line status
+    optional<RGPAnnotatedHalfSegment2D> getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p); // Returns the nearest annotated halfsegment, from the sweep line status, below a given point, if there is one
 
 private:
     // References to the spatial object sequences
@@ -636,14 +634,7 @@ bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
 
 template <class F, class G>
 inline
-RGPAnnotatedHalfSegment2D PlaneSweep<F,G>::getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p)
-{
-
-}
-
-template <class F, class G>
-inline
-bool PlaneSweep<F,G>::lineStatusContains(RGPSegment2D s)
+optional<RGPAnnotatedHalfSegment2D> PlaneSweep<F,G>::getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p)
 {
 
 }
