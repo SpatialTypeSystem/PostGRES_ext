@@ -36,7 +36,7 @@ public:
 
     // Members
 
-    bool insideIsAbove;
+    bool interiorIsAbove;
 
     // Constructors
 

@@ -10,7 +10,8 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, s
 
   sweep.select_first();
 
-  do
+  // Terminates when the end of an object is reached, or all flags are turned on
+  while (sweep.status == TraversalStatus::END_OF_NONE || !(featureVectorF[poi_disjoint] && featureVectorG[poi_disjoint] && featureVectorF[poi_shared]))
   {
     if (sweep.object == ObjectSelected::OBJ_F)
     {
@@ -26,10 +27,7 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, s
     }
 
     sweep.select_next();
-  } while (sweep.status == TraversalStatus::END_OF_NONE &&
-      !featureVectorF[poi_disjoint] &&
-      featureVectorG[poi_disjoint] &&
-      featureVectorF[poi_shared]);
+  }
 
   if (sweep.status == TraversalStatus::END_OF_F)
   {
@@ -43,7 +41,7 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, s
   return;
 }
 
-//// Point x Line
+// Point x Line
 void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
   // Indicates what index in the bool vector represents what flag
@@ -127,14 +125,81 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, s
       featureVectorF[poi_on_interior] &&
       featureVectorF[poi_on_bound] &&
       featureVectorG[bound_poi_disjoint]);
+
+  if (sweep.status == TraversalStatus::END_OF_G)
+  {
+    featureVectorF[poi_disjoint] = true;
+  }
 }
 
-//// Point x Region
-//void Explore::explore(Point2D  &spatialObj_F, Region2D &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
-//{
-//
-//}
-//
+// Point x Region
+void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
+  // Indicates what index in the bool vector represents what flag
+  enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
+
+  PlaneSweep<RGPPoint2D,RGPAnnotatedHalfSegment2D> sweep(spatialObj_F.getSequence(), spatialObj_G.getSequence());
+
+  sweep.select_first();
+
+  while (sweep.status == TraversalStatus::END_OF_NONE || !(featureVectorF[poi_inside] && featureVectorG[poi_on_bound] && featureVectorF[poi_outside]))
+  {
+    if (sweep.object == ObjectSelected::OBJ_F)
+    {
+      RGPPoint2D p = sweep.getEventF();
+
+      if (sweep.pointOnSegment(p))
+      {
+        featureVectorF[poi_on_bound] = true;
+      }
+      else
+      {
+        RGPAnnotatedHalfSegment2D ah = sweep.getAnnotatedHalfSegmentBelowPoint(p);
+        if (sweep.lineStatusContains(ah.segment))
+        {
+          if (ah.interiorIsAbove)
+          {
+            featureVectorF[poi_inside] = true;
+          }
+          else
+          {
+            featureVectorF[poi_outside] = true;
+          }
+        }
+        else
+        {
+          featureVectorF[poi_outside] = true;
+        }
+      }
+    }
+    else
+    {
+      RGPAnnotatedHalfSegment2D ah = sweep.getEventG();
+
+      if (ah.dominantPoint == ah.segment.point1) // Left halfsegment
+      {
+        sweep.insert(ah.segment);
+      }
+      else // Right halfsegment
+      {
+        sweep.remove(ah.segment);
+      }
+
+      if (sweep.object == ObjectSelected::BOTH)
+      {
+        featureVectorF[poi_on_bound] = true;
+      }
+    }
+
+    sweep.select_next();
+  }
+
+  if (sweep.status == TraversalStatus::END_OF_G)
+  {
+    featureVectorF[poi_outside] = true;
+  }
+}
+
 //// Line x Line
 //void Explore::explore(Line2D &spatialObj_F, Line2D &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 //{

@@ -42,7 +42,7 @@ bool RGPHalfSegment2D::operator>=(const RGPHalfSegment2D &rhs) const
 
 RGPAnnotatedHalfSegment2D::RGPAnnotatedHalfSegment2D(RGPSegment2D s,
     RGPPoint2D dp, bool regAbove) : RGPHalfSegment2D::RGPHalfSegment2D(s, dp) {
-    this->insideIsAbove = regAbove;
+    this->interiorIsAbove = regAbove;
 }
 
 RGPAnnotatedHalfSegment2D::~RGPAnnotatedHalfSegment2D() {}

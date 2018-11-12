@@ -27,7 +27,7 @@ public:
     F getEventF();
     G getEventG();
 
-    // Checks whether a given point lies on/in any segment of the sweepLineStatus
+    // Checks whether a given point lies on/in any segment of the sweep line status
     bool pointOnSegment(RGPPoint2D p);
     bool pointInSegment(RGPPoint2D p);
 
@@ -39,8 +39,12 @@ public:
     bool lookAheadF(RGPHalfSegment2D h);
     bool lookAheadG(RGPHalfSegment2D h);
 
+    RGPAnnotatedHalfSegment2D getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p); // Returns the nearest annotated halfsegment from either object below a given point
+
+    bool lineStatusContains(RGPSegment2D s); // Checks if the given segment is currently in the sweep line status
+
 private:
-    // Pointers to the spatial object sequences
+    // References to the spatial object sequences
     const std::vector<F>& staticSequenceF;
     const std::vector<G>& staticSequenceG;
     std::vector<F> dynamicSequenceF;
@@ -67,9 +71,11 @@ private:
 //    bool get_pred_attr(SweepLineStatus &sweepLineStatus, RGPHalfSegment2D segment); //Yields the attribute from the prdecessor of a segment in the sweepline status
 //    bool pred_exists(SweepLineStatus &sweepLineStatus, RGPHalfSegment2D segment); //Checks for a segment in the sweepLineStatus to check if it hasa predecessor
 //    bool common_point_exists(SweepLineStatus &sweepLineStatus, RGPHalfSegment2D segment); //Checks for a neighbor segment
-//    RGPSegment2D pred_of_p(SweepLineStatus &sweepLineStatus,RGPPoint2D point); //Searches the nearest segment below a given point in the sweepLineStatus
 //    bool current_exists(SweepLineStatus &sweepLineStatus); //Tests whether such a segment exists
 };
+
+
+// Methods
 
 template<class F, class G>
 inline
@@ -624,6 +630,20 @@ bool PlaneSweep<F,G>::lookAheadF(RGPHalfSegment2D h)
 template <class F, class G>
 inline
 bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
+{
+
+}
+
+template <class F, class G>
+inline
+RGPAnnotatedHalfSegment2D PlaneSweep<F,G>::getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p)
+{
+
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::lineStatusContains(RGPSegment2D s)
 {
 
 }
