@@ -25,8 +25,8 @@ public:
     void select_next();
 
     // Get event returns the element to which the logical pointer of a point or half segment sequence of an object points to
-    F getEventF();
-    G getEventG();
+    std::vector<F>::const_iterator getEventF();
+    std::vector<G>::const_iterator getEventG();
 
     // Checks whether a given point lies on/in any segment of the sweep line status
     bool pointOnSegment(RGPPoint2D p);
@@ -51,16 +51,10 @@ private:
     const std::vector<G>& staticSequenceG;
     std::vector<F> dynamicSequenceF;
     std::vector<G> dynamicSequenceG;
-
-    // Static sequence sizes
-    const int sizeF;
-    const int sizeG;
-
-    // Sequence index trackers
-    int staticIndexF;
-    int staticIndexG;
-    int dynamicIndexF;
-    int dynamicIndexG;
+    std::vector<F>::iterator staticIteratorF;
+    std::vector<G>::iterator staticIteratorG;
+    std::vector<F>::iterator dynamicIteratorF;
+    std::vector<G>::iterator dynamicIteratorF;
 
     //// NON-TEMPLATED CODE ////
 
