@@ -150,9 +150,9 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, st
       }
       else
       {
-        if (auto ah = sweep.getAnnotatedHalfSegmentBelowPoint(p))
+        if (auto attr = sweep.getAttributeOfSegmentBelow(p))
         {
-          if (ah->interiorIsAbove)
+          if (*attr)
           {
             featureVectorF[poi_inside] = true;
           }
@@ -546,5 +546,118 @@ void Explore::explore(Line2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std
 //// Region x Region
 //void Explore::explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 //{
+//  // Indicates what index in the bool vector represents what flag
+//  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
 //
+//  PlaneSweep<RGPAnnotatedHalfSegment2D,RGPAnnotatedHalfSegment2D> sweep(spatialObj_F.getSequence(), spatialObj_G.getSequence());
+//
+//  optional<RGPPoint2D> lastDominantPointF = nullopt;
+//  optional<RGPPoint2D> lastDominantPointG = nullopt;
+//
+//  sweep.select_first();
+//
+//  while (sweep.status == TraversalStatus::END_OF_NONE &&
+//         !(featureVectorF[zero_one] && featureVectorF[one_zero] && featureVectorF[one_two] && featureVectorF[two_one] && featureVectorF[zero_two] && featureVectorF[two_zero] &&
+//           featureVectorF[one_one] && featureVectorF[bound_poi_shared] && featureVectorG[zero_one] && featureVectorG[one_zero] && featureVectorG[one_two] && featureVectorG[two_one]))
+//  {
+//    RGPAnnotatedHalfSegment2D ah;
+//
+//    if (sweep.object == ObjectSelected::OBJ_F)
+//    {
+//      ah = sweep.getEventF();
+//      lastDominantPointF = make_optional(ah.dominantPoint);
+//    }
+//    else if (sweep.object == ObjectSelected::OBJ_G)
+//    {
+//      ah = sweep.getEventG();
+//      lastDominantPointG = make_optional(ah.dominantPoint);
+//    }
+//    else // BOTH
+//    {
+//      ah = sweep.getEventF()
+//      lastDominantPointF = make_optional(ah.dominantPoint);
+//      lastDominantPointG = make_optional(ah.dominantPoint);
+//    }
+//
+//    if (lastDominantPointF == lastDominantPointG || sweep.lookAheadG(ah) || sweep.lookAheadF(ah))
+//    {
+//      featureVectorF[bound_poi_shared] = true;
+//    }
+//
+//    if (h.dominantPoint == h.segment.point2) // Right halfsegment
+//    {
+//      VectorFlag flag;
+//
+//      if (auto overlapNums = sweep.getOverlapNumbersOf(ah.segment))
+//      {
+//        auto [m,n] = *overlapNums;
+//
+//        switch(m)
+//        {
+//        case 0:
+//          switch(n)
+//          {
+//          case 1:
+//            flag = zero_one;
+//            break;
+//          case 2:
+//            flag = zero_two;
+//            break;
+//          default:return;
+//          }
+//          break;
+//        case 1:
+//          switch(m)
+//          {
+//          case 0:
+//            flag = one_zero;
+//            break;
+//          case 1:
+//            flag = one_one;
+//            break;
+//          case 2:
+//            flag = one_two;
+//            break;
+//          default:return;
+//          }
+//          break;
+//        case 2:
+//          switch(m)
+//          {
+//          case 0:
+//            flag = two_zero;
+//            break;
+//          case 1:
+//            flag = two_one;
+//            break;
+//          default:return;
+//          }
+//          break;
+//        default:return;
+//        }
+//      }
+//
+//      if (sweep.object == ObjectSelected::OBJ_F)
+//      {
+//        featureVectorF[flag] = true;
+//      }
+//      else if (sweep.object == ObjectSelected::OBJ_G)
+//      {
+//        featureVectorG[flag] = true;
+//      }
+//      else if (sweep.object == ObjectSelected::BOTH)
+//      {
+//        featureVectorF[flag] = true;
+//        featureVectorG[flag] = true;
+//      }
+//
+//      sweep.remove(ah.segment);
+//    }
+//    else // Left halfsegment
+//    {
+//      sweep.insert(ah.segment);
+//
+//
+//    }
+//  }
 //}

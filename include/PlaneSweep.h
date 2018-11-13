@@ -40,8 +40,9 @@ public:
     bool lookAheadF(RGPHalfSegment2D h);
     bool lookAheadG(RGPHalfSegment2D h);
 
-    optional<RGPAnnotatedHalfSegment2D> getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p); // Returns the nearest annotated halfsegment, from the sweep line status, below a given point, if there is one
+    optional<bool> getAttributeOfSegmentBelow(RGPPoint2D p); // Returns the nearest annotated halfsegment, from the sweep line status, below a given point, if there is one
     optional<std::tuple<short, short>> getOverlapNumbersOfPredecessor(RGPSegment2D s); // Returns the overlap numbers of the predecessor to the given segment in the sweep line status
+    optional<std::tuple<short, short>> getOverlapNumbersOf(RGPSegment2D s); // Returns the overlap numbers of the given segment in the sweep line status
 
 private:
 
@@ -637,7 +638,7 @@ bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
 
 template <class F, class G>
 inline
-optional<RGPAnnotatedHalfSegment2D> PlaneSweep<F,G>::getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p)
+optional<bool> PlaneSweep<F,G>::getAttributeOfSegmentBelow(RGPPoint2D p)
 {
 
 }
@@ -645,6 +646,13 @@ optional<RGPAnnotatedHalfSegment2D> PlaneSweep<F,G>::getAnnotatedHalfSegmentBelo
 template <class F, class G>
 inline
 optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOfPredecessor(RGPSegment2D s)
+{
+
+}
+
+template <class F, class G>
+inline
+optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOf(RGPSegment2D s)
 {
 
 }
