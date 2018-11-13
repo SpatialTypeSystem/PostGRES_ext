@@ -24,7 +24,6 @@ bool RGPHalfSegment2D::operator!=(const RGPHalfSegment2D &rhs) {
   return !((*this) == rhs);
 }
 bool RGPHalfSegment2D::operator<(const RGPHalfSegment2D &rhs) {
-  // TODO: When both half segments are collinear
   if (dominantPoint < rhs.dominantPoint ||
       (dominantPoint == rhs.dominantPoint && isLeftFlag == false &&
        rhs.isLeftFlag == true) ||
