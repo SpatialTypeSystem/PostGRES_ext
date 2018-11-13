@@ -4,6 +4,7 @@
 #include "RGP.h"
 #include <vector>
 #include <queue>
+#include <tuple>
 
 // Object - ObjectSelected
 enum class ObjectSelected {OBJ_F, OBJ_G, BOTH, NONE};
@@ -40,8 +41,10 @@ public:
     bool lookAheadG(RGPHalfSegment2D h);
 
     optional<RGPAnnotatedHalfSegment2D> getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p); // Returns the nearest annotated halfsegment, from the sweep line status, below a given point, if there is one
+    optional<std::tuple<short, short>> getOverlapNumbersOfPredecessor(RGPSegment2D s); // Returns the overlap numbers of the predecessor to the given segment in the sweep line status
 
 private:
+
     // References to the spatial object sequences
     const std::vector<F>& staticSequenceF;
     const std::vector<G>& staticSequenceG;
@@ -635,6 +638,13 @@ bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
 template <class F, class G>
 inline
 optional<RGPAnnotatedHalfSegment2D> PlaneSweep<F,G>::getAnnotatedHalfSegmentBelowPoint(RGPPoint2D p)
+{
+
+}
+
+template <class F, class G>
+inline
+optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOfPredecessor(RGPSegment2D s)
 {
 
 }
