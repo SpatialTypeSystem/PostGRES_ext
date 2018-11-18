@@ -1,18 +1,18 @@
-#ifndef LINE2D_H
-#define LINE2D_H
+#ifndef LINE2DFORPROGRAMMER_H
+#define LINE2DFORPROGRAMMER_H
 
 #include "Number.h"
 #include "RGP.h"
 #include <string>
 #include <vector>
 
-class Line2D{
+class Line2DForProgrammer{
 public:
 	// Constructors
-	Line2D(std::vector<RGPHalfSegment2D> listOfSegments);
-	Line2D(std::string listOfLine2DString);
-	Line2D(std::ifstream& file); // Send in file for constructor
-	~Line2D();
+	Line2DForProgrammer(std::vector<RGPHalfSegment2D> listOfSegments);
+	Line2DForProgrammer(std::string listOfLine2DString);
+	Line2DForProgrammer(std::ifstream& file); // Send in file for constructor
+	~Line2DForProgrammer();
 
 	// Methods
 	std::string getLineString(); // Get the line as human readable ASCII string
@@ -28,8 +28,8 @@ public:
 	RGPSegment2D operator[](int index);	// Retrieves a RGPSegment2D at specified index
 
 private:
-	struct Line2DUserStore;
-	Line2DUserStore *impl;
+	struct Line2DImplStore;
+	Line2DImplStore *impl;
 };
 
 #endif //LINE2D
