@@ -19,17 +19,17 @@ class Line2DImpl
 
 		// Methods
 		std::string getLineString(); // Get the line as human readable ASCII string
-		static bool isEmptyLine();
-		static bool isValidLine();
+		bool isEmptyLine();
+		bool isValidLine();
 		int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
 		std::vector<RGPSegment2D> getBoundingBox();
 		
-		bool add(RGPSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
-		bool update(std::vector<RGPSegment2D>::iterator it, RGPSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
-		bool remove(std::vector<RGPSegment2D>::iterator it);	// Removes a RGPSegment2D at specified index
+		bool add(RGPHalfSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
+		bool update(std::vector<RGPHalfSegment2D>::iterator it, RGPHalfSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
+		bool remove(std::vector<RGPHalfSegment2D>::iterator it);	// Removes a RGPSegment2D at specified index
 		
-		bool operator==(const Line2D &l2d);	// Override of operator == to check equality of two Line2Ds
-		bool operator!=(const Line2D &l2d);	// Override of operator != to check inequality of two Line2Ds
+		bool operator==(const Line2DImpl &l2d);	// Override of operator == to check equality of two Line2Ds
+		bool operator!=(const Line2DImpl &l2d);	// Override of operator != to check inequality of two Line2Ds
 		RGPSegment2D operator[](int index);	// Retrieves a RGPSegment2D at specified index
 	
 	private:
