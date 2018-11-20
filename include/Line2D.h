@@ -9,7 +9,6 @@
 class Line2D{
 public:
 	// Constructors
-	Line2D(std::vector<RGPHalfSegment2D> listOfSegments);
 	Line2D(std::string listOfLine2DString);
 	Line2D(std::ifstream& file); // Send in file for constructor
 	~Line2D();
@@ -19,17 +18,15 @@ public:
 	static bool isEmptyLine();
 	static bool isValidLine();
 	int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
-	std::vector<RGPSegment2D> getBoundingBox();
+
 	bool operator==(const Line2D &l2d);	// Override of operator == to check equality of two Line2Ds
 	bool operator!=(const Line2D &l2d);	// Override of operator != to check inequality of two Line2Ds
-	bool add(RGPSegment2D rgpSeg2d);	// Adds a new RGPSegment2D 
-	bool update(int index, RGPSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
-	bool remove(int index);	// Removes a RGPSegment2D at specified index
-	RGPSegment2D operator[](int index);	// Retrieves a RGPSegment2D at specified index
 
+	std::vector<RGPSegment2D> getBoundingBox();
+		
 private:
-	struct Line2DUserStore;
-	Line2DUserStore *impl;
+	struct Line2DStore;
+	Line2DStore *handle;
 };
 
 #endif //LINE2D
