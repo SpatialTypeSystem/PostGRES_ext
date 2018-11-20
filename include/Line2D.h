@@ -15,8 +15,8 @@ public:
 
 	// Methods
 	std::string getLineString(); // Get the line as human readable ASCII string
-	static bool isEmptyLine();
-	static bool isValidLine();
+	bool isEmptyLine();
+	bool isValidLine();
 	int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
 
 	bool operator==(const Line2D &l2d);	// Override of operator == to check equality of two Line2Ds
