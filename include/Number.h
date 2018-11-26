@@ -37,6 +37,9 @@ public:
   bool operator==(const Number &n) const;
   bool operator!=(const Number &n) const;
   Number &sqrt() const;
+  Number &sqrt(size_t digits) const;
+
+  std::string to_string(size_t digits) const;
 
   // Overriding the output and input operator
   friend std::ostream &operator<<(std::ostream &os, const Number &n);
