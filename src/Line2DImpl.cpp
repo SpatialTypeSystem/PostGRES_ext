@@ -279,10 +279,23 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 						std::string temp = a[0]+"";
 						std::cout << temp << "\t" << num1 << "\n";
 						// TODO: modify for line2d NOT point2d
-						/*Number q(temp);
-						Number p(num1);
-						RGPHalfSegment2D poi(p,q);
-						add(poi);*/
+
+						/*
+						
+						Number q1(temp);
+						Number p1(num1);
+
+						Number q2(temp);
+						Number p2(num1);
+						
+						RGPPoint2D poi1(p1,q1);
+						RGPPoint2D poi2(p2,q2);
+						
+						RGPSegment2D seg(poi1,poi2);
+						RGPHalfSegment2D halfseg(seg,poi);	// choose dominant point
+						add(halfseg);
+						
+						*/
 					}
 					else
 						return false;
