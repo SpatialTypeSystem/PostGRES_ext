@@ -17,6 +17,13 @@ Number::Number()
   p->num = temp;
 }
 
+// Copy constructor
+Number::Number(const Number &n)
+{
+  p = new NumberImpl;
+  p->num = n.p->num;
+}
+
 // The string will be converted to a rational number
 Number::Number(std::string number)
 {
@@ -47,73 +54,73 @@ Number::~Number()
 }
 
 // Override arithmetic operators
-Number &Number::operator=(const Number &n)
+Number Number::operator=(const Number &n)
 {
   p->num = n.p->num;
   return *this;
 }
 
-Number &Number::operator+(const Number &n) const
+Number Number::operator+(const Number &n) const
 {
-  Number *ret = new Number();
-  ret->p->num = p->num + n.p->num;
-  return *ret;
+  Number ret;
+  ret.p->num = p->num + n.p->num;
+  return ret;
 }
 
-Number &Number::operator+=(const Number &n)
+Number Number::operator+=(const Number &n)
 {
   p->num = p->num + n.p->num;
   return *this;
 }
 
-Number &Number::operator-(const Number &n) const
+Number Number::operator-(const Number &n) const
 {
-  Number *ret = new Number();
-  ret->p->num = p->num - n.p->num;
-  return *ret;
+  Number ret;
+  ret.p->num = p->num - n.p->num;
+  return ret;
 }
 
-Number &Number::operator-=(const Number &n)
+Number Number::operator-=(const Number &n)
 {
   p->num = p->num - n.p->num;
   return *this;
 }
 
-Number &Number::operator*(const Number &n) const
+Number Number::operator*(const Number &n) const
 {
-  Number *ret = new Number();
-  ret->p->num = p->num * n.p->num;
-  return *ret;
+  Number ret;
+  ret.p->num = p->num * n.p->num;
+  return ret;
 }
 
-Number &Number::operator*=(const Number &n)
+Number Number::operator*=(const Number &n)
 {
   p->num = p->num *= n.p->num;
   return *this;
 }
 
-Number &Number::operator/(const Number &n) const
+Number Number::operator/(const Number &n) const
 {
-  Number *ret = new Number();
-  ret->p->num = p->num / n.p->num;
-  return *ret;
+  Number ret;
+  ret.p->num = p->num / n.p->num;
+  return ret;
 }
 
-Number &Number::operator/=(const Number &n)
+Number Number::operator/=(const Number &n)
 {
   p->num = p->num /= n.p->num;
   return *this;
 }
 
-Number &Number::operator^(const int n) const
+Number Number::operator^(const int n) const
 {
-  Number *ret = new Number();
-  mpz_pow_ui(ret->p->num.get_num_mpz_t(), p->num.get_num_mpz_t(),
+  Number ret;
+  mpz_pow_ui(ret.p->num.get_num_mpz_t(), p->num.get_num_mpz_t(),
              (unsigned long)n);
-  mpz_pow_ui(ret->p->num.get_den_mpz_t(), p->num.get_den_mpz_t(),
+  mpz_pow_ui(ret.p->num.get_den_mpz_t(), p->num.get_den_mpz_t(),
              (unsigned long)n);
-  ret->p->num.canonicalize();
-  return *ret;
+  ret.p->num.canonicalize();
+  return ret;
 }
 
 // Override comparison operators
@@ -147,17 +154,16 @@ bool Number::operator!=(const Number &n) const
   return p->num != n.p->num;
 }
 
-Number &Number::sqrt() const
+Number Number::sqrt() const
 {
-  // TODO: Temporary implementation, limited precision
-  Number *ret = new Number();
+  Number ret;
   mpf_class float_num(p->num);
   mpf_sqrt(float_num.get_mpf_t(), float_num.get_mpf_t());
-  ret->p->num = mpq_class(float_num);
-  return *ret;
+  ret.p->num = mpq_class(float_num);
+  return ret;
 }
 
-Number &Number::sqrt(size_t digits) const
+Number Number::sqrt(size_t digits) const
 {
   mpz_class den_mpz = p->num.get_den();
   std::string num = p->num.get_num().get_str();
@@ -252,15 +258,15 @@ Number &Number::sqrt(size_t digits) const
   }
 
   square_root.insert(quot_int_len / 2, ".");
-  Number *ret = new Number(square_root);
-  return *ret;
+  Number ret(square_root);
+  return ret;
 }
 
 std::string Number::to_string(size_t digits) const
 {
   size_t max_len = mpz_sizeinbase(p->num.get_num_mpz_t(), 10) + digits + 2;
   char *buf = (char *)malloc(sizeof(char) * max_len);
-  gmp_snprintf(buf, max_len, "%.*Ff", digits, mpf_class(p->num, digits * 4));
+  gmp_snprintf(buf, max_len, "%.*Ff", digits, mpf_class(p->num, digits * 4).get_mpf_t());
   std::string ret(buf);
   delete buf;
   return ret;
