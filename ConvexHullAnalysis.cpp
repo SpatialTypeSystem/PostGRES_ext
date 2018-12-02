@@ -10,6 +10,7 @@
 #include "include/RGPPoint2D.h"
 #include "include/ConvexHull/DivideAndConquer.h"
 #include "include/ConvexHull/Chans.h"
+#include "include/ConvexHull/Graham.h"
 
 void runConvexHullAlgorithm(std::vector < RGPPoint2D* > (*algorithmFunction)(std::vector < RGPPoint2D* >), std::string algorithmName, std::vector < RGPPoint2D* > points);
 
@@ -70,7 +71,7 @@ int main(void) {
 
     // Convex hull: (0,1) (3,0) (6,2) (5,5) (2,5) (0,4) 
     runConvexHullAlgorithm(getConvexHullDivideAndConquer, "DivideAndConquer", points);
-
+    runConvexHullAlgorithm(getGraham, "Graham", points);
     runConvexHullAlgorithm(getConvexHullChans, "Chans", points);
 
     return 0;

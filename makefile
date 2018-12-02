@@ -20,7 +20,8 @@ ch:
 	g++ -g -o ./obj/ConvexHull/Utils.o ./src/ConvexHull/Utils.cpp -c
 	g++ -g -o ./obj/ConvexHull/Chans.o ./src/ConvexHull/Chans.cpp -c
 	g++ -g -o ./obj/ConvexHull/DivideAndConquer.o ./src/ConvexHull/DivideAndConquer.cpp -c
-	g++ -g -o convexHullAnalysis obj/ConvexHull/Utils.o obj/Number.o obj/RGPPoint2D.o obj/ConvexHull/DivideAndConquer.o obj/ConvexHull/Chans.o ConvexHullAnalysis.cpp -lgmpxx -lgmp
+	g++ -g -o ./obj/ConvexHull/Graham.o ./src/ConvexHull/Graham.cpp -c
+	g++ -g -o convexHullAnalysis obj/ConvexHull/Utils.o obj/Number.o obj/RGPPoint2D.o obj/ConvexHull/DivideAndConquer.o obj/ConvexHull/Chans.o obj/ConvexHull/Graham.o ConvexHullAnalysis.cpp -lgmpxx -lgmp
 
 clean:
 	rm -rf $(TARGET) $(OBJ_DIR)/*.o
