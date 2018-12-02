@@ -154,18 +154,1106 @@ PREDICATE Evaluate::determine( Point2DImpl  &spatialObj_F, Region2DImpl  &spatia
 
 PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
-	// To do
-	return disjoint;
+	enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+
+	if (featureVectorF[bound_shared])
+	{
+		if (featureVectorG[bound_on_interior])
+		{
+			if (featureVectorF[bound_on_interior])
+			{
+				if (featureVectorF[bound_disjoint])
+				{
+					if (featureVectorF[seg_unshared])
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return equal;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return inside;
+							}
+							else
+							{
+								return inside;
+							}
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return disjoint;
+							}
+							else
+							{
+								return disjoint;
+							}
+						}
+						else
+						{
+							if (featureVectorG[seg_unshared])
+							{
+								return contains;
+							}
+							else
+							{
+								if (featureVectorG[bound_disjoint])
+								{
+									return overlap;
+								}
+								else
+								{
+									return overlap;
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return disjoint;
+						}
+						else
+						{
+							return disjoint;
+						}
+					}
+					else
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return contains;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorG[bound_disjoint])
+				{
+					if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_unshared])
+						{
+							return inside;
+						}
+						else
+						{
+							if (featureVectorF[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_unshared])
+						{
+							return inside;
+						}
+						else
+						{
+							if (featureVectorF[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			if (featureVectorF[bound_disjoint])
+			{
+				if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return contains;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return contains;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (featureVectorG[bound_on_interior])
+		{
+			if (featureVectorF[bound_on_interior])
+			{
+				if (featureVectorF[bound_disjoint])
+				{
+					if (featureVectorF[seg_unshared])
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return equal;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return coveredBy;
+							}
+							else
+							{
+								return coveredBy;
+							}
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return meet;
+							}
+							else
+							{
+								return meet;
+							}
+						}
+						else
+						{
+							if (featureVectorG[seg_unshared])
+							{
+								return covers;
+							}
+							else
+							{
+								if (featureVectorG[bound_disjoint])
+								{
+									return overlap;
+								}
+								else
+								{
+									return overlap;
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return covers;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorG[bound_disjoint])
+				{
+					if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_unshared])
+						{
+							return coveredBy;
+						}
+						else
+						{
+							if (featureVectorF[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_unshared])
+						{
+							return coveredBy;
+						}
+						else
+						{
+							if (featureVectorF[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			if (featureVectorF[bound_disjoint])
+			{
+				if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return covers;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[seg_shared] || featureVectorF[interior_poi_shared])
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[bound_on_interior])
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return covers;
+						}
+						else
+						{
+							if (featureVectorG[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+					else
+					{
+						if (featureVectorG[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
-	// To do
-	return disjoint;
+	enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
+
+	if (featureVectorF[bound_shared])
+	{
+		if (featureVectorF[bound_inside])
+		{
+			if (featureVectorF[seg_inside])
+			{
+				if (featureVectorF[bound_disjoint])
+				{
+					if (featureVectorF[seg_outside])
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_shared] || featureVectorF[poi_shared])
+						{
+							return disjoint;
+						}
+						else
+						{
+							if (featureVectorG[seg_unshared])
+							{
+								return meet;
+							}
+							else
+							{
+								return meet;
+							}
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_shared] || featureVectorF[poi_shared])
+					{
+						return disjoint;
+					}
+					else
+					{
+						if (featureVectorG[seg_unshared])
+						{
+							return meet;
+						}
+						else
+						{
+							return meet;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[seg_shared] || featureVectorF[poi_shared])
+				{
+					if (featureVectorF[seg_outside])
+					{
+						return inside;
+					}
+					else
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorG[seg_unshared])
+					{
+						if (featureVectorF[seg_outside])
+						{
+							return inside;
+						}
+						else
+						{
+							if (featureVectorF[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+					else
+					{
+						if (featureVectorF[seg_outside])
+						{
+							return inside;
+						}
+						else
+						{
+							if (featureVectorF[bound_disjoint])
+							{
+								return overlap;
+							}
+							else
+							{
+								return overlap;
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			if (featureVectorF[seg_shared] || featureVectorF[poi_shared])
+			{
+				if (featureVectorF[seg_outside])
+				{
+					return inside;
+				}
+				else
+				{
+					if (featureVectorF[bound_disjoint])
+					{
+						return overlap;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorG[seg_unshared])
+				{
+					if (featureVectorF[seg_outside])
+					{
+						return inside;
+					}
+					else
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_outside])
+					{
+						return inside;
+					}
+					else
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (featureVectorF[seg_shared] || featureVectorF[poi_shared])
+		{
+			if (featureVectorF[bound_inside])
+			{
+				if (featureVectorF[seg_inside])
+				{
+					if (featureVectorF[bound_disjoint])
+					{
+						return meet;
+					}
+					else
+					{
+						return meet;
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_outside])
+					{
+						return coveredBy;
+					}
+					else
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[seg_outside])
+				{
+					return coveredBy;
+				}
+				else
+				{
+					if (featureVectorF[bound_disjoint])
+					{
+						return overlap;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (featureVectorF[seg_inside])
+			{
+				if (featureVectorF[seg_outside])
+				{
+					return meet;
+				}
+				else
+				{
+					if (featureVectorF[bound_disjoint])
+					{
+						return meet;
+					}
+					else
+					{
+						return meet;
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[bound_inside])
+				{
+					if (featureVectorF[seg_outside])
+					{
+						return coveredBy;
+					}
+					else
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+				else
+				{
+					if (featureVectorF[seg_outside])
+					{
+						return coveredBy;
+					}
+					else
+					{
+						if (featureVectorF[bound_disjoint])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
-	// To do
-	return disjoint;
+	enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+
+	if (featureVectorG[one_two] || featureVectorG[two_one])
+	{
+		if (featureVectorF[zero_one] || featureVectorF[one_zero])
+		{
+			if (featureVectorF[zero_one] || featureVectorF[one_zero] || featureVectorF[one_one] || featureVectorG[one_two] || featureVectorG[two_one])
+			{
+				if (featureVectorF[one_two] || featureVectorF[two_one])
+				{
+					if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return equal;
+					}
+					else
+					{
+						return coveredBy;
+					}
+				}
+				else
+				{
+					if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
+					{
+						return inside;
+					}
+					else
+					{
+						if (featureVectorG[zero_one] || featureVectorG[one_zero])
+						{
+							return coveredBy;
+						}
+						else
+						{
+							return coveredBy;
+						}
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[one_two] || featureVectorF[two_one])
+				{
+					if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_two] || featureVectorF[two_one] || featureVectorG[one_two] || featureVectorG[two_one])
+					{
+						return meet;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+				else
+				{
+					if (featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return overlap;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (featureVectorG[zero_one] || featureVectorG[one_zero])
+			{
+				if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_two] || featureVectorF[two_one] || featureVectorG[one_two] || featureVectorG[two_one])
+				{
+					return meet;
+				}
+				else
+				{
+					if (featureVectorF[one_two] || featureVectorF[two_one])
+					{
+						if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
+						{
+							return covers;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_two] || featureVectorF[two_one] || featureVectorG[one_two] || featureVectorG[two_one])
+				{
+					if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
+					{
+						return disjoint;
+					}
+					else
+					{
+						return meet;
+					}
+				}
+				else
+				{
+					if (featureVectorF[one_two] || featureVectorF[two_one])
+					{
+						return overlap;
+					}
+					else
+					{
+						if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (featureVectorF[one_two] || featureVectorF[two_one])
+		{
+			if (featureVectorF[zero_one] || featureVectorF[one_zero])
+			{
+				if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
+				{
+					return covers;
+				}
+				else
+				{
+					if (featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return overlap;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
+				{
+					if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return contains;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+				else
+				{
+					if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return covers;
+					}
+					else
+					{
+						if (featureVectorG[zero_one] || featureVectorG[one_zero])
+						{
+							return overlap;
+						}
+						else
+						{
+							return overlap;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
+			{
+				if (featureVectorF[zero_one] || featureVectorF[one_zero])
+				{
+					return overlap;
+				}
+				else
+				{
+					if (featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return overlap;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+			}
+			else
+			{
+				if (featureVectorF[zero_one] || featureVectorF[one_zero])
+				{
+					if (featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return overlap;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+				else
+				{
+					if (featureVectorG[zero_one] || featureVectorG[one_zero])
+					{
+						return overlap;
+					}
+					else
+					{
+						return overlap;
+					}
+				}
+			}
+		}
+	}
 }
