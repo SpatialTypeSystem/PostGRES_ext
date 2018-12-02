@@ -86,7 +86,7 @@ bool Relationship2D::disjoint(Region2D &leftOperand, Region2D &rightOperand)
 
   // Explore here
 
-  return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one] &&
+  return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       !(rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]) &&
       (leftFeature[zero_one] || leftFeature[one_zero]) &&
@@ -157,7 +157,7 @@ bool Relationship2D::meet(Region2D &leftOperand, Region2D &rightOperand)
 
   // Explore here
 
-  return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one] &&
+  return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       !(rightFeature[one_two] || rightFeature[two_one]) &&
       (leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[one_two] || leftFeature[two_one]) &&
@@ -240,7 +240,7 @@ bool Relationship2D::overlap(Region2D &leftOperand, Region2D &rightOperand)
 
   // Explore here
 
-  return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one] &&
+  return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       (leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       (leftFeature[one_two] || leftFeature[two_one] || leftFeature[one_one] || rightFeature[zero_one] || rightFeature[one_zero]);
 }
@@ -458,7 +458,7 @@ bool Relationship2D::covers(Region2D &leftOperand, Region2D &rightOperand)
 
   // Explore here
 
-  return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one] &&
+  return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[one_two] || leftFeature[two_one]) &&
       (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]) &&
       !(leftFeature[one_two] || leftFeature[two_one] || leftFeature[one_one] || rightFeature[zero_one] || rightFeature[one_zero]) &&
