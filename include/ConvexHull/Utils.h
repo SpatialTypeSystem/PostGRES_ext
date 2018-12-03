@@ -1,6 +1,6 @@
 #include "../../include/RGPPoint2D.h"
 
-int getPositionOfPoint(RGPPoint2D* p1, RGPPoint2D* p2, RGPPoint2D* p3);
+int getPositionOfPoint(const RGPPoint2D* p1, const RGPPoint2D* p2, const RGPPoint2D* p3);
 
 /*
  * Comparator to compare points consisting of x and y coordinates
