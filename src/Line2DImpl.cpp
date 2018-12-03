@@ -1,5 +1,8 @@
+#include "../include/Number.h"
 #include "../include/Line2D.h"
 #include "../include/Line2DImpl.h"
+#include "../include/RGPSegment2D.h"
+#include "../include/RGPHalfSegment2D.h"
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -9,6 +12,38 @@ struct Line2DImpl::Line2DImplStore {
 	std::vector<RGPHalfSegment2D> vectorOfSegments;
 };
 
+/*class MyIterator
+{
+	public:
+		MyIterator(RGPHalfSegment2D *ptr1)
+		{
+			ptr = ptr1;
+		}
+		RGPHalfSegment2D operator*()
+		{
+			return *ptr;
+		}
+		RGPHalfSegment2D next()
+		{
+			ptr++;
+			return *ptr; 
+		}
+	private:
+		RGPHalfSegment2D *ptr;
+};
+
+std::vector<RGPHalfSegment2D>::iterator Line2DImpl::begin()
+{
+	return (&(handle->vectorOfSegments[0]));
+}
+
+std::vector<RGPHalfSegment2D>::iterator Line2DImpl::end()
+{
+	int t = handle->vectorOfSegments.size();
+	return (&(handle->vectorOfSegments[t-1]));
+}*/
+
+//Constructors
 Line2DImpl::Line2DImpl(std::vector<RGPHalfSegment2D> listOfSegments)
 {
 	handle = new Line2DImplStore;
@@ -19,11 +54,11 @@ Line2DImpl::Line2DImpl(std::string listOfLine2DString)
 {
 	handle = new Line2DImplStore;
 	
-	//TODO: parseStringToVectorOfLines() needs to be updated
+	//TODO: parseStringToVectorOfLines() return type needs to be updated
 	//handle->vectorOfSegments = parseStringToVectorOfLines(listOfLine2DString);
 }
 
-Line2DImpl::Line2DImpl(std::ifstream& file) // Send in file for constructor
+Line2DImpl::Line2DImpl(std::ifstream& file)
 {
 	handle = new Line2DImplStore;
 	
@@ -252,53 +287,89 @@ void Line2DImpl::mergeSort(std::vector<RGPHalfSegment2D> &left, std::vector<RGPH
 
 bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 {
-	int pos;
-	std::string num1;
-	std::string s =st;
+	// line2ed format
+	// (((a1,b1),(c1,d1)),((a2,b2),(c2,d2)),((a3,b3),(c3,d3)),((a4,b4),(c4,d4)))
+	// ((a1,b1),(c1,d1)),((a2,b2),(c2,d2)),((a3,b3),(c3,d3)),((a4,b4),(c4,d4))
+	
+	// point2d format
+	// ((a,b),(c,d),(e,f))
+	
+	// should we reset "handle->vectorOfSegments"
+	// at any instance before we return false
+	
+	int pos,fl = 0;		// fl unused
+	std::string num1,num2,num3,num4;
+	std::string s = st;
 	std::string delimeter = ",";
-	s.erase(0,1);
-	s.erase(s.length()-1,1);
-	std::cout << s << "\n";
-	pos = s.find(delimeter);
-	std::cout << pos << "\n";
+	int flag = 0;
+	
+	//std::vector<Number> nums;		// unused
+
 	try{
-		while(pos!= std::string::npos)
+		s.erase(0,1);
+		s.erase(s.length()-1,1);
+		s.append(",");
+		std::cout << s << "\n";
+		pos = s.find(delimeter);
+		std::cout << pos << "\n";
+		std::string a = "";
+
+		while(pos != std::string::npos)	// npos ..? (last delimeter??)
 		{
-			std::string a = s.substr(0, pos);
-			std::cout << a << "\n";
-			if(a.length()==2)
+			if(flag == 0){
+				s.erase(0,1); // delete starting '('
+			}
+			else if(flag == 3){
+				s.erase(pos-1,pos); // delete ending ')'
+				flag=-1;
+			}
+			
+			if(flag == -1){
+				a = s.substr(0, pos-1);
+			}
+			else{
+				a = s.substr(0, pos);
+			}
+
+			if(a.length() == 2)
 			{
 				try
 				{
-					if(a[0]=='(')
+					if(a[0]=='(' && flag == 0)
 					{
 						num1 = a[1];
 					}
-					else if(a[1]==')')
+					else if(a[1]==')' && flag == 1)
 					{
-						std::string temp = a[0]+"";
-						std::cout << temp << "\t" << num1 << "\n";
-						// TODO: modify for line2d NOT point2d
-
-						/*
-						
-						Number q1(temp);
-						Number p1(num1);
-
-						Number q2(temp);
-						Number p2(num1);
-						
-						RGPPoint2D poi1(p1,q1);
-						RGPPoint2D poi2(p2,q2);
-						
-						RGPSegment2D seg(poi1,poi2);
-						RGPHalfSegment2D halfseg(seg,poi);	// choose dominant point
-						add(halfseg);
-						
-						*/
+						num2 = a[0];
 					}
-					else
+					else if(a[0]=='(' && flag == 2)
+					{
+						num3 = a[1];
+					}
+					else if(a[1]==')' && flag == -1)
+					{
+						num4 = a[0];
+            			
+						std::cout<<"num1 and num2 is "<<num1<<" "<<num2<<std::endl;	//numbers from points
+						std::cout<<"num3 and num4 is "<<num3<<" "<<num4<<std::endl;	//numbers from points
+						
+						Number *n1 = new Number(num1);
+						Number *n2 = new Number(num2);
+						Number *n3 = new Number(num3);
+						Number *n4 = new Number(num4);
+						
+						RGPPoint2D *point1 = new RGPPoint2D(*n1,*n2);
+						RGPPoint2D *point2 = new RGPPoint2D(*n3,*n4);
+						
+						RGPSegment2D seg(*point1,*point2);
+						RGPHalfSegment2D halfseg(seg, *point1); // how to decide dominant point (2nd param)?
+						
+						handle->vectorOfSegments.push_back(halfseg);
+					}
+					else{
 						return false;
+					}
 				}
 				catch(int e){
 					return false;
@@ -309,12 +380,12 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 				return false;
 			}
 			s.erase(0, pos + delimeter.length());
+      		std::cout <<"string s is"<< s << "\n";
 			pos = s.find(delimeter);
-			
+			flag++;
 		}
 	}
 	catch(int e){
 		return false;
-
 	}
 }

@@ -31,7 +31,10 @@ class Line2DImpl
 		bool operator==(const Line2DImpl &l2d);	// Override of operator == to check equality of two Line2Ds
 		bool operator!=(const Line2DImpl &l2d);	// Override of operator != to check inequality of two Line2Ds
 		RGPSegment2D operator[](int index);	// Retrieves a RGPSegment2D at specified index
-	
+		
+		std::vector<RGPHalfSegment2D>::iterator begin();
+		std::vector<RGPHalfSegment2D>::iterator end();
+
 	private:
 		struct Line2DImplStore;
 		Line2DImplStore *handle;
