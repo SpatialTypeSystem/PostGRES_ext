@@ -11,8 +11,9 @@ cd PostGRES_ext
 wget https://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz
 tar -xf gmp-6.1.2.tar.xz
 cd gmp-6.1.2
-./configure
+./configure --prefix=$HOME/.local --enable-cxx
 make
+make install
 cd ..
 # Build PostGRES_ext
 make clean

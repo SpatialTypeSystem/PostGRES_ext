@@ -165,62 +165,7 @@ Number Number::sqrt() const
 
 Number Number::sqrt(size_t digits) const
 {
-  mpz_class den_mpz = p->num.get_den();
-  std::string num = p->num.get_num().get_str();
-  std::string den = p->num.get_den().get_str();
-  size_t num_int_len = num.find('.');
-  if (num_int_len == std::string::npos)
-  {
-    num_int_len = num.length();
-  }
-
-  std::string curr_div;
-  std::string quotient;
-  for (int i = 0; i < num_int_len; i++)
-  {
-    curr_div += num.at(i);
-    mpz_class curr_div_mpz(curr_div);
-    if (curr_div_mpz > den_mpz)
-    {
-      mpz_class quotient_digit = curr_div_mpz / den_mpz;
-      mpz_class remainder = curr_div_mpz % den_mpz;
-      quotient += quotient_digit.get_str();
-      curr_div = remainder.get_str();
-    }
-    else
-    {
-      quotient += '0';
-    }
-  }
-
-  quotient += '.';
-  size_t long_div_digits = digits * 2;
-
-  while (long_div_digits > 0)
-  {
-    curr_div += '0';
-    mpz_class curr_div_mpz(curr_div);
-    if (curr_div_mpz > den_mpz)
-    {
-      mpz_class quotient_digit = curr_div_mpz / den_mpz;
-      mpz_class remainder = curr_div_mpz % den_mpz;
-      quotient += quotient_digit.get_str();
-      curr_div = remainder.get_str();
-    }
-    else
-    {
-      quotient += '0';
-    }
-    long_div_digits--;
-  }
-
-  size_t non_zero_idx = quotient.find_first_not_of('0');
-  if (quotient[non_zero_idx] == '.')
-  {
-    non_zero_idx--;
-  }
-  quotient.erase(0, non_zero_idx);
-
+  std::string quotient = to_string(digits * 2);
   std::string full_divisor(quotient);
   size_t quot_int_len = quotient.find('.');
   full_divisor.replace(quot_int_len, 1, "");
@@ -264,12 +209,61 @@ Number Number::sqrt(size_t digits) const
 
 std::string Number::to_string(size_t digits) const
 {
-  size_t max_len = mpz_sizeinbase(p->num.get_num_mpz_t(), 10) + digits + 2;
-  char *buf = (char *)malloc(sizeof(char) * max_len);
-  gmp_snprintf(buf, max_len, "%.*Ff", digits, mpf_class(p->num, digits * 4).get_mpf_t());
-  std::string ret(buf);
-  delete buf;
-  return ret;
+  mpz_class den_mpz = p->num.get_den();
+  std::string num = p->num.get_num().get_str();
+  std::string den = p->num.get_den().get_str();
+  size_t num_int_len = num.find('.');
+  if (num_int_len == std::string::npos)
+  {
+    num_int_len = num.length();
+  }
+
+  std::string curr_div;
+  std::string quotient;
+  for (int i = 0; i < num_int_len; i++)
+  {
+    curr_div += num.at(i);
+    mpz_class curr_div_mpz(curr_div);
+    if (curr_div_mpz > den_mpz)
+    {
+      mpz_class quotient_digit = curr_div_mpz / den_mpz;
+      mpz_class remainder = curr_div_mpz % den_mpz;
+      quotient += quotient_digit.get_str();
+      curr_div = remainder.get_str();
+    }
+    else
+    {
+      quotient += '0';
+    }
+  }
+
+  quotient += '.';
+
+  while (digits > 0)
+  {
+    curr_div += '0';
+    mpz_class curr_div_mpz(curr_div);
+    if (curr_div_mpz > den_mpz)
+    {
+      mpz_class quotient_digit = curr_div_mpz / den_mpz;
+      mpz_class remainder = curr_div_mpz % den_mpz;
+      quotient += quotient_digit.get_str();
+      curr_div = remainder.get_str();
+    }
+    else
+    {
+      quotient += '0';
+    }
+    digits--;
+  }
+
+  size_t non_zero_idx = quotient.find_first_not_of('0');
+  if (quotient[non_zero_idx] == '.')
+  {
+    non_zero_idx--;
+  }
+  quotient.erase(0, non_zero_idx);
+  return quotient;
 }
 
 // Overriding the output and input operator
@@ -280,6 +274,9 @@ std::ostream &operator<<(std::ostream &os, const Number &n)
 }
 std::istream &operator>>(std::istream &is, Number &n)
 {
-  is >> n.p->num;
+  std::string input;
+  getline(is, input);
+  Number temp(input);
+  n.p->num = temp.p->num;
   return is;
 }
