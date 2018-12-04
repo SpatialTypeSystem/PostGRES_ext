@@ -1,8 +1,5 @@
-#include "../include/Number.h"
 #include "../include/Line2D.h"
 #include "../include/Line2DImpl.h"
-#include "../include/RGPSegment2D.h"
-#include "../include/RGPHalfSegment2D.h"
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -12,7 +9,7 @@ struct Line2DImpl::Line2DImplStore {
 	std::vector<RGPHalfSegment2D> vectorOfSegments;
 };
 
-/*class MyIterator
+class MyIterator
 {
 	public:
 		MyIterator(RGPHalfSegment2D *ptr1)
@@ -32,7 +29,7 @@ struct Line2DImpl::Line2DImplStore {
 		RGPHalfSegment2D *ptr;
 };
 
-std::vector<RGPHalfSegment2D>::iterator Line2DImpl::begin()
+/*std::vector<RGPHalfSegment2D>::iterator Line2DImpl::begin()
 {
 	return (&(handle->vectorOfSegments[0]));
 }
