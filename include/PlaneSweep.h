@@ -15,6 +15,10 @@ template<class F, class G>
 class PlaneSweep {
 public:
 
+    PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorG, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator startIteratorG){
+
+    }
+
     ObjectSelected object;
     TraversalStatus status;
 
@@ -39,10 +43,6 @@ public:
     // Check if the dominant points of the given halfsegment and the next halfsegment (after the current index) of the indicated sequence are equal
     bool lookAheadF(RGPHalfSegment2D h);
     bool lookAheadG(RGPHalfSegment2D h);
-
-    int staticIndexF, staticIndexG;
-    int sizeF, sizeG =0;
-
 
     optional<bool> getAttributeOfSegmentBelow(RGPPoint2D p); // Returns the nearest annotated halfsegment, from the sweep line status, below a given point, if there is one
     optional<std::tuple<short, short>> getOverlapNumbersOfPredecessor(RGPSegment2D s); // Returns the overlap numbers of the predecessor to the given segment in the sweep line status
@@ -98,8 +98,6 @@ template<class F, class G>
 inline
 void PlaneSweep<F,G>::select_first()
 {
-    staticIndexF = 0;
-    staticIndexG = 0;
 
     if (!staticSequenceF.empty())
     {
@@ -134,90 +132,6 @@ void PlaneSweep<F,G>::select_first()
     }
 
     return;
-}
-
-template<>
-inline
-void PlaneSweep<RGPPoint2D,RGPHalfSegment2D>::select_first()
-{
-    staticIndexF = 0;
-    staticIndexG = 0;
-
-    if (!staticSequenceF.empty())
-    {
-        if (!staticSequenceG.empty())
-        {
-            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-            {
-                object = ObjectSelected::OBJ_F;
-            }
-            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-            {
-                object = ObjectSelected::OBJ_G;
-            }
-            else
-            {
-                object = ObjectSelected::BOTH;
-            }
-            status = TraversalStatus::END_OF_NONE;
-        }
-        else
-        {
-            status = TraversalStatus::END_OF_G;
-        }
-    }
-    else if (!staticSequenceG.empty())
-    {
-        status = TraversalStatus::END_OF_F;
-    }
-    else
-    {
-        status = TraversalStatus::END_OF_BOTH;
-    }
-
-    return;
-}
-
-template<>
-inline
-void PlaneSweep<RGPPoint2D,RGPAnnotatedHalfSegment2D>::select_first()
-{
-  staticIndexF = 0;
-  staticIndexG = 0;
-
-  if (!staticSequenceF.empty())
-  {
-    if (!staticSequenceG.empty())
-    {
-      if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-      {
-        object = ObjectSelected::OBJ_F;
-      }
-      else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-      {
-        object = ObjectSelected::OBJ_G;
-      }
-      else
-      {
-        object = ObjectSelected::BOTH;
-      }
-      status = TraversalStatus::END_OF_NONE;
-    }
-    else
-    {
-      status = TraversalStatus::END_OF_G;
-    }
-  }
-  else if (!staticSequenceG.empty())
-  {
-    status = TraversalStatus::END_OF_F;
-  }
-  else
-  {
-    status = TraversalStatus::END_OF_BOTH;
-  }
-
-  return;
 }
 
 template<class F, class G>
@@ -340,322 +254,84 @@ void PlaneSweep<F,G>::select_next() {
     }
 }
 
-template<>
+
+
+template <class F, class G>
 inline
-void PlaneSweep<RGPPoint2D,RGPHalfSegment2D>::select_next() {
-    if (object == ObjectSelected::OBJ_F)
-    {
-        if (++staticIndexF < sizeF)
-        {
-            if (status != TraversalStatus::END_OF_G)
-            {
-                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-                {
-                    object = ObjectSelected::OBJ_F;
-                }
-                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-                {
-                    object = ObjectSelected::OBJ_G;
-                }
-                else
-                {
-                    object = ObjectSelected::BOTH;
-                }
-            }
-            else
-            {
-                object = ObjectSelected::OBJ_F;
-            }
-        }
-        else
-        {
-            if (status == TraversalStatus::END_OF_G)
-            {
-                object = ObjectSelected::NONE;
-                status = TraversalStatus::END_OF_BOTH;
-            }
-            else
-            {
-                object = ObjectSelected::OBJ_G;
-                status = TraversalStatus::END_OF_F;
-            }
-        }
-    }
-    else if (object == ObjectSelected::OBJ_G)
-    {
-        if (++staticIndexG < sizeG)
-        {
-            if (status != TraversalStatus::END_OF_F)
-            {
-                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-                {
-                    object = ObjectSelected::OBJ_F;
-                }
-                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-                {
-                    object = ObjectSelected::OBJ_G;
-                }
-                else
-                {
-                    object = ObjectSelected::BOTH;
-                }
-            }
-            else
-            {
-                object = ObjectSelected::OBJ_G;
-            }
-        }
-        else
-        {
-            if (status == TraversalStatus::END_OF_F)
-            {
-                object = ObjectSelected::NONE;
-                status = TraversalStatus::END_OF_BOTH;
-            }
-            else
-            {
-                object = ObjectSelected::OBJ_F;
-                status = TraversalStatus::END_OF_G;
-            }
-        }
-    }
-    else if (object == ObjectSelected::BOTH)
-    {
-        ++staticIndexF;
-        ++staticIndexG;
+//start implemnting iterators
+F PlaneSweep<F,G>::getEventF()
+{
 
-        bool check_F = staticIndexF < sizeF;
-        bool check_G = staticIndexG < sizeG;
 
-        if (check_F && check_G)
-        {
-            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-            {
-                object = ObjectSelected::OBJ_F;
-            }
-            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-            {
-                object = ObjectSelected::OBJ_G;
-            }
-            else
-            {
-                object = ObjectSelected::BOTH;
-            }
-        }
-        else if (check_F)
-        {
-            object = ObjectSelected::OBJ_F;
-            status = TraversalStatus::END_OF_G;
-        }
-        else if (check_G)
-        {
-            object = ObjectSelected::OBJ_G;
-            status = TraversalStatus::END_OF_F;
-        }
-        else
-        {
-            object = ObjectSelected::NONE;
-            status = TraversalStatus::END_OF_BOTH;
-        }
-    }
 }
 
-template<>
+template <class F, class G>
 inline
-void PlaneSweep<RGPPoint2D,RGPAnnotatedHalfSegment2D>::select_next() {
-  if (object == ObjectSelected::OBJ_F)
-  {
-    if (++staticIndexF < sizeF)
-    {
-      if (status != TraversalStatus::END_OF_G)
-      {
-        if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-        {
-          object = ObjectSelected::OBJ_F;
-        }
-        else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-        {
-          object = ObjectSelected::OBJ_G;
-        }
-        else
-        {
-          object = ObjectSelected::BOTH;
-        }
-      }
-      else
-      {
-        object = ObjectSelected::OBJ_F;
-      }
-    }
-    else
-    {
-      if (status == TraversalStatus::END_OF_G)
-      {
-        object = ObjectSelected::NONE;
-        status = TraversalStatus::END_OF_BOTH;
-      }
-      else
-      {
-        object = ObjectSelected::OBJ_G;
-        status = TraversalStatus::END_OF_F;
-      }
-    }
-  }
-  else if (object == ObjectSelected::OBJ_G)
-  {
-    if (++staticIndexG < sizeG)
-    {
-      if (status != TraversalStatus::END_OF_F)
-      {
-        if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-        {
-          object = ObjectSelected::OBJ_F;
-        }
-        else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-        {
-          object = ObjectSelected::OBJ_G;
-        }
-        else
-        {
-          object = ObjectSelected::BOTH;
-        }
-      }
-      else
-      {
-        object = ObjectSelected::OBJ_G;
-      }
-    }
-    else
-    {
-      if (status == TraversalStatus::END_OF_F)
-      {
-        object = ObjectSelected::NONE;
-        status = TraversalStatus::END_OF_BOTH;
-      }
-      else
-      {
-        object = ObjectSelected::OBJ_F;
-        status = TraversalStatus::END_OF_G;
-      }
-    }
-  }
-  else if (object == ObjectSelected::BOTH)
-  {
-    ++staticIndexF;
-    ++staticIndexG;
+G PlaneSweep<F,G>::getEventG()
+{
 
-    bool check_F = staticIndexF < sizeF;
-    bool check_G = staticIndexG < sizeG;
-
-    if (check_F && check_G)
-    {
-      if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG].dominantPoint)
-      {
-        object = ObjectSelected::OBJ_F;
-      }
-      else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG].dominantPoint)
-      {
-        object = ObjectSelected::OBJ_G;
-      }
-      else
-      {
-        object = ObjectSelected::BOTH;
-      }
-    }
-    else if (check_F)
-    {
-      object = ObjectSelected::OBJ_F;
-      status = TraversalStatus::END_OF_G;
-    }
-    else if (check_G)
-    {
-      object = ObjectSelected::OBJ_G;
-      status = TraversalStatus::END_OF_F;
-    }
-    else
-    {
-      object = ObjectSelected::NONE;
-      status = TraversalStatus::END_OF_BOTH;
-    }
-  }
 }
 
-// template <class F, class G>
-// inline
-// //start implemnting iterators
-// F PlaneSweep<F,G>::getEventF()
-// {
-//
-//
-// }
-//
-// template <class F, class G>
-// inline
-// G PlaneSweep<F,G>::getEventG()
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// bool PlaneSweep<F,G>::pointOnSegment(RGPPoint2D p)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// bool PlaneSweep<F,G>::pointInSegment(RGPPoint2D p)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// void PlaneSweep<F,G>::insert(RGPSegment2D s)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// void PlaneSweep<F,G>::remove(RGPSegment2D s)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// bool PlaneSweep<F,G>::lookAheadF(RGPHalfSegment2D h)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// optional<bool> PlaneSweep<F,G>::getAttributeOfSegmentBelow(RGPPoint2D p)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOfPredecessor(RGPSegment2D s)
-// {
-//
-// }
-//
-// template <class F, class G>
-// inline
-// optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOf(RGPSegment2D s)
-// {
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::pointOnSegment(RGPPoint2D p)
+{
 
-// }
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::pointInSegment(RGPPoint2D p)
+{
+
+}
+
+template <class F, class G>
+inline
+void PlaneSweep<F,G>::insert(RGPSegment2D s)
+{
+
+}
+
+template <class F, class G>
+inline
+void PlaneSweep<F,G>::remove(RGPSegment2D s)
+{
+
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::lookAheadF(RGPHalfSegment2D h)
+{
+
+}
+
+template <class F, class G>
+inline
+bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
+{
+
+}
+
+template <class F, class G>
+inline
+optional<bool> PlaneSweep<F,G>::getAttributeOfSegmentBelow(RGPPoint2D p)
+{
+
+}
+
+template <class F, class G>
+inline
+optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOfPredecessor(RGPSegment2D s)
+{
+
+}
+
+template <class F, class G>
+inline
+optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOf(RGPSegment2D s)
+{
+
+}
 #endif //PLANESWEEP
