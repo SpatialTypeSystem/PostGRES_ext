@@ -30,6 +30,14 @@ public:
     bool operator>(const RGPPoint2D &rhs) const;
     bool operator>=(const RGPPoint2D &rhs) const;
 
+    bool operator<(const RGPHalfSegment2D &rhs) const;
+    bool operator>(const RGPHalfSegment2D &rhs) const;
+
+    bool operator<(const RGPAnnotatedHalfSegment2D &rhs) const;
+    bool operator>(const RGPAnnotatedHalfSegment2D &rhs) const;
+
+
+
     // Allows ouptut of an RGPPoint2D in the format of "(x,y)"
     friend std::ostream& operator<<(std::ostream& os, const RGPPoint2D p);
 

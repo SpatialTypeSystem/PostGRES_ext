@@ -57,6 +57,12 @@ private:
     std::vector<G> dynamicSequenceG;
     typename std::vector<F>::iterator staticIteratorF;
     typename std::vector<G>::iterator staticIteratorG;
+    // Iterators to check if we are at the end of vector
+    // typename std::vector<F>::iterator startStaticIteratorF;
+    // typename std::vector<G>::iterator startStaticIteratorG;
+    typename std::vector<F>::iterator endStaticIteratorF;
+    typename std::vector<G>::iterator endStaticIteratorG;
+
     typename std::vector<F>::iterator dynamicIteratorF;
     typename std::vector<G>::iterator dynamicIteratorG;
 
@@ -98,16 +104,18 @@ template<class F, class G>
 inline
 void PlaneSweep<F,G>::select_first()
 {
+    // staticIndexF = 0;
+    // staticIndexG = 0;
 
     if (!staticSequenceF.empty())
     {
         if (!staticSequenceG.empty())
         {
-            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
+            if ((*staticIteratorF) < (*staticIteratorG))
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
+            else if ((*staticIteratorF) > (*staticIteratorG))
             {
                 object = ObjectSelected::OBJ_G;
             }
@@ -139,15 +147,15 @@ inline
 void PlaneSweep<F,G>::select_next() {
     if (object == ObjectSelected::OBJ_F)
     {
-        if (++staticIndexF < sizeF)
+        if (++staticIteratorF < endStaticIteratorF)
         {
             if (status != TraversalStatus::END_OF_G)
             {
-                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
+                if ( (*staticIteratorF) < (*staticIteratorG))
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
+                else if ((*staticIteratorF) > (*staticIteratorG))
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -177,15 +185,15 @@ void PlaneSweep<F,G>::select_next() {
     }
     else if (object == ObjectSelected::OBJ_G)
     {
-        if (++staticIndexG < sizeG)
+        if (++staticIteratorG < endStaticIteratorG)
         {
             if (status != TraversalStatus::END_OF_F)
             {
-                if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
+                if ((*staticIteratorF) < (*staticIteratorG))
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
+                else if ((*staticIteratorF) > (*staticIteratorG))
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -215,19 +223,23 @@ void PlaneSweep<F,G>::select_next() {
     }
     else if (object == ObjectSelected::BOTH)
     {
-        ++staticIndexF;
-        ++staticIndexG;
+        // ++staticIndexF;
+        ++staticIteratorF;
+        // ++staticIndexG;
+        ++staticIteratorG;
 
-        bool check_F = staticIndexF < sizeF;
-        bool check_G = staticIndexG < sizeG;
+        // bool check_F = staticIndexF < sizeF;
+        bool check_F = staticIteratorF < endStaticIteratorF;
+        //bool check_G = staticIndexG < sizeG;
+        bool check_G = staticIteratorG < endStaticIteratorG;
 
         if (check_F && check_G)
         {
-            if (staticSequenceF[staticIndexF] < staticSequenceG[staticIndexG])
+            if ((*staticIteratorF) < (*staticIteratorG))
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if (staticSequenceF[staticIndexF] > staticSequenceG[staticIndexG])
+            else if ((*staticIteratorF) > (*staticIteratorG))
             {
                 object = ObjectSelected::OBJ_G;
             }
