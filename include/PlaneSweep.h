@@ -657,6 +657,5 @@ void PlaneSweep<RGPPoint2D,RGPAnnotatedHalfSegment2D>::select_next() {
 // optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOf(RGPSegment2D s)
 // {
 
-}
-
+// }
 #endif //PLANESWEEP
