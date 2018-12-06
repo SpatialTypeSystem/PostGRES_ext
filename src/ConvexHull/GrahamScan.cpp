@@ -121,13 +121,14 @@ std::vector < RGPPoint2D* > getGraham(std::vector < RGPPoint2D* > RGPPoint2DsOri
           i++; 
         }
   
-  
-       RGPPoint2Ds[m] = RGPPoint2Ds[i]; 
+        cout << "m " << m << " i " << i << endl;
+        if (m != i)
+            RGPPoint2Ds[m] = RGPPoint2Ds[i]; 
        m++;  // Update size of modified array 
    } 
   
-   while (RGPPoint2Ds.size() > m)
-     RGPPoint2Ds.pop_back();
+//    while (RGPPoint2Ds.size() > m)
+//      RGPPoint2Ds.pop_back();
 
    std::vector < RGPPoint2D* > convexHull;
    // If modified array of RGPPoint2Ds has less than 3 RGPPoint2Ds, 
