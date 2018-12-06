@@ -28,6 +28,12 @@ public:
     bool operator>(const RGPHalfSegment2D &rhs) const;
     bool operator>=(const RGPHalfSegment2D &rhs) const;
 
+    bool operator<(const RGPAnnotatedHalfSegment2D &rhs) const;
+    bool operator>(const RGPAnnotatedHalfSegment2D &rhs) const;
+
+    bool operator<(const RGPPoint2D &rhs) const;
+    bool operator>(const RGPPoint2D &rhs) const;
+
 };
 
 class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D
