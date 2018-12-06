@@ -8,9 +8,11 @@
 
 #include "include/Number.h"
 #include "include/RGPPoint2D.h"
-#include "include/ConvexHull/DivideAndConquer.h"
 #include "include/ConvexHull/Chans.h"
-#include "include/ConvexHull/Graham.h"
+#include "include/ConvexHull/DivideAndConquer.h"
+#include "include/ConvexHull/GrahamScan.h"
+#include "include/ConvexHull/MonotoneChain.h"
+#include "include/ConvexHull/JarvisMarch.h"
 
 void runConvexHullAlgorithm(std::vector < RGPPoint2D* > (*algorithmFunction)(std::vector < RGPPoint2D* >), std::string algorithmName, std::vector < RGPPoint2D* > points);
 
@@ -67,25 +69,28 @@ int main(void) {
     RGPPoint2D* p8 = new RGPPoint2D(a8, b8);
     points.push_back(p8);
 
-    std::cout << p8->x << std::endl;
+    // std::cout << p8->x << std::endl;
 
     // Convex hull: (0,1) (3,0) (6,2) (5,5) (2,5) (0,4) 
+    // runConvexHullAlgorithm(getGraham, "GrahamScan", points);
+    // runConvexHullAlgorithm(getMonotone, "MonotoneChain", points);
     // runConvexHullAlgorithm(getConvexHullDivideAndConquer, "DivideAndConquer", points);
-    runConvexHullAlgorithm(getGraham, "Graham", points);
+    // runConvexHullAlgorithm(getConvexHullJarvisMarch, "JarvisMarch", points);
     // runConvexHullAlgorithm(getConvexHullChans, "Chans", points);
 
     return 0;
 }
 
 void runConvexHullAlgorithm(std::vector < RGPPoint2D* > (*algorithmFunction)(std::vector < RGPPoint2D* >), std::string algorithmName, std::vector < RGPPoint2D* > points) {
+    std::cout << "--------------------------------------------------" << std::endl;
     std::cout << "Algorithm: " << algorithmName << std::endl;
 
     std::chrono::high_resolution_clock::time_point startTime = std::chrono::high_resolution_clock::now();
     std::cout << "Point set before --> ";
     printPoints(points);
     std::vector < RGPPoint2D* > convexHull = (*algorithmFunction)(points);
-    // std::cout << "Point set after --> ";
-    // printPoints(points);
+    std::cout << "Point set after --> ";
+    printPoints(points);
     // std::cout << "Convex hull after --> ";
     // printPoints(convexHull);
     std::chrono::high_resolution_clock::time_point endTime = std::chrono::high_resolution_clock::now();

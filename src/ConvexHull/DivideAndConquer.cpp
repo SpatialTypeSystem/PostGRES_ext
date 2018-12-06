@@ -237,7 +237,7 @@ std::vector < RGPPoint2D* > getConvexHullDivideAndConquerInternal(std::vector < 
     }
 
     int splitIndex = numberOfPoints / 2;
-    std::cout << "splitIndex: " << splitIndex << std::endl;
+    // std::cout << "splitIndex: " << splitIndex << std::endl;
 
     std::vector < RGPPoint2D* > leftPoints; 
     std::vector < RGPPoint2D* > rightPoints;
