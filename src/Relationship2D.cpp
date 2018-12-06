@@ -1,7 +1,57 @@
 #include "Relationship2D.h"
 #include "PlaneSweep.h"
+#include "Explore.h"
+#include "Evaluate.h"
 
 #include <vector>
+
+PREDICATE determine(Point2D &leftOperand, Point2D &rightOperand)
+{
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  return determine(leftOperand, rightOperand, leftFeature, rightFeature);
+}
+ 
+PREDICATE determine(Point2D &leftOperand, Line2D &rightOperand)
+{
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  return determine(leftOperand, rightOperand, leftFeature, rightFeature);
+}
+  
+PREDICATE determine(Point2D &leftOperand, Region2D &rightOperand)
+{
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  return determine(leftOperand, rightOperand, leftFeature, rightFeature);
+}
+
+PREDICATE determine(Line2D &leftOperand, Line2D &rightOperand)
+{
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  return determine(leftOperand, rightOperand, leftFeature, rightFeature);
+}
+
+PREDICATE determine(Line2D &leftOperand, Region2D &rightOperand)
+{
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  return determine(leftOperand, rightOperand, leftFeature, rightFeature);
+}
+ 
+PREDICATE determine(Region2D &leftOperand, Region2D &rightOperand)
+{
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  return determine(leftOperand, rightOperand, leftFeature, rightFeature);
+}
 
 // Disjoint
 bool Relationship2D::disjoint(Point2D &leftOperand, Point2D &rightOperand)
@@ -12,7 +62,10 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Point2D &rightOperand)
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, disjoint);
 
   return !leftFeature[poi_shared] && leftFeature[poi_disjoint];
 }
@@ -25,7 +78,10 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, disjoint);
 
   return !leftFeature[poi_on_interior] && !leftFeature[poi_on_bound];
 }
@@ -37,7 +93,10 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Region2D &rightOperand)
 
   std::vector<bool> leftFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, disjoint);
 
   return !leftFeature[poi_inside] && !leftFeature[poi_on_bound];
 }
@@ -50,7 +109,10 @@ bool Relationship2D::disjoint(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, disjoint);
 
   return !(leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
       !rightFeature[bound_on_interior] &&
@@ -67,7 +129,10 @@ bool Relationship2D::disjoint(Line2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, disjoint);
 
   return !leftFeature[seg_inside] &&
       !(leftFeature[seg_shared] || leftFeature[poi_shared]) &&
@@ -84,7 +149,10 @@ bool Relationship2D::disjoint(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, disjoint);
 
   return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       !(rightFeature[one_two] || rightFeature[two_one]) &&
@@ -102,7 +170,10 @@ bool Relationship2D::meet(Point2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, meet);
 
   return !leftFeature[poi_on_interior] && leftFeature[poi_on_bound];
 }
@@ -114,7 +185,10 @@ bool Relationship2D::meet(Point2D &leftOperand, Region2D &rightOperand)
 
   std::vector<bool> leftFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, meet);
 
   return !leftFeature[poi_inside] && leftFeature[poi_on_bound];
 }
@@ -127,7 +201,10 @@ bool Relationship2D::meet(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, meet);
 
   return !(leftFeature[seg_shared] || leftFeature[interior_poi_shared]) && leftFeature[seg_unshared];
 }
@@ -140,7 +217,10 @@ bool Relationship2D::meet(Line2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, meet);
 
   return !leftFeature[seg_inside] &&
       !leftFeature[seg_outside] &&
@@ -155,7 +235,10 @@ bool Relationship2D::meet(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, meet);
 
   return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       !(rightFeature[one_two] || rightFeature[two_one]) &&
@@ -173,7 +256,10 @@ bool Relationship2D::overlap(Point2D &leftOperand, Point2D &rightOperand)
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, overlap);
 
   return leftFeature[poi_shared] && leftFeature[poi_disjoint] && rightFeature[poi_disjoint];
 }
@@ -186,7 +272,10 @@ bool Relationship2D::overlap(Point2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, overlap);
 
   return leftFeature[poi_on_interior] && leftFeature[poi_disjoint];
 }
@@ -198,7 +287,10 @@ bool Relationship2D::overlap(Point2D &leftOperand, Region2D &rightOperand)
 
   std::vector<bool> leftFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, overlap);
 
   return leftFeature[poi_inside] && leftFeature[poi_outside];
 }
@@ -211,7 +303,10 @@ bool Relationship2D::overlap(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, overlap);
 
   return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) && rightFeature[seg_unshared];
 }
@@ -224,7 +319,10 @@ bool Relationship2D::overlap(Line2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, overlap);
 
   return leftFeature[seg_inside] &&
       leftFeature[seg_outside];
@@ -238,7 +336,10 @@ bool Relationship2D::overlap(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, overlap);
 
   return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       (leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
@@ -254,7 +355,10 @@ bool Relationship2D::equal(Point2D &leftOperand, Point2D &rightOperand)
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, equal);
 
   return !leftFeature[poi_disjoint] && !rightFeature[poi_disjoint];
 }
@@ -267,7 +371,10 @@ bool Relationship2D::equal(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, equal);
 
   return !rightFeature[bound_on_interior] &&
       !leftFeature[seg_unshared] &&
@@ -284,7 +391,10 @@ bool Relationship2D::equal(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, equal);
 
   return !(rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
@@ -302,7 +412,10 @@ bool Relationship2D::inside(Point2D &leftOperand, Point2D &rightOperand)
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, inside);
 
   return !leftFeature[poi_disjoint] && rightFeature[poi_disjoint];
 }
@@ -315,7 +428,10 @@ bool Relationship2D::inside(Point2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, inside);
 
   return leftFeature[poi_on_interior] && !leftFeature[poi_disjoint];
 }
@@ -327,7 +443,10 @@ bool Relationship2D::inside(Point2D &leftOperand, Region2D &rightOperand)
 
   std::vector<bool> leftFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, inside);
 
   return leftFeature[poi_inside] && !leftFeature[poi_outside];
 }
@@ -340,7 +459,10 @@ bool Relationship2D::inside(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, inside);
 
   return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
       !rightFeature[bound_on_interior] &&
@@ -358,7 +480,10 @@ bool Relationship2D::inside(Line2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, inside);
 
   return leftFeature[seg_inside] &&
       !leftFeature[seg_outside] &&
@@ -373,7 +498,10 @@ bool Relationship2D::inside(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, inside);
 
   return !(rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
@@ -391,7 +519,10 @@ bool Relationship2D::contains(Point2D &leftOperand, Point2D &rightOperand)
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, contains);
 
   return leftFeature[poi_shared] && leftFeature[poi_disjoint] && !rightFeature[poi_disjoint];
 }
@@ -404,7 +535,10 @@ bool Relationship2D::contains(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, contains);
 
   return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
       leftFeature[seg_unshared] &&
@@ -421,7 +555,10 @@ bool Relationship2D::contains(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, contains);
 
   return (rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[one_two] || leftFeature[two_one]) &&
@@ -439,7 +576,10 @@ bool Relationship2D::covers(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, covers);
 
   return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
       leftFeature[seg_unshared] &&
@@ -456,7 +596,10 @@ bool Relationship2D::covers(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, covers);
 
   return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[one_two] || leftFeature[two_one]) &&
@@ -474,7 +617,10 @@ bool Relationship2D::coveredBy(Line2D &leftOperand, Line2D &rightOperand)
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, coveredBy);
 
   return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
       !rightFeature[bound_on_interior] &&
@@ -492,7 +638,10 @@ bool Relationship2D::coveredBy(Line2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, coveredBy);
 
   return leftFeature[seg_inside] &&
       !leftFeature[seg_outside] &&
@@ -507,7 +656,10 @@ bool Relationship2D::coveredBy(Region2D &leftOperand, Region2D &rightOperand)
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
-  // Explore here
+  // Explore
+  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  // Evaluate
+  validate(leftOperand, rightOperand, leftFeature, rightFeature, coveredBy);
 
   return !(rightFeature[one_two] || rightFeature[two_one]) &&
       !(leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&

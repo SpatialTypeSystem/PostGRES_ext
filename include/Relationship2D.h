@@ -12,6 +12,16 @@ public:
   Relationship2D();
   ~Relationship2D();
 
+  // Determine relationship
+  // Reference these from Evaluate.h
+  enum PREDICATE { disjoint, meet, overlap, covers, contains, equal, inside, coveredBy };
+  static PREDICATE determine(Point2D &leftOperand, Point2D &rightOperand);
+  static PREDICATE determine(Point2D &leftOperand, Line2D &rightOperand);
+  static PREDICATE determine(Point2D &leftOperand, Region2D &rightOperand);
+  static PREDICATE determine(Line2D &leftOperand, Line2D &rightOperand);
+  static PREDICATE determine(Line2D &leftOperand, Region2D &rightOperand);
+  static PREDICATE determine(Region2D &leftOperand, Region2D &rightOperand);
+
   // Disjoint
   static bool disjoint(Point2D &leftOperand, Point2D &rightOperand);
   static bool disjoint(Point2D &leftOperand, Line2D &rightOperand);
