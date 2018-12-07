@@ -28,7 +28,7 @@ Number::Number(const Number &n)
 Number::Number(std::string number)
 {
   std::string denom = "/1";
-  std::regex decimal("^[0-9]+(\\.[0-9]+)?$");
+  std::regex decimal("^-?[0-9]+(\\.[0-9]+)?$");
 
   if (!std::regex_match(number, decimal))
   {
@@ -166,6 +166,11 @@ Number Number::sqrt() const
 Number Number::sqrt(size_t digits) const
 {
   std::string quotient = to_string(digits * 2);
+  if (quotient[0] == '-')
+  {
+    throw std::runtime_error("Square root of a negative number is not supported!");
+  }
+
   std::string full_divisor(quotient);
   size_t quot_int_len = quotient.find('.');
   full_divisor.replace(quot_int_len, 1, "");
@@ -212,6 +217,12 @@ std::string Number::to_string(size_t digits) const
   mpz_class den_mpz = p->num.get_den();
   std::string num = p->num.get_num().get_str();
   std::string den = p->num.get_den().get_str();
+  bool is_negative = num[0] == '-';
+  if (is_negative)
+  {
+    num.erase(0, 1);
+  }
+
   size_t num_int_len = num.find('.');
   if (num_int_len == std::string::npos)
   {
@@ -262,7 +273,14 @@ std::string Number::to_string(size_t digits) const
   {
     non_zero_idx--;
   }
+
   quotient.erase(0, non_zero_idx);
+
+  if (is_negative)
+  {
+    quotient.insert(0, 1, '-');
+  }
+
   return quotient;
 }
 

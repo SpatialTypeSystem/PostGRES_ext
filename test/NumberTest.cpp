@@ -21,6 +21,14 @@ BOOST_AUTO_TEST_CASE(init_string)
     BOOST_REQUIRE(out.is_equal("500"));
 }
 
+BOOST_AUTO_TEST_CASE(init_negative)
+{
+    boost::test_tools::output_test_stream out;
+    Number a("-400");
+    out << a;
+    BOOST_REQUIRE(out.is_equal("-400"));
+}
+
 BOOST_AUTO_TEST_CASE(init_to_string)
 {
     Number a("500.7293203823820");
@@ -37,6 +45,12 @@ BOOST_AUTO_TEST_CASE(to_string_expand)
 {
     Number a("500.7293203823820");
     BOOST_CHECK_EQUAL(a.to_string(15), "500.729320382382000");
+}
+
+BOOST_AUTO_TEST_CASE(init_negative_decimal)
+{
+    Number a("-4.87654");
+    BOOST_CHECK_EQUAL(a.to_string(5), "-4.87654");
 }
 
 BOOST_AUTO_TEST_CASE(malformed_number)
@@ -214,6 +228,12 @@ BOOST_AUTO_TEST_CASE(sqrt_digits)
                                "0618359611525724270897245410520925637804"
                                "89941441440837878227";
     BOOST_CHECK_EQUAL(a.to_string(98), oeis_a002163);
+}
+
+BOOST_AUTO_TEST_CASE(sqrt_digits_neg)
+{
+    Number a("-5");
+    BOOST_CHECK_THROW(a.sqrt(2), std::runtime_error);
 }
 
 BOOST_AUTO_TEST_CASE(input_stream)
