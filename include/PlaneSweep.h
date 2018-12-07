@@ -318,6 +318,11 @@ bool PlaneSweep<F,G>::lookAheadF(RGPHalfSegment2D h)
 {
     // Check if the dominant points of the given halfsegment and the next
     // halfsegment (after the current index) of the indicated sequence are equal
+    if (staticIteratorF == endStaticIteratorF) {
+        return (*++staticIteratorF) == h;
+    } else {
+        return false;
+    }
 }
 
 template <class F, class G>
@@ -326,6 +331,11 @@ bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
 {
     // Check if the dominant points of the given halfsegment and the next
     // halfsegment (after the current index) of the indicated sequence are equal
+    if (staticIteratorG == endStaticIteratorG) {
+        return (*++staticIteratorG) == h;
+    } else {
+        return false;
+    }
 }
 
 template <class F, class G>
@@ -334,6 +344,9 @@ optional<bool> PlaneSweep<F,G>::getAttributeOfSegmentBelow(RGPPoint2D p)
 {
     // Returns the nearest annotated halfsegment, from the sweep line status,
     // below a given point, if there is one
+
+    // Loops through sweep line status, checking if the segment is classified as less than our RGPPoint2D
+    // Returns the first one that is true
 }
 
 template <class F, class G>
@@ -341,6 +354,7 @@ inline
 optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOfPredecessor(RGPSegment2D s)
 {
     // Returns the overlap numbers of the predecessor to the given segment in the sweep line status
+
 }
 
 template <class F, class G>
@@ -348,5 +362,6 @@ inline
 optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOf(RGPSegment2D s)
 {
     // Returns the overlap numbers of the given segment in the sweep line status
+    
 }
 #endif //PLANESWEEP
