@@ -1,12 +1,12 @@
 #ifndef LINE2DIMPL_H
 #define LINE2DIMPL_H
 
+#include <string>
+#include <vector>
+
 #include "RGP.h"
 #include "RGPSegment2D.h"
 #include "RGPHalfSegment2D.h"
-#include <string>
-#include <vector>
-#include <iterator>
 
 class Line2DImpl
 {
@@ -17,24 +17,38 @@ class Line2DImpl
 		Line2DImpl(std::ifstream& file); // Send in file for constructor
 		~Line2DImpl();
 
+		class iterator
+		{
+			public:
+				iterator(RGPHalfSegment2D*);
+				RGPHalfSegment2D operator*();
+				RGPHalfSegment2D operator++(int);
+				RGPHalfSegment2D operator++();
+				bool operator!=(const iterator&);
+				bool operator==(const iterator&);
+				RGPHalfSegment2D *ptr;
+		};
+		
+		iterator begin();
+		iterator end();
+		
 		// Methods
 		std::string getLineString(); // Get the line as human readable ASCII string
+		void printAllLines();
 		bool isEmptyLine();
 		bool isValidLine();
 		int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
-		std::vector<RGPSegment2D> getBoundingBox();
+		Line2DImpl getBoundingBox();
 		
 		bool add(RGPHalfSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
-		bool update(std::vector<RGPHalfSegment2D>::iterator it, RGPHalfSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
-		bool remove(std::vector<RGPHalfSegment2D>::iterator it);	// Removes a RGPSegment2D at specified index
+		bool update(iterator it, RGPHalfSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
+		bool remove(iterator it);	// Removes a RGPSegment2D at specified index
 		
 		bool operator==(const Line2DImpl &l2d);	// Override of operator == to check equality of two Line2Ds
 		bool operator!=(const Line2DImpl &l2d);	// Override of operator != to check inequality of two Line2Ds
-		RGPSegment2D operator[](int index);	// Retrieves a RGPSegment2D at specified index
+		Line2DImpl operator[](int index);	// Retrieves a RGPSegment2D at specified index
+		Line2DImpl operator=(const Line2DImpl &l2dImpl);
 		
-		std::vector<RGPHalfSegment2D>::iterator begin();
-		std::vector<RGPHalfSegment2D>::iterator end();
-
 	private:
 		struct Line2DImplStore;
 		Line2DImplStore *handle;
