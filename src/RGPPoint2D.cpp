@@ -14,16 +14,16 @@ bool RGPPoint2D::operator<=(const RGPPoint2D &rhs) const {}
 bool RGPPoint2D::operator>(const RGPPoint2D &rhs) const {}
 bool RGPPoint2D::operator>=(const RGPPoint2D &rhs) const {}
 
-bool RGPPoint2D::operator<(const RGPHalfSegment2D &rhs) const {
-  return true;
-}
-bool RGPPoint2D::operator>(const RGPHalfSegment2D &rhs) const {
-  return true;
-}
+// bool RGPPoint2D::operator<(const RGPHalfSegment2D &rhs) const {
+//   return true;
+// }
+// bool RGPPoint2D::operator>(const RGPHalfSegment2D &rhs) const {
+//   return true;
+// }
 
-bool RGPPoint2D::operator<(const RGPAnnotatedHalfSegment2D &rhs) const {
-  return true;
-}
-bool RGPPoint2D::operator>(const RGPAnnotatedHalfSegment2D &rhs) const {
-  return true;
-}
+// bool RGPPoint2D::operator<(const RGPAnnotatedHalfSegment2D &rhs) const {
+//   return true;
+// }
+// bool RGPPoint2D::operator>(const RGPAnnotatedHalfSegment2D &rhs) const {
+//   return true;
+// }

@@ -1,8 +1,8 @@
 #ifndef RGPHALFSEGMENT2D_H
 #define RGPHALFSEGMENT2D_H
 
-#include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
+#include "RGPPoint2D.h"
 #include "Optional.h"
 
 class RGPHalfSegment2D
@@ -27,9 +27,6 @@ public:
     bool operator<=(const RGPHalfSegment2D &rhs) const;
     bool operator>(const RGPHalfSegment2D &rhs) const;
     bool operator>=(const RGPHalfSegment2D &rhs) const;
-
-    bool operator<(const RGPAnnotatedHalfSegment2D &rhs) const;
-    bool operator>(const RGPAnnotatedHalfSegment2D &rhs) const;
 
     bool operator<(const RGPPoint2D &rhs) const;
     bool operator>(const RGPPoint2D &rhs) const;

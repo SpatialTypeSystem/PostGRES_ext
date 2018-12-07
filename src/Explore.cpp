@@ -1,4 +1,4 @@
-#include "../include/Explore.h"
+#include "Explore.h"
 
 // Point x Point
 void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
