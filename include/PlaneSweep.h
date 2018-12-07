@@ -108,11 +108,11 @@ void PlaneSweep<F,G>::select_first()
     {
         if (!staticSequenceG.empty())
         {
-            if ((*staticIteratorG) < (*staticIteratorF))
+            if ((*staticIteratorG) > (*staticIteratorF))
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if ((*staticIteratorG) > (*staticIteratorF))
+            else if ((*staticIteratorG) < (*staticIteratorF))
             {
                 object = ObjectSelected::OBJ_G;
             }
@@ -148,11 +148,11 @@ void PlaneSweep<F,G>::select_next() {
         {
             if (status != TraversalStatus::END_OF_G)
             {
-                if ( (*staticIteratorG) < (*staticIteratorF))
+                if ((*staticIteratorG) > (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if ((*staticIteratorG) > (*staticIteratorF))
+                else if ((*staticIteratorG) < (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -186,11 +186,11 @@ void PlaneSweep<F,G>::select_next() {
         {
             if (status != TraversalStatus::END_OF_F)
             {
-                if ((*staticIteratorG) < (*staticIteratorF))
+                if ((*staticIteratorG) > (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if ((*staticIteratorG) > (*staticIteratorF))
+                else if ((*staticIteratorG) < (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -232,11 +232,11 @@ void PlaneSweep<F,G>::select_next() {
 
         if (check_F && check_G)
         {
-            if ((*staticIteratorG) < (*staticIteratorF))
+            if ((*staticIteratorG) > (*staticIteratorF))
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if ((*staticIteratorG) > (*staticIteratorF))
+            else if ((*staticIteratorG) < (*staticIterator))
             {
                 object = ObjectSelected::OBJ_G;
             }
