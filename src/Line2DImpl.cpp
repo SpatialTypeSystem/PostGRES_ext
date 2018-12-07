@@ -366,7 +366,7 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 				a = s.substr(0, pos);
 			}
 
-			if(a.length() == 2)
+			if(a.length() >= 2)
 			{
 				try
 				{
