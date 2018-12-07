@@ -2,7 +2,7 @@
 #define PLANESWEEP_H
 
 #include "RGP.h"
-#incldue "AVLTree.h"
+#include "AVLTree.h"
 #include <vector>
 #include <queue>
 #include <tuple>
@@ -54,23 +54,24 @@ public:
     optional<std::tuple<short, short>> getOverlapNumbersOf(RGPSegment2D s);
 
 private:
-    template <typename obj>
     // Stores event points
     std::queue<RGPPoint2D> eventPointSchedule;
+
+    template <typename obj>
     // Holds the state of the intersection of the sweep line
-    AVL<obj> sweepLineStatus;
+    AVLtree<obj> sweepLineStatus;
     //Sets an attribute for a segment in the sweep line status
-    void set_attr(AVL<obj>             &sweepLineStatus, bool attribute);
+    void set_attr(AVLtree<obj>             &sweepLineStatus, bool attribute);
     //Gets an attribute from a segment in the sweep line status
-    bool get_attr(AVL<obj>             &sweepLineStatus);
+    bool get_attr(AVLtree<obj>             &sweepLineStatus);
     //Yields the attribute from the prdecessor of a segment in the sweepline status
-    bool get_pred_attr(AVL<obj>        &sweepLineStatus, RGPHalfSegment2D segment);
+    bool get_pred_attr(AVLtree<obj>        &sweepLineStatus, RGPHalfSegment2D segment);
     //Checks for a segment in the sweepLineStatus to check if it hasa predecessor
-    bool pred_exists(AVL<obj>          &sweepLineStatus, RGPHalfSegment2D segment);
+    bool pred_exists(AVLtree<obj>          &sweepLineStatus, RGPHalfSegment2D segment);
     //Checks for a neighbor segment
-    bool common_point_exists(AVL<obj>  &sweepLineStatus, RGPHalfSegment2D segment);
+    bool common_point_exists(AVLtree<obj>  &sweepLineStatus, RGPHalfSegment2D segment);
     //Tests whether such a segment exists
-    bool current_exists(AVL<obj>       &sweepLineStatus);
+    bool current_exists(AVLtree<obj>       &sweepLineStatus);
 
     template<class F, class G>
     // References to the spatial object sequences
@@ -118,11 +119,11 @@ void PlaneSweep<F,G>::select_first()
     {
         if (!staticSequenceG.empty())
         {
-            if ((*staticIteratorF) < (*staticIteratorG))
+            if ((*staticIteratorG) > (*staticIteratorF))
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if ((*staticIteratorF) > (*staticIteratorG))
+            else if ((*staticIteratorG) < (*staticIteratorF))
             {
                 object = ObjectSelected::OBJ_G;
             }
@@ -158,11 +159,11 @@ void PlaneSweep<F,G>::select_next() {
         {
             if (status != TraversalStatus::END_OF_G)
             {
-                if ( (*staticIteratorF) < (*staticIteratorG))
+                if ( (*staticIteratorG) > (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if ((*staticIteratorF) > (*staticIteratorG))
+                else if ((*staticIteratorG) < (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -196,11 +197,11 @@ void PlaneSweep<F,G>::select_next() {
         {
             if (status != TraversalStatus::END_OF_F)
             {
-                if ((*staticIteratorF) < (*staticIteratorG))
+                if ((*staticIteratorG) > (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_F;
                 }
-                else if ((*staticIteratorF) > (*staticIteratorG))
+                else if ((*staticIteratorG) < (*staticIteratorF))
                 {
                     object = ObjectSelected::OBJ_G;
                 }
@@ -230,23 +231,19 @@ void PlaneSweep<F,G>::select_next() {
     }
     else if (object == ObjectSelected::BOTH)
     {
-        // ++staticIndexF;
         ++staticIteratorF;
-        // ++staticIndexG;
         ++staticIteratorG;
 
-        // bool check_F = staticIndexF < sizeF;
         bool check_F = staticIteratorF < endStaticIteratorF;
-        //bool check_G = staticIndexG < sizeG;
         bool check_G = staticIteratorG < endStaticIteratorG;
 
         if (check_F && check_G)
         {
-            if ((*staticIteratorF) < (*staticIteratorG))
+            if ((*staticIteratorG) > (*staticIteratorF))
             {
                 object = ObjectSelected::OBJ_F;
             }
-            else if ((*staticIteratorF) > (*staticIteratorG))
+            else if ((*staticIteratorG) < (*staticIteratorF))
             {
                 object = ObjectSelected::OBJ_G;
             }
@@ -278,14 +275,18 @@ inline
 
 F PlaneSweep<F,G>::getEventF()
 {
-  return *staticIteratorF;
+    // Get event returns the element to which the logical pointer of a
+    // point or half segment sequence of an object points to
+    return *staticIteratorF;
 }
 
 template <class F, class G>
 inline
 G PlaneSweep<F,G>::getEventG()
 {
-  return *staticIteratorG;
+    // Get event returns the element to which the logical pointer of a
+    // point or half segment sequence of an object points to
+    return *staticIteratorG;
 }
 
 template <class F, class G>
@@ -306,48 +307,66 @@ template <class F, class G>
 inline
 void PlaneSweep<F,G>::insert(RGPSegment2D s)
 {
-
+    // Inserts/Removes a segment from the sweep line status when
+    // it's left/right half segment is encountered
 }
 
 template <class F, class G>
 inline
 void PlaneSweep<F,G>::remove(RGPSegment2D s)
 {
-
+    // Inserts/Removes a segment from the sweep line status when
+    // it's left/right half segment is encountered
 }
 
 template <class F, class G>
 inline
 bool PlaneSweep<F,G>::lookAheadF(RGPHalfSegment2D h)
 {
-
+    // Check if the dominant points of the given halfsegment and the next
+    // halfsegment (after the current index) of the indicated sequence are equal
+    if (staticIteratorF == endStaticIteratorF) {
+        return (*++staticIteratorF) == h;
+    } else {
+        return false;
+    }
 }
 
 template <class F, class G>
 inline
 bool PlaneSweep<F,G>::lookAheadG(RGPHalfSegment2D h)
 {
-
+    // Check if the dominant points of the given halfsegment and the next
+    // halfsegment (after the current index) of the indicated sequence are equal
+    if (staticIteratorG == endStaticIteratorG) {
+        return (*++staticIteratorG) == h;
+    } else {
+        return false;
+    }
 }
 
 template <class F, class G>
 inline
 optional<bool> PlaneSweep<F,G>::getAttributeOfSegmentBelow(RGPPoint2D p)
 {
+    // Returns the nearest annotated halfsegment, from the sweep line status,
+    // below a given point, if there is one
 
+    // Loops through sweep line status, checking if the segment is classified as less than our RGPPoint2D
+    // Returns the first one that is true
 }
 
 template <class F, class G>
 inline
 optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOfPredecessor(RGPSegment2D s)
 {
-
+    // Returns the overlap numbers of the predecessor to the given segment in the sweep line status
 }
 
 template <class F, class G>
 inline
 optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOf(RGPSegment2D s)
 {
-
+    // Returns the overlap numbers of the given segment in the sweep line status
 }
 #endif //PLANESWEEP
