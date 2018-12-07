@@ -23,8 +23,12 @@ make
 
 # Convex hull analysis
 ```bash
+mkdir data
+make chdata
+./createPointsData 5 1000
+
 make ch
-./convexHullAnalysis
+./convexHullAnalysis 3 100
 ```
 # File structure
 *include - Contains all *.h files

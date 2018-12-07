@@ -1,5 +1,23 @@
+#include "../../include/Number.h"
 #include "../../include/RGPPoint2D.h"
 
+/*
+ * A utility function to return square of distance 
+ * between p1 and p2
+ */
+Number distanceSquare(const RGPPoint2D* p1, const RGPPoint2D* p2);
+
+/*
+ * Computes convex hull of points in
+ * near constant time when number of points <= 3
+ */
+std::vector < RGPPoint2D* > getConvexHullBruteForce(std::vector < RGPPoint2D* > points);
+
+/*
+ * +1 : if p3 is left of line (p1, p2)
+ * 0 : if p3 is on line (p1, p2)
+ * -1 : if p3 is right of line (p1, p2)
+ */
 int getPositionOfPoint(const RGPPoint2D* p1, const RGPPoint2D* p2, const RGPPoint2D* p3);
 
 /*

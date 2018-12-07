@@ -2,7 +2,7 @@ SRC_DIR := ./src
 TST_DIR := ./test
 INC_DIR := ./include
 OBJ_DIR := ./obj
-CC := g++
+CC := g++-7
 CFLAGS := -std=c++17 -g
 LDFLAGS := -lgmpxx -lgmp
 LDFLAGS_TST := -lgmpxx -lgmp -lboost_unit_test_framework
@@ -19,14 +19,17 @@ $(TARGET): $(OBJS)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) -o $@ -c $< $(INC)
 
+chdata:
+	g++-7 -g -o createPointsData CreatePointsData.cpp
+	
 ch:
-	g++ -g -o ./obj/ConvexHull/Utils.o ./src/ConvexHull/Utils.cpp -c
-	g++ -g -o ./obj/ConvexHull/Chans.o ./src/ConvexHull/Chans.cpp -c
-	g++ -g -o ./obj/ConvexHull/DivideAndConquer.o ./src/ConvexHull/DivideAndConquer.cpp -c
-	g++ -g -o ./obj/ConvexHull/MonotoneChain.o ./src/ConvexHull/MonotoneChain.cpp -c
-	g++ -g -o ./obj/ConvexHull/GrahamScan.o ./src/ConvexHull/GrahamScan.cpp -c
-	g++ -g -o ./obj/ConvexHull/JarvisMarch.o ./src/ConvexHull/JarvisMarch.cpp -c
-	g++ -g -o convexHullAnalysis obj/ConvexHull/Utils.o obj/Number.o obj/RGPPoint2D.o obj/ConvexHull/DivideAndConquer.o obj/ConvexHull/Chans.o obj/ConvexHull/GrahamScan.o obj/ConvexHull/MonotoneChain.o obj/ConvexHull/JarvisMarch.o ConvexHullAnalysis.cpp -lgmpxx -lgmp
+	g++-7 -g -o ./obj/ConvexHull/Utils.o ./src/ConvexHull/Utils.cpp -c
+	g++-7 -g -o ./obj/ConvexHull/Chans.o ./src/ConvexHull/Chans.cpp -c
+	g++-7 -g -o ./obj/ConvexHull/DivideAndConquer.o ./src/ConvexHull/DivideAndConquer.cpp -c
+	g++-7 -g -o ./obj/ConvexHull/MonotoneChain.o ./src/ConvexHull/MonotoneChain.cpp -c
+	g++-7 -g -o ./obj/ConvexHull/GrahamScan.o ./src/ConvexHull/GrahamScan.cpp -c
+	g++-7 -g -o ./obj/ConvexHull/JarvisMarch.o ./src/ConvexHull/JarvisMarch.cpp -c
+	g++-7 -g -o convexHullAnalysis obj/ConvexHull/Utils.o obj/Number.o obj/RGPPoint2D.o obj/ConvexHull/DivideAndConquer.o obj/ConvexHull/Chans.o obj/ConvexHull/GrahamScan.o obj/ConvexHull/MonotoneChain.o obj/ConvexHull/JarvisMarch.o ConvexHullAnalysis.cpp -lgmpxx -lgmp
 
 test: $(TST_DIR)/NumberTest
 $(TST_DIR)/NumberTest: $(OBJ_DIR)/Number.o $(TST_DIR)/NumberTest.cpp

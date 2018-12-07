@@ -28,7 +28,7 @@ Number::Number(const Number &n)
 Number::Number(std::string number)
 {
   std::string denom = "/1";
-  std::regex decimal("^[0-9]+(\\.[0-9]+)?$");
+  std::regex decimal("((\\+|-)?[[:digit:]]+)(\\.(([[:digit:]]+)?))?((e|E)((\\+|-)?)[[:digit:]]+)?");
 
   if (!std::regex_match(number, decimal))
   {
