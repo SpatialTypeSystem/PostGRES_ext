@@ -5,7 +5,6 @@
 #ifndef RGPSEGMENT2D_H
 #define RGPSEGMENT2D_H
 
-#include "RGPHalfSegment2D.h"
 #include "RGPPoint2D.h"
 #include "Optional.h"
 
