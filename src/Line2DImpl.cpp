@@ -330,9 +330,6 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 	// line2ed format
 	// (((a1,b1),(c1,d1)),((a2,b2),(c2,d2)),((a3,b3),(c3,d3)),((a4,b4),(c4,d4)))
 
-	// point2d format
-	// ((a,b),(c,d),(e,f))
-
 	int pos,flag = 0;
 	std::string num1,num2,num3,num4;
 	std::string s = st;
@@ -340,54 +337,62 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 
 	//std::vector<Number> nums;		// unused
 
+	// QUESTION:
+	// should we reset vectorOfSegments for any possible changes that
+	// may have already happened with push_back() before returning false..?
+	// for instance data could be pushed but, then additional data is then
+	// formatted incorrectly, possibly corrupting vectorOfSegments ..?
+	
 	try{
 		s.erase(0,1);
 		s.erase(s.length()-1,1);
 		s.append(",");
 		std::cout << s << "\n";
 		pos = s.find(delimeter);
-		std::cout << pos << "\n";
 		std::string a = "";
-
-		while(pos != std::string::npos)	// npos ..? (last delimeter??)
+		
+		while(pos != std::string::npos)
 		{
 			if(flag == 0){
 				s.erase(0,1); // delete starting '('
 			}
 			else if(flag == 3){
-				s.erase(pos-1,pos); // delete ending ')'
+				s.erase(pos-1,1); // delete ending ')'
 				flag=-1;
 			}
 			
-			if(flag == -1){
+			if(flag == 0){
+				a = s.substr(0, pos);
+			}
+			else if(flag == -1){
 				a = s.substr(0, pos-1);
 			}
 			else{
-				a = s.substr(0, pos);
+				a = s.substr(0, pos+1);
 			}
-
+			
 			if(a.length() >= 2)
 			{
 				try
 				{
 					if(a[0]=='(' && flag == 0)
 					{
-						num1 = a[1];
+						num1 = a.substr(1,a.length()-2);
 					}
-					else if(a[1]==')' && flag == 1)
+					else if(!(a.substr(a.length()-2,1)).compare(")") && flag == 1)
 					{
-						num2 = a[0];
+						num2 = a.substr(0,a.length()-2);
 					}
 					else if(a[0]=='(' && flag == 2)
 					{
-						num3 = a[1];
+						num3 = a.substr(1,a.length()-2);
 					}
-					else if(a[1]==')' && flag == -1)
+					else if(!(a.substr(a.length()-1,1)).compare(")") && flag == -1)
 					{
-						num4 = a[0];
+						num4 = a.substr(0,a.length()-1);
             			
-						std::cout<<"num1 and num2 is "<<num1<<" "<<num2<<std::endl;	//numbers from points
-						std::cout<<"num3 and num4 is "<<num3<<" "<<num4<<std::endl;	//numbers from points
+						std::cout<<"num1 and num2 is "<<num1<<" "<<num2<<std::endl;
+						std::cout<<"num3 and num4 is "<<num3<<" "<<num4<<std::endl;
 						
 						Number *n1 = new Number(num1);
 						Number *n2 = new Number(num2);
@@ -406,28 +411,29 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 						handle->vectorOfSegments.push_back(halfseg);
 					}
 					else{
-						// should we reset vectorOfSegments for any possible changes that
-						// may have already happened with push_back() before returning false..?
 						return false;
 					}
 				}
 				catch(int e){
-					// should we reset vectorOfSegments for any possible changes that
-					// may have already happened with push_back() before returning false..?
 					return false;
 				}
 			}
 			else
 			{
-				// should we reset vectorOfSegments for any possible changes that
-				// may have already happened with push_back() before returning false..?
 				return false;
 			}
-			s.erase(0, pos + delimeter.length());
+			
+			if(flag < 1){
+				s.erase(0, pos);
+			}
+			else{
+				s.erase(0, pos + delimeter.length());
+			}
       		std::cout <<"string s is"<< s << "\n";
 			pos = s.find(delimeter);
 			flag++;
 		}
+		return true;
 	}
 	catch(int e){
 		return false;
