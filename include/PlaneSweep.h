@@ -147,7 +147,7 @@ inline
 void PlaneSweep<F,G>::select_next() {
     if (object == ObjectSelected::OBJ_F)
     {
-        if (++staticIteratorF < endStaticIteratorF)
+        if ((*++staticIteratorF) < (*endStaticIteratorF))
         {
             if (status != TraversalStatus::END_OF_G)
             {
@@ -185,7 +185,7 @@ void PlaneSweep<F,G>::select_next() {
     }
     else if (object == ObjectSelected::OBJ_G)
     {
-        if (++staticIteratorG < endStaticIteratorG)
+        if (*(++staticIteratorG) < (*endStaticIteratorG))
         {
             if (status != TraversalStatus::END_OF_F)
             {
