@@ -755,7 +755,6 @@ int main(void)
             num_falses++;
         }
     }
-    printf("Number of Testcases passed: %d\n", num_trues);
-    printf("Number of Testcases failed: %d\n", num_falses);
+    printf("%d test cases passed. %d test cases failed.\n", num_trues, num_falses);
     return 0;
 }
