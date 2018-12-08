@@ -2,11 +2,11 @@
 #include "iostream"
 #include "sstream"
 
-#include "Number.h"
-#include "RGPHalfSegment2D.h"
-#include "RGPOperations2D.h"
-#include "RGPPoint2D.h"
-#include "RGPSegment2D.h"
+#include "include/Number.h"
+#include "include/RGPHalfSegment2D.h"
+#include "include/RGPOperations2D.h"
+#include "include/RGPPoint2D.h"
+#include "include/RGPSegment2D.h"
 
 bool init_out()
 {
