@@ -16,8 +16,7 @@ template<class F, class G>
 class PlaneSweep {
 public:
 
-    PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorG, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator startIteratorG){
-    }
+	PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorF, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator endIteratorG);
 
     ObjectSelected object;
     TraversalStatus status;
@@ -57,6 +56,7 @@ private:
     // Stores event points
     std::queue<RGPPoint2D> eventPointSchedule;
 
+    template <class obj>
     // Holds the state of the intersection of the sweep line
     AVLtree<obj> sweepLineStatus;
     //Sets an attribute for a segment in the sweep line status
@@ -72,7 +72,7 @@ private:
     //Tests whether such a segment exists
     bool current_exists(AVLtree<obj>       &sweepLineStatus);
 
-    template<class F, class G>
+    // template<class F, class G>
     // References to the spatial object sequences
     const std::vector<F>& staticSequenceF;
     const std::vector<G>& staticSequenceG;
@@ -94,7 +94,8 @@ private:
 
 template<class F, class G>
 inline
-PlaneSweep<F,G>::PlaneSweep(const std::vector<F>& seqF, const std::vector<G>& seqG) : staticSequenceF(seqF), staticSequenceG(seqG), sizeF(seqF.size()), sizeG(seqG.size())
+PlaneSweep<F,G>::PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorF, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator endIteratorG) :
+	staticIteratorF(startIteratorF), endStaticIteratorF(endIteratorF), startIteratorG(startIteratorG), endStaticIteratorG(endIteratorG)
 {
     object = ObjectSelected::NONE;
     status = TraversalStatus::END_OF_NONE;
