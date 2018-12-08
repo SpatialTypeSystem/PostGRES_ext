@@ -21,7 +21,7 @@ public:
 	Line2D difference(Line2D F, Line2D G);
 	Region2D difference(Region2D F, Region2D G);
 private:
-	
+
 };
 
 #endif //SPATIALOPERATIONS_H
