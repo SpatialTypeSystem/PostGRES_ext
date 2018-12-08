@@ -268,8 +268,7 @@ bool halfsegment_isleft()
     RGPSegment2D s1("(1,5),(4,3)"), s2("(1,5),(4,3)");
     RGPPoint2D p1("(1,5)"), p2("(4,3)");
     RGPHalfSegment2D hf1(s1, p1), hf2(s2, p2);
-    return hf1.isLeft() == true;
-    return hf2.isLeft() == false;
+    return hf2.isLeft() == false && hf1.isLeft() == true;
 }
 
 bool halfsegment_equality()
@@ -293,8 +292,7 @@ bool halfsegment_lessthan()
     RGPSegment2D s1("(1,5),(4,3)"), s2("(1,5),(4,3)"), s3("(1,4),(1,10)"), s4("(1,4),(2,3)");
     RGPPoint2D p1("(1,5)"), p2("(4,3)"), p3("(1,4)");
     RGPHalfSegment2D hf1(s1, p1), hf2(s2, p2), hf3(s3, p3), hf4(s4, p3);
-    return hf1 < hf2;
-    return hf4 < hf3;
+    return hf4 < hf3 && hf1 < hf2;
 }
 
 bool halfsegment_lessthanequals()
@@ -302,8 +300,7 @@ bool halfsegment_lessthanequals()
     RGPSegment2D s1("(1,5),(4,3)"), s2("(1,5),(4,3)"), s3("(1,4),(1,10)"), s4("(1,4),(2,3)");
     RGPPoint2D p1("(1,5)"), p2("(4,3)"), p3("(1,4)");
     RGPHalfSegment2D hf1(s1, p1), hf2(s2, p1), hf3(s3, p3), hf4(s4, p3);
-    return hf1 <= hf2;
-    return hf4 <= hf3;
+    return hf4 <= hf3 && hf1 <= hf2;
 }
 
 bool halfsegment_greaterthan()
@@ -319,8 +316,7 @@ bool halfsegment_greaterthanequals()
     RGPSegment2D s1("(1,5),(4,3)"), s2("(1,5),(4,3)"), s3("(1,4),(1,10)"), s4("(1,4),(2,3)");
     RGPPoint2D p1("(1,5)"), p2("(4,3)"), p3("(1,4)");
     RGPHalfSegment2D hf1(s1, p1), hf2(s2, p1), hf3(s3, p3), hf4(s4, p3);
-    return hf2 >= hf1;
-    return hf3 >= hf4;
+    return hf3 >= hf4 && hf2 >= hf1;
 }
 
 bool halfsegment_point_equality()
@@ -352,8 +348,7 @@ bool halfsegment_point_lessthanequals()
     RGPSegment2D s1("(1,5),(4,3)"), s2("(1,5),(4,3)"), s3("(1,4),(1,10)"), s4("(1,4),(2,3)");
     RGPPoint2D p1("(1,5)"), p2("(4,3)");
     RGPHalfSegment2D hf1(s1, p1);
-    return hf1 <= p2;
-    return hf1 == p1;
+    return hf1 == p1 && hf1 <= p2;
 }
 
 bool halfsegment_point_greaterthan()
@@ -369,8 +364,7 @@ bool halfsegment_point_greaterthanequals()
     RGPSegment2D s1("(1,5),(4,3)"), s2("(1,5),(4,3)");
     RGPPoint2D p1("(1,5)"), p2("(4,3)");
     RGPHalfSegment2D hf2(s2, p2);
-    return hf2 >= p1;
-    return hf2 == p2;
+    return hf2 == p2 && hf2 >= p1;
 }
 
 bool annotated_halfsegment()
@@ -378,8 +372,7 @@ bool annotated_halfsegment()
     RGPSegment2D s1("(1,5),(4,3)"), s2("(1,5),(4,3)");
     RGPPoint2D p1("(1,5)"), p2("(4,3)");
     RGPAnnotatedHalfSegment2D hf2(s2, p2, true);
-    return hf2 >= p1;
-    return hf2 == p2;
+    return hf2 == p2 && hf2 >= p1;
 }
 
 bool operations_intersection_null()
@@ -393,8 +386,7 @@ bool operations_intersection()
 {
     RGPSegment2D s1("(2,4),(3,2)"), s2("(1,1),(4,3)");
     optional<RGPPoint2D> intersectionPoint = RGPOperations2D::intersectionOf(s1, s2);
-    return intersectionPoint.has_value() == true;
-    return intersectionPoint.value() == RGPPoint2D("(2.875,2.25)");
+    return intersectionPoint.has_value() == true && intersectionPoint.value() == RGPPoint2D("(2.875,2.25)");
 }
 
 bool point_output()
@@ -404,8 +396,7 @@ bool point_output()
     RGPPoint2D point1(x1, y1), point2(x2, y2);
     out1 << point1;
     out2 << point2;
-    return out1.str() == "(5,7)";
-    return out2.str() == "(5,7)";
+    return out1.str() == "(5,7)" && out2.str() == "(5,7)";
 }
 
 bool point_input()
@@ -414,8 +405,7 @@ bool point_input()
     std::stringstream ss;
     ss << "(65,7)";
     ss >> p;
-    return p.x == Number("65");
-    return p.y == Number("7");
+    return p.x == Number("65") && p.y == Number("7");
 }
 
 bool point_equality()
@@ -429,32 +419,28 @@ bool point_lessthan()
 {
     Number x1("5"), y1("7"), x2("4"), y2("7"), x3("4"), y3("6");
     RGPPoint2D point1(x1, y1), point2(x2, y2), point3(x3, y3);
-    return point2 < point1;
-    return point3 < point2;
+    return point2 < point1 && point3 < point2;
 }
 
 bool point_greaterthan()
 {
     Number x1("5"), y1("7"), x2("4"), y2("7"), x3("4"), y3("6");
     RGPPoint2D point1(x1, y1), point2(x2, y2), point3(x3, y3);
-    return point1 > point2;
-    return point2 > point3;
+    return point1 > point2 && point2 > point3;
 }
 
 bool point_lessthanequalto()
 {
     Number x1("5"), y1("7"), x2("4"), y2("7"), x3("5"), y3("7");
     RGPPoint2D point1(x1, y1), point2(x2, y2), point3(x3, y3);
-    return point2 <= point1;
-    return point3 <= point1;
+    return point2 <= point1 && point3 <= point1;
 }
 
 bool point_greaterthanequalto()
 {
     Number x1("5"), y1("7"), x2("4"), y2("7"), x3("5"), y3("7");
     RGPPoint2D point1(x1, y1), point2(x2, y2), point3(x3, y3);
-    return point1 >= point2;
-    return point3 >= point1;
+    return point1 >= point2 && point3 >= point1;
 }
 
 bool point_notequalto()
@@ -479,10 +465,8 @@ bool segment_input()
     std::stringstream ss;
     ss << "(65,7),(10,4)";
     ss >> s;
-    return s.point1.x == Number("10");
-    return s.point1.y == Number("4");
-    return s.point2.x == Number("65");
-    return s.point2.y == Number("7");
+    return s.point1.x == Number("10") && s.point1.y == Number("4") &&
+           s.point2.x == Number("65") && s.point2.y == Number("7");
 }
 
 bool segment_contains()
@@ -494,15 +478,13 @@ bool segment_contains()
 bool segment_ispointabove()
 {
     RGPSegment2D s("(0,1),(5,10)");
-    return s.isPointAbove(RGPPoint2D("(6,7)")) == true;
-    return s.isPointAbove(RGPPoint2D("(0,4)")) == false;
+    return s.isPointAbove(RGPPoint2D("(6,7)")) == true && s.isPointAbove(RGPPoint2D("(0,4)")) == false;
 }
 
 bool segment_ispointbelow()
 {
     RGPSegment2D s("(0,1),(5,10)");
-    return s.isPointBelow(RGPPoint2D("(6,7)")) == false;
-    return s.isPointBelow(RGPPoint2D("(0,4)")) == true;
+    return s.isPointBelow(RGPPoint2D("(6,7)")) == false && s.isPointBelow(RGPPoint2D("(0,4)")) == true;
 }
 
 bool segment_ispointonsegment()
@@ -532,23 +514,20 @@ bool segment_lessthan()
 bool segment_lessthanequals()
 {
     RGPSegment2D segment1("(2,3),(50,22)"), segment2("(1,3),(2,2)"), segment3(RGPPoint2D("(2,3)"), RGPPoint2D("(50,22)"));
-    return segment2 <= segment1;
-    return segment1 <= segment3;
+    return segment2 <= segment1 && segment1 <= segment3;
 }
 
 bool segment_greaterthan()
 {
     RGPSegment2D segment1("(2,3),(50,22)"), segment2("(1,3),(2,4)");
     RGPSegment2D segment3("(2,3),(50,22)"), segment4("(1,3),(2,2)");
-    return segment1 > segment2;
-    return segment3 > segment4;
+    return segment1 > segment2 && segment3 > segment4;
 }
 
 bool segment_greaterthanequals()
 {
     RGPSegment2D segment1("(2,3),(50,22)"), segment2("(1,3),(2,4)"), segment3(RGPPoint2D("(1,3)"), RGPPoint2D("(2,4)"));
-    return segment1 >= segment2;
-    return segment3 >= segment2;
+    return segment1 >= segment2 && segment3 >= segment2;
 }
 
 int main(void)
