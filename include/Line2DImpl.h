@@ -12,7 +12,8 @@ class Line2DImpl
 {
 	public:	
 		// Constructors
-		Line2DImpl(std::vector<RGPHalfSegment2D> listOfSegments);
+		Line2DImpl();
+		Line2DImpl(std::vector<RGPSegment2D> listOfSegments);
 		Line2DImpl(std::string listOfLine2DString);
 		Line2DImpl(std::ifstream& file); // Send in file for constructor
 		~Line2DImpl();
@@ -40,8 +41,8 @@ class Line2DImpl
 		int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
 		Line2DImpl getBoundingBox();
 		
-		bool add(RGPHalfSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
-		bool update(iterator it, RGPHalfSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
+		bool add(RGPSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
+		bool update(iterator it, RGPSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
 		bool remove(iterator it);	// Removes a RGPSegment2D at specified index
 		
 		bool operator==(const Line2DImpl &l2d);	// Override of operator == to check equality of two Line2Ds
