@@ -7,7 +7,7 @@
 
 struct Line2DImpl::Line2DImplStore {
 	std::vector<RGPHalfSegment2D> vectorOfSegments;
-	std::vector<RGPHalfSegment2D> boundingBox;
+	std::vector<RGPSegment2D> boundingBox;
 };
 
 Line2DImpl::iterator::iterator(RGPHalfSegment2D *ptr1)
@@ -25,7 +25,7 @@ RGPHalfSegment2D Line2DImpl::iterator::operator++(int junk)
 	RGPHalfSegment2D *ptr1;
 	ptr1 = ptr;
 	ptr++;
-	return *ptr;
+	return *ptr1;
 }
 
 RGPHalfSegment2D Line2DImpl::iterator::operator++()
@@ -60,11 +60,23 @@ Line2DImpl::iterator Line2DImpl::end()
 	return (iterator(&(handle->vectorOfSegments[t-1])));
 }
 
+Line2DImpl::Line2DImpl()
+{
+	handle = new Line2DImplStore();
+}
 //Constructors
-Line2DImpl::Line2DImpl(std::vector<RGPHalfSegment2D> listOfSegments)
+
+Line2DImpl::Line2DImpl(std::vector<RGPSegment2D> listOfSegments)
 {
 	handle = new Line2DImplStore;
-	handle->vectorOfSegments = listOfSegments;
+	std::vector<RGPHalfSegment2D> halfSegments;
+	for(auto it = listOfSegments.begin(); it!=listOfSegments.end();it++)
+	{
+		halfSegments.push_back(RGPHalfSegment2D(*it,(*it).point1));
+		halfSegments.push_back(RGPHalfSegment2D(*it,(*it).point2));	
+	}
+	lineSort(halfSegments);
+	handle->vectorOfSegments = halfSegments;
 }
 
 Line2DImpl::Line2DImpl(std::string listOfLine2DString)
@@ -102,11 +114,8 @@ Line2DImpl::Line2DImpl(std::ifstream& file)
 Line2DImpl::~Line2DImpl()
 {
 	// TODO
-	if(!isEmptyLine()){
-		// delete handle->vectorOfSegments;
-		// delete handle->boundingBox;
-		// delete handle;
-	}
+	// delete handle->vectorOfSegments;
+	// delete handle;
 }
 
 // Methods
@@ -133,11 +142,11 @@ std::string Line2DImpl::getLineString() // Get the line as human readable ASCII 
 
 void Line2DImpl::printAllLines()
 {
-	/*std::cout<<"(";
+	std::cout<<"(";
 	std::vector<RGPHalfSegment2D> x = handle->vectorOfSegments;
 	for(auto i = x.begin(); i!=x.end(); i++)
-		std::cout<<*i;
-	std::cout<<")";*/
+		std::cout<<(*i).segment;
+	std::cout<<")";
 }
 
 bool Line2DImpl::isEmptyLine()
@@ -164,24 +173,37 @@ int Line2DImpl::Line2DImpl::getNumberOfSegments()
 
 Line2DImpl Line2DImpl::getBoundingBox()
 {
-	std::vector<RGPHalfSegment2D> box;
-	box = handle->boundingBox;
-	Line2DImpl pt(box);
+	std::vector<RGPHalfSegment2D> halfSegments;
+	halfSegments = handle->vectorOfSegments;
+	RGPPoint2D p1(halfSegments[0].segment.point1.x,halfSegments[0].segment.point1.y);
+	RGPPoint2D p2(halfSegments[halfSegments.size()-1].segment.point2.x,halfSegments[halfSegments.size()-1].segment.point2.y);
+	auto maxy = halfSegments[0].segment.point2.y;
+	for(auto it = halfSegments.begin();it!= halfSegments.end();it++)
+	{
+		if(maxy<(*it).segment.point1.y)
+			maxy = (*it).segment.point1.y;
+		if(maxy<(*it).segment.point2.y)
+			maxy = (*it).segment.point2.y;	
+	}
+	RGPSegment2D seg(p1,RGPPoint2D(p2.x,maxy));
+	handle->boundingBox.push_back(seg);
+	Line2DImpl pt(handle->boundingBox);
 	return pt;
 }
 
-bool Line2DImpl::add(RGPHalfSegment2D rgpSeg2d)
+bool Line2DImpl::add(RGPSegment2D rgpSeg2d)
 {
 	try
 	{
+
 		if(isEmptyLine()){
-			handle->vectorOfSegments.push_back(rgpSeg2d);
+			handle->vectorOfSegments.push_back(RGPHalfSegment2D(rgpSeg2d,rgpSeg2d.point1));
+			handle->vectorOfSegments.push_back(RGPHalfSegment2D(rgpSeg2d,rgpSeg2d.point2));
 		}
 		else{
-			int i = 0;
-			// TODO: fix error with operator > comparison
-			//while(rgpSeg2d > handle->vectorOfSegments[i]){i++;}
-			handle->vectorOfSegments.insert(handle->vectorOfSegments.begin()+i, rgpSeg2d);
+			handle->vectorOfSegments.push_back(RGPHalfSegment2D(rgpSeg2d,rgpSeg2d.point1));
+			handle->vectorOfSegments.push_back(RGPHalfSegment2D(rgpSeg2d,rgpSeg2d.point2));
+			lineSort(handle->vectorOfSegments);
 		}
 	}
 	catch(int e)
@@ -191,7 +213,7 @@ bool Line2DImpl::add(RGPHalfSegment2D rgpSeg2d)
 	return true;
 }
 
-bool Line2DImpl::update(Line2DImpl::iterator it, RGPHalfSegment2D rgpSeg2d)
+bool Line2DImpl::update(Line2DImpl::iterator it, RGPSegment2D rgpSeg2d)
 {
 	try
     {
@@ -199,9 +221,16 @@ bool Line2DImpl::update(Line2DImpl::iterator it, RGPHalfSegment2D rgpSeg2d)
 			return false;
 		}
 		else{
-			int index = it.ptr - &(handle->vectorOfSegments[0]);
-			handle->vectorOfSegments.erase(handle->vectorOfSegments.begin()+index);
-			add(rgpSeg2d);
+			for(std::vector<RGPHalfSegment2D>::iterator i = handle->vectorOfSegments.begin(); i!= handle->vectorOfSegments.end() ; i++)
+			{
+				if((*i).segment == (*it).segment)
+				{
+					int index = it.ptr - &(handle->vectorOfSegments[0]);
+					handle->vectorOfSegments.erase(handle->vectorOfSegments.begin()+index);
+				}	
+			}
+			handle->vectorOfSegments.push_back(RGPHalfSegment2D(rgpSeg2d,rgpSeg2d.point1));
+			handle->vectorOfSegments.push_back(RGPHalfSegment2D(rgpSeg2d,rgpSeg2d.point2));
 			lineSort(handle->vectorOfSegments);
 		}
     }
@@ -220,8 +249,14 @@ bool Line2DImpl::remove(Line2DImpl::iterator it)
 			return false;
 		}
 		else{
-			int index = it.ptr - &(handle->vectorOfSegments[0]);
-			handle->vectorOfSegments.erase(handle->vectorOfSegments.begin()+index);
+			for(std::vector<RGPHalfSegment2D>::iterator i = handle->vectorOfSegments.begin(); i!= handle->vectorOfSegments.end() ; i++)
+			{
+				if((*i).segment == (*it).segment)
+				{
+					int index = it.ptr - &(handle->vectorOfSegments[0]);
+					handle->vectorOfSegments.erase(handle->vectorOfSegments.begin()+index);
+				}	
+			}
 		}
 	}
 	catch(int e)
@@ -234,14 +269,17 @@ bool Line2DImpl::remove(Line2DImpl::iterator it)
 bool Line2DImpl::operator==(const Line2DImpl &l2d)
 {
 	int i = 0;
-	if(handle->vectorOfSegments.size() != l2d.handle->vectorOfSegments.size()){
+	if(handle->vectorOfSegments.size() != l2d.handle->vectorOfSegments.size())
+	{
 		return false;
 	}
 	
 	while(i < l2d.handle->vectorOfSegments.size())
     {
 		if(handle->vectorOfSegments[i] != l2d.handle->vectorOfSegments[i])
+		{
 			return false;
+		}
 		else
 			i++;
 	}
@@ -251,7 +289,8 @@ bool Line2DImpl::operator==(const Line2DImpl &l2d)
 bool Line2DImpl::operator!=(const Line2DImpl &l2d)
 {
 	int i = 0;
-	if(handle->vectorOfSegments.size() != l2d.handle->vectorOfSegments.size()){
+	if(handle->vectorOfSegments.size() != l2d.handle->vectorOfSegments.size())
+	{
 		return true;
 	}
 
@@ -267,8 +306,8 @@ bool Line2DImpl::operator!=(const Line2DImpl &l2d)
 
 Line2DImpl Line2DImpl::operator[](int index)
 {
-	std::vector<RGPHalfSegment2D> t;
-	t.push_back(handle->vectorOfSegments[index]);
+	std::vector<RGPSegment2D> t;
+	t.push_back(handle->vectorOfSegments[index].segment);
 	Line2DImpl temp(t);
 	return temp;
 }
@@ -337,7 +376,8 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 	std::string num1,num2,num3,num4;
 	std::string s = st;
 	std::string delimeter = ",";
-
+	std::vector<RGPSegment2D> segments;
+	std::vector<RGPHalfSegment2D> halfSegments;
 	//std::vector<Number> nums;		// unused
 
 	// QUESTION:
@@ -397,21 +437,17 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 						std::cout<<"num1 and num2 is "<<num1<<" "<<num2<<std::endl;
 						std::cout<<"num3 and num4 is "<<num3<<" "<<num4<<std::endl;
 						
-						Number *n1 = new Number(num1);
-						Number *n2 = new Number(num2);
-						Number *n3 = new Number(num3);
-						Number *n4 = new Number(num4);
 						
-						RGPPoint2D *point1 = new RGPPoint2D(*n1,*n2);
-						RGPPoint2D *point2 = new RGPPoint2D(*n3,*n4);
+						segments.push_back(RGPSegment2D(RGPPoint2D(Number(num1),Number(num2)),RGPPoint2D(Number(num3),Number(num4))));
+						halfSegments.push_back(RGPHalfSegment2D(RGPSegment2D(RGPPoint2D(Number(num1),Number(num2)),RGPPoint2D(Number(num3),Number(num4))),RGPPoint2D(Number(num1),Number(num2))));
+						halfSegments.push_back(RGPHalfSegment2D(RGPSegment2D(RGPPoint2D(Number(num1),Number(num2)),RGPPoint2D(Number(num3),Number(num4))),RGPPoint2D(Number(num3),Number(num4))));
+
 						
-						RGPSegment2D seg(*point1,*point2);
-						RGPHalfSegment2D halfseg(seg, *point1); // how to decide dominant point (2nd param)?
 						
 						// Could dominant point be decided based on initial inputted format??
 						// ex: (((non-dominant),(dominant)),(non-dominant),(dominant),...)
 						
-						handle->vectorOfSegments.push_back(halfseg);
+						
 					}
 					else{
 						return false;
@@ -436,6 +472,8 @@ bool Line2DImpl::parseStringToVectorOfLines(std::string st)
 			pos = s.find(delimeter);
 			flag++;
 		}
+		lineSort(halfSegments);
+		handle->vectorOfSegments = halfSegments;
 		return true;
 	}
 	catch(int e){
