@@ -1,8 +1,9 @@
 #ifndef LINE2D_H
 #define LINE2D_H
 
-#include "Number.h"
 #include "RGP.h"
+#include "Number.h"
+#include "Line2DImpl.h"
 #include <string>
 #include <vector>
 
