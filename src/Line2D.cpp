@@ -1,5 +1,5 @@
-#include "../include/Line2D.h"
-#include "../include/Line2DImpl.h"
+#include "Line2D.h"
+#include "Line2DImpl.h"
 
 struct Line2D::Line2DStore {
 	Line2DImpl *implPointer;
