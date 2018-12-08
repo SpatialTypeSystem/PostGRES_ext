@@ -23,6 +23,8 @@ public:
 	  PlaneSweep(typename std::vector<F>::iterator startIteratorF, typename std::vector<F>::iterator endIteratorF,
       typename std::vector<G>::iterator startIteratorG, typename std::vector<G>::iterator endIteratorG);
 
+    PlaneSweep(const std::vector<F>& seqF, const std::vector<G>& seqG);
+      
     ObjectSelected object;
     TraversalStatus status;
 
