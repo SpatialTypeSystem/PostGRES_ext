@@ -7,20 +7,12 @@
 #include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
 
-int main(void)
-{
-    Number n;
-    Number a("5");
-    std::cout << "All includes successfull!" << std::endl;
-    return 0;
-}
-
 bool init_out()
 {
     std::ostringstream out;
     Number a;
     out << a;
-    return out.is_equal("0");
+    return out.str() == "0";
 }
 
 bool init_string()
@@ -28,7 +20,7 @@ bool init_string()
     std::ostringstream out;
     Number a("500");
     out << a;
-    return out.is_equal("500");
+    return out.str() == "500";
 }
 
 bool init_negative()
@@ -36,7 +28,7 @@ bool init_negative()
     std::ostringstream out;
     Number a("-400");
     out << a;
-    return out.is_equal("-400");
+    return out.str() == "-400";
 }
 
 bool init_to_string()
@@ -412,8 +404,8 @@ bool point_output()
     RGPPoint2D point1(x1, y1), point2(x2, y2);
     out1 << point1;
     out2 << point2;
-    return out1.is_equal("(5,7)");
-    return out2.is_equal("(5,7)");
+    return out1.str() == "(5,7)";
+    return out2.str() == "(5,7)";
 }
 
 bool point_input()
@@ -478,7 +470,7 @@ bool segment_output()
     RGPSegment2D s(p1, p2);
     std::ostringstream out;
     out << s;
-    return out.is_equal("(1,3),(3,5)");
+    return out.str() == "(1,3),(3,5)";
 }
 
 bool segment_input()
@@ -557,4 +549,12 @@ bool segment_greaterthanequals()
     RGPSegment2D segment1("(2,3),(50,22)"), segment2("(1,3),(2,4)"), segment3(RGPPoint2D("(1,3)"), RGPPoint2D("(2,4)"));
     return segment1 >= segment2;
     return segment3 >= segment2;
+}
+
+int main(void)
+{
+    Number n;
+    Number a("5");
+    std::cout << "All includes successfull!" << std::endl;
+    return 0;
 }
