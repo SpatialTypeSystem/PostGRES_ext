@@ -57,7 +57,6 @@ private:
     // Stores event points
     std::queue<RGPPoint2D> eventPointSchedule;
 
-    template <typename obj>
     // Holds the state of the intersection of the sweep line
     AVLtree<obj> sweepLineStatus;
     //Sets an attribute for a segment in the sweep line status
@@ -112,9 +111,6 @@ template<class F, class G>
 inline
 void PlaneSweep<F,G>::select_first()
 {
-    // staticIndexF = 0;
-    // staticIndexG = 0;
-
     if (!staticSequenceF.empty())
     {
         if (!staticSequenceG.empty())
@@ -146,7 +142,6 @@ void PlaneSweep<F,G>::select_first()
     {
         status = TraversalStatus::END_OF_BOTH;
     }
-
     return;
 }
 
@@ -295,6 +290,8 @@ template <class F, class G>
 inline
 bool PlaneSweep<F,G>::pointOnSegment(RGPPoint2D p)
 {
+  // Checks whether a given point lies on/in any segment of the sweep line status
+
 
 }
 
@@ -302,23 +299,26 @@ template <class F, class G>
 inline
 bool PlaneSweep<F,G>::pointInSegment(RGPPoint2D p)
 {
+  // Checks whether a given point lies on/in any segment of the sweep line status
+
 
 }
 
 template <class F, class G>
 inline
+// Inserts/Removes a segment from the sweep line status when
+// it's left/right half segment is encountered
 void PlaneSweep<F,G>::insert(RGPSegment2D s)
 {
-    // Inserts/Removes a segment from the sweep line status when
-    // it's left/right half segment is encountered
+
+    sweepLineStatus.insert(s);
 }
 
 template <class F, class G>
 inline
 void PlaneSweep<F,G>::remove(RGPSegment2D s)
 {
-    // Inserts/Removes a segment from the sweep line status when
-    // it's left/right half segment is encountered
+    sweepLineStatus.remove(s);
 }
 
 template <class F, class G>
@@ -356,6 +356,7 @@ optional<bool> PlaneSweep<F,G>::getAttributeOfSegmentBelow(RGPPoint2D p)
 
     // Loops through sweep line status, checking if the segment is classified as less than our RGPPoint2D
     // Returns the first one that is true
+
 }
 
 template <class F, class G>
