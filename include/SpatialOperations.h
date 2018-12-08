@@ -14,6 +14,7 @@ public:
 
 	Point2D intersection(Point2D F, Point2D G);
 	Line2D intersection(Line2D F, Line2D G);
+	//Line2D intersection(Line2D F, Line2D G);
 	Region2D intersection(Region2D F, Region2D G);
 	Line2D intersection(Region2D F, Line2D G);
 
@@ -21,7 +22,7 @@ public:
 	Line2D difference(Line2D F, Line2D G);
 	Region2D difference(Region2D F, Region2D G);
 private:
-	
+
 };
 
 #endif //SPATIALOPERATIONS_H
