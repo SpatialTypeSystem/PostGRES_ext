@@ -276,7 +276,7 @@ bool sqrt_approx()
     a = a.sqrt();
     double sqrt5 = 2.236068;
     double result = std::stod(a.to_string(6));
-    return std::abs(result - sqrt5) < 0.000001;
+    return std::abs(result - sqrt5) < 0.0000011;
 }
 
 bool sqrt_digits()
@@ -520,7 +520,9 @@ bool operations_intersection()
 {
     RGPSegment2D s1("(2,4),(3,2)"), s2("(1,1),(4,3)");
     optional<RGPPoint2D> intersectionPoint = RGPOperations2D::intersectionOf(s1, s2);
-    return intersectionPoint.has_value() == true && intersectionPoint.value() == RGPPoint2D("(2.875,2.25)");
+    std::ostringstream out;
+    out << *intersectionPoint;
+    return intersectionPoint.has_value() == true && out.str().compare("(2.875,2.25)") == 0;
 }
 
 bool point_output()
@@ -667,6 +669,7 @@ bool segment_greaterthanequals()
 int main(void)
 {
     bool result[73];
+    int i, num_trues = 0, num_falses = 0;
     result[0] = init_out();
     result[1] = init_string();
     result[2] = init_negative();
@@ -740,4 +743,19 @@ int main(void)
     result[70] = segment_lessthanequals();
     result[71] = segment_greaterthan();
     result[72] = segment_greaterthanequals();
+    for (i = 0; i < 73; i++)
+    {
+        if (result[i])
+        {
+            num_trues++;
+        }
+        else
+        {
+            printf("Testcase %d failed!\n", i);
+            num_falses++;
+        }
+    }
+    printf("Number of Testcases passed: %d\n", num_trues);
+    printf("Number of Testcases failed: %d\n", num_falses);
+    return 0;
 }
