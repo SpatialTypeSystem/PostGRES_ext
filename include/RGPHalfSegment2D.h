@@ -4,13 +4,15 @@
 #include "RGPPoint2D.h"
 #include "RGPSegment2D.h"
 
-class RGPHalfSegment2D {
+class RGPHalfSegment2D
+{
 public:
   // Members
 
   RGPSegment2D segment;
   RGPPoint2D dominantPoint;
   bool isLeftFlag;
+  bool isVertical;
   Number m; // Slope
 
   // Constructors
@@ -26,11 +28,20 @@ public:
   bool operator<=(const RGPHalfSegment2D &rhs);
   bool operator>(const RGPHalfSegment2D &rhs);
   bool operator>=(const RGPHalfSegment2D &rhs);
+
+  bool operator<(const RGPPoint2D p);
+  bool operator==(const RGPPoint2D p);
+  bool operator!=(const RGPPoint2D p);
+  bool operator>(const RGPPoint2D p);
+  bool operator<=(const RGPPoint2D p);
+  bool operator>=(const RGPPoint2D p);
+
   bool isLeft();
   Number sqLen() const; // Square of length
 };
 
-class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D {
+class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D
+{
 public:
   // Members
 

@@ -18,10 +18,22 @@ $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(LIB) -o $@ $^ $(LDFLAGS)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) -o $@ -c $< $(INC)
-test: $(TST_DIR)/NumberTest
+test: $(TST_DIR)/NumberTest $(TST_DIR)/RGPPoint2DTest $(TST_DIR)/RGPSegment2DTest $(TST_DIR)/RGPHalfSegment2DTest $(TST_DIR)/RGPOperationsTest
 $(TST_DIR)/NumberTest: $(OBJ_DIR)/Number.o $(TST_DIR)/NumberTest.cpp
 	$(CC) $(CFLAGS) $(LIB) -o $@ $^ $(INC) $(LDFLAGS_TST)
 	./$(TST_DIR)/NumberTest
+$(TST_DIR)/RGPPoint2DTest: $(OBJ_DIR)/RGPPoint2D.o $(OBJ_DIR)/Number.o $(TST_DIR)/RGPPoint2DTest.cpp
+	$(CC) $(CFLAGS) $(LIB) -o $@ $^ $(INC) $(LDFLAGS_TST)
+	./$(TST_DIR)/RGPPoint2DTest
+$(TST_DIR)/RGPSegment2DTest: $(OBJ_DIR)/RGPSegment2D.o $(OBJ_DIR)/RGPPoint2D.o $(OBJ_DIR)/Number.o $(TST_DIR)/RGPSegment2DTest.cpp
+	$(CC) $(CFLAGS) $(LIB) -o $@ $^ $(INC) $(LDFLAGS_TST)
+	./$(TST_DIR)/RGPSegment2DTest
+$(TST_DIR)/RGPHalfSegment2DTest: $(OBJ_DIR)/RGPHalfSegment2D.o $(OBJ_DIR)/RGPSegment2D.o $(OBJ_DIR)/RGPPoint2D.o $(OBJ_DIR)/Number.o $(TST_DIR)/RGPHalfSegment2DTest.cpp
+	$(CC) $(CFLAGS) $(LIB) -o $@ $^ $(INC) $(LDFLAGS_TST)
+	./$(TST_DIR)/RGPHalfSegment2DTest
+$(TST_DIR)/RGPOperationsTest: $(OBJ_DIR)/RGPOperations.o $(OBJ_DIR)/RGPHalfSegment2D.o $(OBJ_DIR)/RGPSegment2D.o $(OBJ_DIR)/RGPPoint2D.o $(OBJ_DIR)/Number.o $(TST_DIR)/RGPOperationsTest.cpp
+	$(CC) $(CFLAGS) $(LIB) -o $@ $^ $(INC) $(LDFLAGS_TST)
+	./$(TST_DIR)/RGPOperationsTest
 clean:
 	rm -rf $(TARGET) $(OBJ_DIR)/*.o
 	

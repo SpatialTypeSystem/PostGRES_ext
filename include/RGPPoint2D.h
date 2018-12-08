@@ -7,15 +7,17 @@
 
 #include "Number.h"
 
-class RGPPoint2D {
+class RGPPoint2D
+{
 public:
   // Members
 
   Number x, y;
 
   // Constructors
-
+  RGPPoint2D();
   RGPPoint2D(Number x, Number y);
+  RGPPoint2D(std::string point);
   ~RGPPoint2D();
 
   // Methods
@@ -32,7 +34,7 @@ public:
 
   // Allows input of an RGPPoint2D in the format of "(x,y)" where ',' will be
   // the delimiter between the x and y values
-  friend std::istream &operator>>(std::istream &is, RGPPoint2D p);
+  friend std::istream &operator>>(std::istream &is, RGPPoint2D &p);
 };
 
 #endif // RGPPOINT2D_H
