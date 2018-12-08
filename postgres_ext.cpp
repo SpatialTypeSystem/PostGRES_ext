@@ -1,4 +1,5 @@
 #include "iostream"
+#include "sstream"
 
 #include "Number.h"
 #include "RGPHalfSegment2D.h"
@@ -16,7 +17,7 @@ int main(void)
 
 bool init_out()
 {
-    std::stringstream out;
+    std::ostringstream out;
     Number a;
     out << a;
     return out.is_equal("0");
@@ -24,7 +25,7 @@ bool init_out()
 
 bool init_string()
 {
-    std::stringstream out;
+    std::ostringstream out;
     Number a("500");
     out << a;
     return out.is_equal("500");
@@ -32,7 +33,7 @@ bool init_string()
 
 bool init_negative()
 {
-    std::stringstream out;
+    std::ostringstream out;
     Number a("-400");
     out << a;
     return out.is_equal("-400");
@@ -406,7 +407,7 @@ bool operations_intersection()
 
 bool point_output()
 {
-    std::stringstream out1, out2;
+    std::ostringstream out1, out2;
     Number x1("5"), y1("7"), x2("5"), y2("7");
     RGPPoint2D point1(x1, y1), point2(x2, y2);
     out1 << point1;
@@ -475,7 +476,7 @@ bool segment_output()
 {
     RGPPoint2D p1(Number("3"), Number("5")), p2(Number("1"), Number("3"));
     RGPSegment2D s(p1, p2);
-    std::stringstream out;
+    std::ostringstream out;
     out << s;
     return out.is_equal("(1,3),(3,5)");
 }
