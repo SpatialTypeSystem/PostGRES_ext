@@ -21,5 +21,7 @@ BOOST_AUTO_TEST_CASE(operations_intersection)
     RGPSegment2D s1("(2,4),(3,2)"), s2("(1,1),(4,3)");
     optional<RGPPoint2D> intersectionPoint = RGPOperations2D::intersectionOf(s1, s2);
     BOOST_REQUIRE(intersectionPoint.has_value() == true);
-    BOOST_REQUIRE(intersectionPoint.value() == RGPPoint2D("(2.875,2.25)"));
+    boost::test_tools::output_test_stream out;
+    out << *intersectionPoint;
+    BOOST_REQUIRE(out.is_equal("(2.875,2.25)"));
 }
