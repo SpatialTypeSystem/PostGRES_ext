@@ -7,6 +7,15 @@
 #include "../../include/ConvexHull/Utils.h"
 #include "../../include/RGPPoint2D.h"
 
+void printPoints1(std::vector<RGPPoint2D *> points)
+{
+  for (int i = 0; i < (int)points.size(); i++)
+  {
+    std::cout << "(" << points[i]->x << "," << points[i]->y << ") ";
+  }
+
+  std::cout << std::endl;
+}
 
 // A utility function to find next to top in a stack
 RGPPoint2D *nextToTop(std::stack< RGPPoint2D * >& S)
@@ -17,19 +26,6 @@ RGPPoint2D *nextToTop(std::stack< RGPPoint2D * >& S)
   S.push(p);
 
   return res;
-}
-
-// A utility function to swap two RGPPoint2Ds
-void swap(std::vector< RGPPoint2D * >& RGPPoint2Ds, int a, int b)
-{
-  if (a == b)
-  {
-    return;
-  }
-
-  RGPPoint2D *temp = RGPPoint2Ds[a];
-  RGPPoint2Ds[a] = RGPPoint2Ds[b];
-  RGPPoint2Ds[b] = temp;
 }
 
 struct pointsComparatorGraham
@@ -78,38 +74,8 @@ std::vector< RGPPoint2D * > getGraham(std::vector< RGPPoint2D * > RGPPoint2DsOri
   // has larger polar angle (in counterclockwise
   // direction) than p1
   sort(RGPPoint2Ds.begin() + 1, RGPPoint2Ds.end(), pointsComparatorGraham(&RGPPoint2Ds[0]));
-
-  // If two or more RGPPoint2Ds make same angle with p0,
-  // Remove all but the one that is farthest from p0
-  // Remember that, in above sorting, our criteria was
-  // to keep the farthest RGPPoint2D at the end when more than
-  // one RGPPoint2Ds have same angle.
-  int m = 1; // Initialize size of modified array
-  for (int i = 1; i < n; i++)
-  {
-    // Keep removing i while angle of i and i+1 is same
-    // with respect to p0
-    while (i < n - 1 && getPositionOfPoint(RGPPoint2Ds[0], RGPPoint2Ds[i],
-                                           RGPPoint2Ds[i + 1]) == 0)
-    {
-      i++;
-    }
-
-    if (m != i)
-    {
-      RGPPoint2Ds[m] = RGPPoint2Ds[i];
-    }
-
-    // Update size of modified array
-    m++; 
-  }
-
-  while (RGPPoint2Ds.size() > m)
-    RGPPoint2Ds.pop_back();
-
-  // If modified array of RGPPoint2Ds has less than 3 RGPPoint2Ds,
-  // convex hull is not possible
-  if (m < 3)
+  
+  if (n < 3)
   {
     //    std::vector < RGPPoint2D* > convexHull;
     return getConvexHullBruteForce(RGPPoint2Ds);
@@ -122,17 +88,25 @@ std::vector< RGPPoint2D * > getGraham(std::vector< RGPPoint2D * > RGPPoint2DsOri
   S.push(RGPPoint2Ds[2]);
 
   // Process remaining n-3 RGPPoint2Ds
-  for (int i = 3; i < m; i++)
+  for (int i = 3; i < n; i++)
   {
     // Keep removing top while the angle formed by
     // RGPPoint2Ds next-to-top, top, and RGPPoint2Ds[i] makes
     // a non-left turn
-    while (getPositionOfPoint(nextToTop(S), S.top(), RGPPoint2Ds[i]) != -1)
+    while ((int)S.size() > 1 && getPositionOfPoint(nextToTop(S), S.top(), RGPPoint2Ds[i]) != -1)
     {
       S.pop();
     }
 
     S.push(RGPPoint2Ds[i]);
+  }
+
+  if ((int)S.size() > 2)
+  {
+    if (getPositionOfPoint(nextToTop(S), S.top(), RGPPoint2Ds[0]) == 0)
+    {
+      S.pop();
+    }
   }
 
   std::vector< RGPPoint2D * > convexHull((int)S.size(), NULL);

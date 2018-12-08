@@ -20,6 +20,8 @@ std::vector < RGPPoint2D* > getConvexHullBruteForce(std::vector < RGPPoint2D* > 
  */
 int getPositionOfPoint(const RGPPoint2D* p1, const RGPPoint2D* p2, const RGPPoint2D* p3);
 
+void swap(std::vector< RGPPoint2D * >& RGPPoint2Ds, int a, int b);
+
 /*
  * Comparator to compare points consisting of x and y coordinates
  * returns true if x coordinate of x point is less than x coordinate of y point

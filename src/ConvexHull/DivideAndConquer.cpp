@@ -192,6 +192,42 @@ std::vector<RGPPoint2D *> mergeConvexHulls(std::vector<RGPPoint2D *> leftConvexH
     }
   }
 
+  int mergedHullSize = (int)mergedConvexHull.size();
+  if (mergedHullSize > 2)
+  {
+    int m = 1;
+    for (int i = 2; i < (int)mergedConvexHull.size(); i++)
+    {
+      while (i < mergedHullSize && m > 0 && getPositionOfPoint(mergedConvexHull[i], mergedConvexHull[m], mergedConvexHull[m - 1]) == 0)
+      {
+        swap(mergedConvexHull, m, i);
+        i++;
+      }
+
+      if (i < mergedHullSize)
+      {
+        m++;
+        swap(mergedConvexHull, m, i);
+      }
+    }
+
+    m++;
+
+    while ((int)mergedConvexHull.size() > m)
+    {
+      mergedConvexHull.pop_back();
+    }
+
+    mergedHullSize = (int)mergedConvexHull.size();
+    if (mergedHullSize > 2)
+    {
+      if (getPositionOfPoint(mergedConvexHull[mergedHullSize - 2], mergedConvexHull[mergedHullSize - 1], mergedConvexHull[0]) == 0)
+      {
+        mergedConvexHull.pop_back();
+      }
+    }
+  }
+
   return mergedConvexHull;
 }
 

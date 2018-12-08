@@ -36,16 +36,21 @@ std::vector<RGPPoint2D *> getConvexHullJarvisMarchInternal(std::vector<RGPPoint2
   do
   {
     q = (p + 1) % n;
-    for (int i = (q + 1) % n, j = 0; j < n - 1; i = (i + 1) % n, j++)
+    // for (int i = (q + 1) % n, j = 0; j < n - 1; i = (i + 1) % n, j++)
+    for (int i = 0; i < n; i++)
     {
       // If i is more counterclockwise than current q, then update q
       if (getPositionOfPoint(points[p], points[i], points[q]) == 1)
       {
         q = i;
       }
-      else if (getPositionOfPoint(points[p], points[i], points[q]) == 0)
+      else if(getPositionOfPoint(points[p], points[i], points[q]) == 0)
       {
-        q = i;
+        Number val1 = distanceSquare(points[p], points[q]);
+        Number val2 = distanceSquare(points[p], points[i]);
+        if(val2 > val1){
+            q = i;
+        }
       }
     }
 

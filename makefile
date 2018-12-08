@@ -29,7 +29,8 @@ ch:
 	g++-7 -g -o ./obj/ConvexHull/MonotoneChain.o ./src/ConvexHull/MonotoneChain.cpp -c
 	g++-7 -g -o ./obj/ConvexHull/GrahamScan.o ./src/ConvexHull/GrahamScan.cpp -c
 	g++-7 -g -o ./obj/ConvexHull/JarvisMarch.o ./src/ConvexHull/JarvisMarch.cpp -c
-	g++-7 -g -o convexHullAnalysis obj/ConvexHull/Utils.o obj/Number.o obj/RGPPoint2D.o obj/ConvexHull/DivideAndConquer.o obj/ConvexHull/Chans.o obj/ConvexHull/GrahamScan.o obj/ConvexHull/MonotoneChain.o obj/ConvexHull/JarvisMarch.o ConvexHullAnalysis.cpp -lgmpxx -lgmp
+	g++-7 -g -o ./obj/ConvexHull/QuickHull.o ./src/ConvexHull/QuickHull.cpp -c
+	g++-7 -g -o convexHullAnalysis obj/ConvexHull/Utils.o obj/Number.o obj/RGPPoint2D.o obj/ConvexHull/DivideAndConquer.o obj/ConvexHull/Chans.o obj/ConvexHull/GrahamScan.o obj/ConvexHull/MonotoneChain.o obj/ConvexHull/JarvisMarch.o obj/ConvexHull/QuickHull.o ConvexHullAnalysis.cpp -lgmpxx -lgmp
 
 test: $(TST_DIR)/NumberTest
 $(TST_DIR)/NumberTest: $(OBJ_DIR)/Number.o $(TST_DIR)/NumberTest.cpp

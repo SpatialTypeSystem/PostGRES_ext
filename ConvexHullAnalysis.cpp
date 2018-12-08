@@ -13,47 +13,81 @@
 #include "include/ConvexHull/GrahamScan.h"
 #include "include/ConvexHull/MonotoneChain.h"
 #include "include/ConvexHull/JarvisMarch.h"
+#include "include/ConvexHull/QuickHull.h"
 #include "include/ConvexHull/Utils.h"
 #include "include/Number.h"
 #include "include/RGPPoint2D.h"
 
-long int runConvexHullAlgorithm(std::string algorithmName, std::vector<RGPPoint2D *> points);
+long int runConvexHullAlgorithm(std::string algorithmName, std::vector<RGPPoint2D *> points, int mode, bool verbose = false);
 
 // Any pre-processing needed for the points before executing the convex hull algorithms
 // Akl–Toussaint heuristic is implemented
 // Sorting is implemented
-std::vector< RGPPoint2D * > preProcessPoints(std::vector<RGPPoint2D *>& points, int flags);
+std::vector<RGPPoint2D *> preProcessPoints(std::vector<RGPPoint2D *> &points, int flags);
 
 // Any post-processing needed for the points on convex hull
 // This is mainly used for getting a unique ordering of points for verifying
-std::vector< RGPPoint2D * > postProcessPoints(std::vector<RGPPoint2D *>& points);
+std::vector<RGPPoint2D *> postProcessPoints(std::vector<RGPPoint2D *> &points);
 
-std::vector< RGPPoint2D * > aklToussaintHeuristic(std::vector < RGPPoint2D * >& points);
-std::vector< RGPPoint2D * > readPointsDataFile(std::string filename);
+std::vector<RGPPoint2D *> aklToussaintHeuristic(std::vector<RGPPoint2D *> &points);
+std::vector<RGPPoint2D *> readPointsDataFile(std::string filename);
 
 // Prints the vector of points
 void printPoints(std::vector<RGPPoint2D *> points);
 
-int main(int argc, char** argv)
-{
-
+void simpleTest1() {
   // Simple test 1
-  std::vector< RGPPoint2D * > points;
-  std::vector< std::pair < std::string, std::string > > xs_ys_1{{"3", "0"}, {"0", "1"}, {"1", "2"}, {"6", "2"}, {"4", "3"}, {"0", "4"}, {"2", "5"}, {"5", "5"}};
+  std::vector<RGPPoint2D *> points;
+  std::vector<std::pair<std::string, std::string>> xs_ys{{"3", "0"}, {"0", "1"}, {"1", "2"}, {"6", "2"}, {"4", "3"}, {"0", "4"}, {"2", "5"}, {"5", "5"}};
 
-  for (int i = 0; i < (int)xs_ys_1.size(); i++)
+  for (int i = 0; i < (int)xs_ys.size(); i++)
   {
-    Number x(xs_ys_1[i].first);
-    Number y(xs_ys_1[i].second);
+    Number x(xs_ys[i].first);
+    Number y(xs_ys[i].second);
     RGPPoint2D *p = new RGPPoint2D(x, y);
     points.push_back(p);
   }
 
-  runConvexHullAlgorithm("MonotoneChain", points);
-  runConvexHullAlgorithm("DivideAndConquer", points);
-  runConvexHullAlgorithm("JarvisMarch", points);
-  runConvexHullAlgorithm("GrahamScan", points);
-  runConvexHullAlgorithm("Chans", points);
+  for (int m = 0; m < 3; m++)
+  {
+    std::cout << "Mode " << m << std::endl;
+    runConvexHullAlgorithm("MonotoneChain", points, m, true);
+    runConvexHullAlgorithm("DivideAndConquer", points, m, true);
+    runConvexHullAlgorithm("JarvisMarch", points, m, true);
+    runConvexHullAlgorithm("GrahamScan", points, m, true);
+    runConvexHullAlgorithm("Chans", points, m, true);
+    runConvexHullAlgorithm("QuickHull", points, m, true);
+  }
+}
+
+void simpleTest2() {
+  // Simple test 2
+  std::vector<RGPPoint2D *> points;
+  // std::vector<std::pair<std::string, std::string>> xs_ys{{"0", "0"}, {"1", "1"}, {"2", "2"}, {"4", "6"}, {"0", "3"}, {"3", "4"}};
+  std::vector<std::pair<std::string, std::string>> xs_ys{{"0", "2"}, {"3", "2"}, {"5", "7"}, {"2", "9"}, {"8", "2"}, {"7", "9"}, {"6", "3"}, {"2", "1"}, {"3", "9"}, {"9", "1"}};
+  for (int i = 0; i < (int)xs_ys.size(); i++)
+  {
+    Number x(xs_ys[i].first);
+    Number y(xs_ys[i].second);
+    RGPPoint2D *p = new RGPPoint2D(x, y);
+    points.push_back(p);
+  }
+
+  for (int m = 0; m < 1; m++)
+  {
+    std::cout << "Mode " << m << std::endl;
+    runConvexHullAlgorithm("MonotoneChain", points, m, true);
+    runConvexHullAlgorithm("DivideAndConquer", points, m, true);
+    runConvexHullAlgorithm("JarvisMarch", points, m, true);
+    runConvexHullAlgorithm("GrahamScan", points, m, true);
+    runConvexHullAlgorithm("Chans", points, m, true);
+    runConvexHullAlgorithm("QuickHull", points, m, true);
+  }
+}
+
+int main(int argc, char **argv)
+{
+  simpleTest2();
 
   if (argc == 3)
   {
@@ -64,106 +98,104 @@ int main(int argc, char** argv)
     int k = atoi(argv[1]);
     int n = atoi(argv[2]);
     std::cout << "K: " << k << " N: " << n << std::endl;
-    std::vector < std::string > patterns{"straight", "horizontal", "vertical"};
-    std::vector < std::string > algorithms{"MonotoneChain", "DivideAndConquer", "JarvisMarch", "GrahamScan", "Chans"};
+    std::vector<std::string> patterns{"straight", "horizontal", "vertical", "random"};
+    std::vector<std::string> algorithms{"MonotoneChain", "DivideAndConquer", "JarvisMarch", "GrahamScan", "Chans"};
     std::string ext = ".txt";
 
-    long int timings[(int)algorithms.size()][(int)patterns.size()][k][n] = {0};
-    
-    for (int a = 0; a < (int)algorithms.size(); a++)
-    {
-      std::vector < std::vector < long int > > timingsForAs;
-      for (int p = 0; p < (int)patterns.size(); p++)
-      {
-        std::vector < std::vector < long int > > timingsForKs;
-        for (int i = 0; i < k; i++)
-        {
-          std::vector < long int > times;
-          for (int j = 10; j <= n; j *= 10)
-          {
-            std::vector < RGPPoint2D * > points = readPointsDataFile("data/" + patterns[p] + "_" + std::to_string(i) + "_" + std::to_string(j) + ext);
-            long int duration = runConvexHullAlgorithm(algorithms[a], points);
-            timings[a][p][i][j] = duration;
-          }
-        }
-      }
-    }
-
+    // long int timings[(int)algorithms.size()][(int)patterns.size()][3][n][k];
+    std::ofstream file;
+    file.open("data/output/timings.txt");
+    file << "Algorithm\tPointPattern\tFilteringMode\tn\tk\tTime(us)\n";
     for (int a = 0; a < (int)algorithms.size(); a++)
     {
       std::cout << algorithms[a] << std::endl;
+      std::vector<std::vector<long int>> timingsForAs;
       for (int p = 0; p < (int)patterns.size(); p++)
       {
         std::cout << patterns[p] << std::endl;
-        for (int i = 0; i < k; i++)
+        std::vector<std::vector<long int>> timingsForKs;
+        for (int m = 0; m < 3; m++)
         {
-          for (int j = 10; j <= n; j *= 10)
+          for (int i = 10; i <= n; i *= 10)
           {
-            std::cout << timings[a][p][i][j] << " ";
+            std::vector<long int> times;
+            for (int j = 0; j < k; j++)
+            {
+              std::vector<RGPPoint2D *> points = readPointsDataFile("data/input/" + patterns[p] + "_" + std::to_string(i) + "_" + std::to_string(j) + ext);
+              long int result = runConvexHullAlgorithm(algorithms[a], points, m);
+              // timings[a][p][m][i][j] = duration;
+              file << algorithms[a] << "\t" << patterns[p] << "\t" << m << "\t" << i << "\t" << j << "\t" << result << "\n";
+            }
           }
-
-          std::cout << "\n";
         }
-
-        std::cout << "\n";
       }
     }
+
+    file.close();
   }
 
   return 0;
 }
 
-long int runConvexHullAlgorithm(std::string algorithmName, std::vector<RGPPoint2D *> points)
+long int runConvexHullAlgorithm(std::string algorithmName, std::vector<RGPPoint2D *> points, int mode, bool verbose)
 {
-  std::cout << "==================================================" << std::endl;
-  std::cout << "Algorithm: " << algorithmName << std::endl;
-  std::cout << "--------------------------------------------------\n\n";
-
-  for (int i = 0; i < 3; i++)
+  if (verbose)
   {
-    std::vector<RGPPoint2D *> processedPoints;
-    processedPoints = preProcessPoints(points, i);
-    
-    // Executing the algorithm and calculating time
-    auto startTime = std::chrono::high_resolution_clock::now();
-    std::vector<RGPPoint2D *> convexHull;
-    
-    if (algorithmName == "MonotoneChain")
-    {
-      convexHull = getMonotone(points);
-    }
-    else if (algorithmName == "DivideAndConquer")
-    {
-      convexHull = getConvexHullDivideAndConquer(points);
-    }
-    else if (algorithmName == "JarvisMarch")
-    {
-      convexHull = getConvexHullJarvisMarch(points);
-    }
-    else if (algorithmName == "GrahamScan")
-    {
-      convexHull = getGraham(points);
-    }
-    else if (algorithmName == "Chans")
-    {
-      convexHull = getConvexHullChans(points);
-    }
+    std::cout << "==================================================" << std::endl;
+    std::cout << "Algorithm: " << algorithmName << std::endl;
+    std::cout << "--------------------------------------------------\n";
+  }
 
-    auto endTime = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
+  std::vector<RGPPoint2D *> processedPoints;
+  processedPoints = preProcessPoints(points, mode);
+
+  // Executing the algorithm and calculating time
+  auto startTime = std::chrono::high_resolution_clock::now();
+  std::vector<RGPPoint2D *> convexHull;
+
+  if (algorithmName == "MonotoneChain")
+  {
+    convexHull = getMonotone(points);
+  }
+  else if (algorithmName == "DivideAndConquer")
+  {
+    convexHull = getConvexHullDivideAndConquer(points);
+  }
+  else if (algorithmName == "JarvisMarch")
+  {
+    convexHull = getConvexHullJarvisMarch(points);
+  }
+  else if (algorithmName == "GrahamScan")
+  {
+    convexHull = getGraham(points);
+  }
+  else if (algorithmName == "Chans")
+  {
+    convexHull = getConvexHullChans(points);
+  }
+  else if (algorithmName == "QuickHull")
+  {
+    convexHull = getConvexHullQuickHull(points);
+  }
+
+  auto endTime = std::chrono::high_resolution_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
+  if (verbose)
+  {
     std::cout << "Time taken: " << duration << " (microseconds)" << std::endl;
 
     std::cout << "Convex hull: ";
     printPoints(convexHull);
-
-    if (i == 0)
-    {
-      std::cout << "--------------------------------------------------";
-    }
-
-    std::cout << "\n\n";
-    return duration;    
   }
+
+  // std::pair<long int, std::vector<RGPPoint2D *>> result = std::make_pair(duration, postProcessPoints(convexHull));
+  // if (i == 0)
+  // {
+  //   std::cout << "--------------------------------------------------";
+  // }
+
+  // std::cout << "\n\n";
+  return duration;
 }
 
 void printPoints(std::vector<RGPPoint2D *> points)
@@ -176,9 +208,9 @@ void printPoints(std::vector<RGPPoint2D *> points)
   std::cout << std::endl;
 }
 
-std::vector<RGPPoint2D *> preProcessPoints(std::vector<RGPPoint2D *>& points, int flags)
+std::vector<RGPPoint2D *> preProcessPoints(std::vector<RGPPoint2D *> &points, int flags)
 {
-  std::vector< RGPPoint2D * > processedPoints;
+  std::vector<RGPPoint2D *> processedPoints;
   if (flags & 1)
   {
     processedPoints = aklToussaintHeuristic(points);
@@ -192,11 +224,11 @@ std::vector<RGPPoint2D *> preProcessPoints(std::vector<RGPPoint2D *>& points, in
   {
     std::sort(processedPoints.begin(), processedPoints.end(), pointsComparator());
   }
-  
+
   return processedPoints;
 }
 
-std::vector< RGPPoint2D * > aklToussaintHeuristic(std::vector < RGPPoint2D * >& points)
+std::vector<RGPPoint2D *> aklToussaintHeuristic(std::vector<RGPPoint2D *> &points)
 {
   int pointsSize = (int)points.size();
   RGPPoint2D *bottomPoint = NULL, *rightPoint = NULL, *topPoint = NULL, *leftPoint = NULL;
@@ -279,20 +311,20 @@ std::vector< RGPPoint2D * > aklToussaintHeuristic(std::vector < RGPPoint2D * >& 
   return filteredPoints;
 }
 
-std::vector< RGPPoint2D * > postProcessPoints(std::vector<RGPPoint2D *>& points)
+std::vector<RGPPoint2D *> postProcessPoints(std::vector<RGPPoint2D *> &points)
 {
   sort(points.begin(), points.end(), pointsComparator());
 }
 
-std::vector< RGPPoint2D * > readPointsDataFile(std::string filename)
+std::vector<RGPPoint2D *> readPointsDataFile(std::string filename)
 {
-  std::vector < RGPPoint2D * > points;
+  std::vector<RGPPoint2D *> points;
 
   std::cout << "Reading " << filename << std::endl;
   std::ifstream file(filename);
-  
+
   std::string xy, x, y;
-  while(std::getline(file, xy))
+  while (std::getline(file, xy))
   {
     std::istringstream ss(xy);
     std::string token;

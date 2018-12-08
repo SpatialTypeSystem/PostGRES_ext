@@ -5,11 +5,11 @@
 
 using namespace std;
 
-void generateRandomData(int k, int n)
+void generateRandomData(int n, int k)
 {
-  std::string text = "data/random_";
+  std::string text = "data/input/random_";
   std::string ext = ".txt";
-  std::string filename = text + std::to_string(k) + "_" + std::to_string(n) + ext;
+  std::string filename = text + std::to_string(n) + "_" + std::to_string(k) + ext;
   ofstream file;
   file.open(filename);
   for (int j = 0; j < n; j++)
@@ -20,11 +20,11 @@ void generateRandomData(int k, int n)
   file.close();
 }
 
-void straightLine(int k, int n)
+void straightLine(int n, int k)
 {
-  std::string text = "data/straight_";
+  std::string text = "data/input/straight_";
   std::string ext = ".txt";
-  std::string filename = text + std::to_string(k) + "_" + std::to_string(n) + ext;
+  std::string filename = text + std::to_string(n) + "_" + std::to_string(k) + ext;
   ofstream file;
   file.open(filename);
   for (int j = 0; j < n; j++)
@@ -35,12 +35,12 @@ void straightLine(int k, int n)
   file.close();
 }
 
-void horizontalLine(int k, int n)
+void horizontalLine(int n, int k)
 {
-  std::string text = "data/horizontal_";
+  std::string text = "data/input/horizontal_";
   std::string ext = ".txt";
   int y = (rand() % 100) + 1;
-  std::string filename = text + std::to_string(k) + "_" + std::to_string(n) + ext;
+  std::string filename = text + std::to_string(n) + "_" + std::to_string(k) + ext;
   ofstream file;
   file.open(filename);
   for (int j = 0; j < n; j++)
@@ -50,12 +50,12 @@ void horizontalLine(int k, int n)
   file.close();
 }
 
-void verticalLine(int k, int n)
+void verticalLine(int n, int k)
 {
-  std::string text = "data/vertical_";
+  std::string text = "data/input/vertical_";
   std::string ext = ".txt";
   int x = (rand() % 100) + 1;
-  std::string filename = text + std::to_string(k) + "_" + std::to_string(n) + ext;
+  std::string filename = text + std::to_string(n) + "_" + std::to_string(k) + ext;
   ofstream file;
   file.open(filename);
   for (int j = 0; j < n; j++)
@@ -77,9 +77,9 @@ int main(int argc, char** argv)
   
   std::cout << "K: " << k << " N: " << n << std::endl;
   
-  for (int i = 0; i < k; i++)
+  for (int i = 10; i <= n; i *= 10)
   {
-    for (int j = 10; j <= n; j *= 10)
+    for (int j = 0; j < k; j++)
     {
       straightLine(i, j);
       horizontalLine(i, j);

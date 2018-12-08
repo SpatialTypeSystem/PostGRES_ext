@@ -90,7 +90,13 @@ std::vector < RGPPoint2D* > getConvexHullBruteForce(std::vector < RGPPoint2D* > 
             }
         }
 
-        if (getPositionOfPoint(points[leftMostPointIndex], points[middlePointIndex], points[rightMostPointIndex]) > 0) {
+        int orientation = getPositionOfPoint(points[leftMostPointIndex], points[middlePointIndex], points[rightMostPointIndex]);
+        if (orientation == 0)
+        {
+          convexHull.push_back(points[leftMostPointIndex]);
+          convexHull.push_back(points[rightMostPointIndex]);
+        }
+        else if (orientation > 0) {
             convexHull.push_back(points[leftMostPointIndex]);
             convexHull.push_back(points[middlePointIndex]);
             convexHull.push_back(points[rightMostPointIndex]);
@@ -104,4 +110,17 @@ std::vector < RGPPoint2D* > getConvexHullBruteForce(std::vector < RGPPoint2D* > 
     }
 
     return convexHull;
+}
+
+// A utility function to swap two RGPPoint2Ds
+void swap(std::vector< RGPPoint2D * >& RGPPoint2Ds, int a, int b)
+{
+  if (a == b)
+  {
+    return;
+  }
+
+  RGPPoint2D *temp = RGPPoint2Ds[a];
+  RGPPoint2Ds[a] = RGPPoint2Ds[b];
+  RGPPoint2Ds[b] = temp;
 }
