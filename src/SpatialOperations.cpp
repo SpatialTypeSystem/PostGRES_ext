@@ -97,12 +97,8 @@ Point2D intersection(Point2D F, Point2D G) {
 }
 
 Line2D intersection(Line2D F, Line2D G) {
-	return new Line2D();
-}
-
-/*Line2D intersection(Line2D F, Line2D G) {
 	return new Point2D();
-}*/
+}
 
 Region2D intersection(Region2D F, Region2D G) {
 	return new Region2D();
