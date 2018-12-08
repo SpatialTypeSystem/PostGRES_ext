@@ -33,8 +33,10 @@ public:
 
     // Get event returns the element to which the logical pointer of a point
     // or half segment sequence of an object points to
-    typename std::vector<F>::const_iterator getEventF();
-    typename std::vector<G>::const_iterator getEventG();
+    // typename std::vector<F>::const_iterator getEventF();
+    // typename std::vector<G>::const_iterator getEventG();
+    F getEventF();
+    G getEventG();
 
     // Checks whether a given point lies on/in any segment of the sweep line status
     bool pointOnSegment(RGPPoint2D p);
