@@ -20,12 +20,12 @@ class PointerWrapper{
 template<class F, class G>
 class PlaneSweep {
 public:
-	  PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorF, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator endIteratorG);
+	  PlaneSweep(typename std::vector<F>::iterator startIteratorF, typename std::vector<F>::iterator endIteratorF,
+      typename std::vector<G>::iterator startIteratorG, typename std::vector<G>::iterator endIteratorG);
 
     ObjectSelected object;
     TraversalStatus status;
 
-    // PlaneSweep(const std::vector<F>& seqF, const std::vector<G>& seqG);
     ~PlaneSweep();
 
     void select_first();
@@ -61,7 +61,7 @@ private:
     // Stores event points
     std::queue<RGPPoint2D> eventPointSchedule;
 
-    PointerWrapper obj_ptr; 
+    PointerWrapper obj_ptr;
     // Holds the state of the intersection of the sweep line
     AVLtree<obj_ptr> sweepLineStatus;
     //Sets an attribute for a segment in the sweep line status
@@ -81,7 +81,7 @@ private:
     //Removes a segment component from the segment sequence of the sweep line status
     bool del_right();
     //Returns new sweep line status
-    AVLTree<obj_ptr> new_sweep();
+    AVLtree<obj_ptr> new_sweep();
 
     // template<class F, class G>
     // References to the spatial object sequences
@@ -105,8 +105,9 @@ private:
 
 template<class F, class G>
 inline
-PlaneSweep<F,G>::PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorF, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator endIteratorG) :
-	staticIteratorF(startIteratorF), endStaticIteratorF(endIteratorF), startIteratorG(startIteratorG), endStaticIteratorG(endIteratorG)
+PlaneSweep<F,G>::PlaneSweep(typename std::vector<F>::iterator startIteratorF, typename std::vector<F>::iterator endIteratorF,
+  typename std::vector<G>::iterator startIteratorG, typename std::vector<G>::iterator endIteratorG) :
+	staticIteratorF(startIteratorF), endStaticIteratorF(endIteratorF), staticIteratorG(startIteratorG), endStaticIteratorG(endIteratorG)
 {
     object = ObjectSelected::NONE;
     status = TraversalStatus::END_OF_NONE;
