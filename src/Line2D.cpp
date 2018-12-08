@@ -60,7 +60,7 @@ bool Line2D::operator!=(const Line2D &l2d)
 	//return handle->implPointer->operator!=(&l2d);
 }
 
-std::vector<RGPSegment2D> Line2D::getBoundingBox()
+Line2DImpl Line2D::getBoundingBox()
 {
 	return handle->implPointer->getBoundingBox();
 }

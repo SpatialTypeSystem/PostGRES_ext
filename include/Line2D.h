@@ -22,7 +22,7 @@ public:
 	bool operator==(const Line2D &l2d);	// Override of operator == to check equality of two Line2Ds
 	bool operator!=(const Line2D &l2d);	// Override of operator != to check inequality of two Line2Ds
 
-	Line2D getBoundingBox();
+	Line2DImpl getBoundingBox();
 		
 private:
 	struct Line2DStore;
