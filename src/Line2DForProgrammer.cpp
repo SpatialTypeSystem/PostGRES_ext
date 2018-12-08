@@ -1,6 +1,6 @@
-#include "../include/Line2D.h"
-#include "../include/Line2DImpl.h"
-#include "../include/Line2DForProgrammer.h"
+#include "Line2D.h"
+#include "Line2DImpl.h"
+#include "Line2DForProgrammer.h"
 
 struct Line2DForProgrammer::Line2DProgrammerStore
 {
