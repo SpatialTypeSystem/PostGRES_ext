@@ -102,8 +102,11 @@ Line2DImpl::Line2DImpl(std::ifstream& file)
 Line2DImpl::~Line2DImpl()
 {
 	// TODO
-	// delete handle->vectorOfSegments;
-	// delete handle;
+	if(!isEmptyLine()){
+		// delete handle->vectorOfSegments;
+		// delete handle->boundingBox;
+		// delete handle;
+	}
 }
 
 // Methods
