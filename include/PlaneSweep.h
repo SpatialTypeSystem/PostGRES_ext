@@ -12,16 +12,20 @@ enum class ObjectSelected {OBJ_F, OBJ_G, BOTH, NONE};
 // Status - TraversalStatus
 enum class TraversalStatus {END_OF_F, END_OF_G, END_OF_BOTH, END_OF_NONE};
 
+class PointerWrapper{
+
+};
+
+
 template<class F, class G>
 class PlaneSweep {
 public:
-
-	PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorF, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator endIteratorG);
+	  PlaneSweep(std::vector<F>::iterator startIteratorF, std::vector<F>::iterator endIteratorF, std::vector<G>::iterator startIteratorG, std::vector<G>::iterator endIteratorG);
 
     ObjectSelected object;
     TraversalStatus status;
 
-    PlaneSweep(const std::vector<F>& seqF, const std::vector<G>& seqG);
+    // PlaneSweep(const std::vector<F>& seqF, const std::vector<G>& seqG);
     ~PlaneSweep();
 
     void select_first();
@@ -45,6 +49,7 @@ public:
     bool lookAheadF(RGPHalfSegment2D h);
     bool lookAheadG(RGPHalfSegment2D h);
 
+    // Atribute - whether a segment is inside a region
     // Returns the nearest annotated halfsegment, from the sweep line status, below a given point, if there is one
     optional<bool> getAttributeOfSegmentBelow(RGPPoint2D p);
     // Returns the overlap numbers of the predecessor to the given segment in the sweep line status
@@ -56,21 +61,27 @@ private:
     // Stores event points
     std::queue<RGPPoint2D> eventPointSchedule;
 
-    template <class obj>
+    PointerWrapper obj_ptr; 
     // Holds the state of the intersection of the sweep line
-    AVLtree<obj> sweepLineStatus;
+    AVLtree<obj_ptr> sweepLineStatus;
     //Sets an attribute for a segment in the sweep line status
-    void set_attr(AVLtree<obj>             &sweepLineStatus, bool attribute);
+    void set_attr(AVLtree<obj_ptr>             &sweepLineStatus, bool attribute);
     //Gets an attribute from a segment in the sweep line status
-    bool get_attr(AVLtree<obj>             &sweepLineStatus);
+    bool get_attr(AVLtree<obj_ptr>             &sweepLineStatus);
     //Yields the attribute from the prdecessor of a segment in the sweepline status
-    bool get_pred_attr(AVLtree<obj>        &sweepLineStatus, RGPHalfSegment2D segment);
+    bool get_pred_attr(AVLtree<obj_ptr>        &sweepLineStatus, RGPHalfSegment2D segment);
     //Checks for a segment in the sweepLineStatus to check if it hasa predecessor
-    bool pred_exists(AVLtree<obj>          &sweepLineStatus, RGPHalfSegment2D segment);
+    bool pred_exists(AVLtree<obj_ptr>          &sweepLineStatus, RGPHalfSegment2D segment);
     //Checks for a neighbor segment
-    bool common_point_exists(AVLtree<obj>  &sweepLineStatus, RGPHalfSegment2D segment);
+    bool common_point_exists(AVLtree<obj_ptr>  &sweepLineStatus, RGPHalfSegment2D segment);
     //Tests whether such a segment exists
-    bool current_exists(AVLtree<obj>       &sweepLineStatus);
+    bool current_exists(AVLtree<obj_ptr>       &sweepLineStatus);
+    //Stores left segment component into the segment sequence of the sweep line status
+    bool add_left();
+    //Removes a segment component from the segment sequence of the sweep line status
+    bool del_right();
+    //Returns new sweep line status
+    AVLTree<obj_ptr> new_sweep();
 
     // template<class F, class G>
     // References to the spatial object sequences
@@ -270,7 +281,6 @@ void PlaneSweep<F,G>::select_next() {
 
 template <class F, class G>
 inline
-
 F PlaneSweep<F,G>::getEventF()
 {
     // Get event returns the element to which the logical pointer of a
@@ -292,6 +302,7 @@ inline
 bool PlaneSweep<F,G>::pointOnSegment(RGPPoint2D p)
 {
   // Checks whether a given point lies on/in any segment of the sweep line status
+
 
 
 }
@@ -365,6 +376,7 @@ inline
 optional<std::tuple<short, short>> PlaneSweep<F,G>::getOverlapNumbersOfPredecessor(RGPSegment2D s)
 {
     // Returns the overlap numbers of the predecessor to the given segment in the sweep line status
+
 }
 
 template <class F, class G>
