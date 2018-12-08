@@ -9,7 +9,7 @@
 void FindHull(std::vector<RGPPoint2D *> &S_pointset, RGPPoint2D *point1, RGPPoint2D *point2, std::vector<RGPPoint2D *> &hullpoints);
 std::vector<RGPPoint2D *> getConvexHullQuickHullInternal(std::vector<RGPPoint2D *> &points);
 
-std::vector<RGPPoint2D *> getConvexHullQuickHull(std::vector<RGPPoint2D *> points)
+std::vector<RGPPoint2D *> getConvexHullQuickHull(std::vector<RGPPoint2D *> &points)
 {
   std::vector<RGPPoint2D *> pointsCopy(points);
   std::vector<RGPPoint2D *> convexHullPoints = getConvexHullQuickHullInternal(pointsCopy);
@@ -128,7 +128,8 @@ void FindHull(std::vector<RGPPoint2D *> &S_pointset, RGPPoint2D *point1, RGPPoin
   }
 
   Number zero("0");
-  if (max_distance == zero) {
+  if (max_distance == zero)
+  {
     return;
   }
 
@@ -144,7 +145,7 @@ void FindHull(std::vector<RGPPoint2D *> &S_pointset, RGPPoint2D *point1, RGPPoin
     int side_val;
     side_val = getPositionOfPoint(point1, farthest_point, point2);
     if ((side_val == 1 && getPositionOfPoint(point1, farthest_point, S_pointset[i]) == -1) ||
-      (side_val == -1 && getPositionOfPoint(point1, farthest_point, S_pointset[i]) == 1))
+        (side_val == -1 && getPositionOfPoint(point1, farthest_point, S_pointset[i]) == 1))
     {
       S1.push_back(S_pointset[i]);
     }
@@ -152,7 +153,7 @@ void FindHull(std::vector<RGPPoint2D *> &S_pointset, RGPPoint2D *point1, RGPPoin
     {
       side_val = getPositionOfPoint(point2, farthest_point, point1);
       if ((side_val == 1 && getPositionOfPoint(point2, farthest_point, S_pointset[i]) == -1) ||
-        (side_val == -1 && getPositionOfPoint(point2, farthest_point, S_pointset[i]) == 1))
+          (side_val == -1 && getPositionOfPoint(point2, farthest_point, S_pointset[i]) == 1))
       {
         S2.push_back(S_pointset[i]);
       }

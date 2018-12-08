@@ -17,7 +17,7 @@ Number cross(RGPPoint2D *O, RGPPoint2D *A, RGPPoint2D *B)
 
 // Returns a list of RGPPoint2Ds on the convex hull in counter-clockwise order.
 // Note: the last RGPPoint2D in the returned list is the same as the first one.
-std::vector<RGPPoint2D *> getMonotone(std::vector<RGPPoint2D *> P)
+std::vector<RGPPoint2D *> getMonotone(std::vector<RGPPoint2D *> &P)
 {
   int n = P.size(), k = 0;
   Number zero("0");

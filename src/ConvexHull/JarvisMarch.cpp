@@ -44,12 +44,13 @@ std::vector<RGPPoint2D *> getConvexHullJarvisMarchInternal(std::vector<RGPPoint2
       {
         q = i;
       }
-      else if(getPositionOfPoint(points[p], points[i], points[q]) == 0)
+      else if (getPositionOfPoint(points[p], points[i], points[q]) == 0)
       {
         Number val1 = distanceSquare(points[p], points[q]);
         Number val2 = distanceSquare(points[p], points[i]);
-        if(val2 > val1){
-            q = i;
+        if (val2 > val1)
+        {
+          q = i;
         }
       }
     }
@@ -63,11 +64,11 @@ std::vector<RGPPoint2D *> getConvexHullJarvisMarchInternal(std::vector<RGPPoint2
   return convexHull;
 }
 
-std::vector< RGPPoint2D * > getConvexHullJarvisMarch(std::vector< RGPPoint2D * > points)
+std::vector<RGPPoint2D *> getConvexHullJarvisMarch(std::vector<RGPPoint2D *> &points)
 {
-  std::vector< RGPPoint2D * > pointsCopy(points);
+  std::vector<RGPPoint2D *> pointsCopy(points);
   std::sort(pointsCopy.begin(), pointsCopy.end(), pointsComparator());
 
-  std::vector< RGPPoint2D * > convexHullPoints = getConvexHullJarvisMarchInternal(pointsCopy);
+  std::vector<RGPPoint2D *> convexHullPoints = getConvexHullJarvisMarchInternal(pointsCopy);
   return convexHullPoints;
 }

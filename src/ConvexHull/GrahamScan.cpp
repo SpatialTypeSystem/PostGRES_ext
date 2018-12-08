@@ -7,18 +7,8 @@
 #include "../../include/ConvexHull/Utils.h"
 #include "../../include/RGPPoint2D.h"
 
-void printPoints1(std::vector<RGPPoint2D *> points)
-{
-  for (int i = 0; i < (int)points.size(); i++)
-  {
-    std::cout << "(" << points[i]->x << "," << points[i]->y << ") ";
-  }
-
-  std::cout << std::endl;
-}
-
 // A utility function to find next to top in a stack
-RGPPoint2D *nextToTop(std::stack< RGPPoint2D * >& S)
+RGPPoint2D *nextToTop(std::stack<RGPPoint2D *> &S)
 {
   RGPPoint2D *p = S.top();
   S.pop();
@@ -48,11 +38,11 @@ struct pointsComparatorGraham
 };
 
 // PrNumbers convex hull of a set of n RGPPoint2Ds.
-std::vector< RGPPoint2D * > getGraham(std::vector< RGPPoint2D * > RGPPoint2DsOriginal)
+std::vector<RGPPoint2D *> getGraham(std::vector<RGPPoint2D *> &RGPPoint2DsOriginal)
 {
-  std::vector< RGPPoint2D * > RGPPoint2Ds(RGPPoint2DsOriginal);
-
+  std::vector<RGPPoint2D *> RGPPoint2Ds(RGPPoint2DsOriginal);
   int n = RGPPoint2Ds.size();
+
   // Find the bottommost RGPPoint2D
   int min = 0;
   for (int i = 1; i < n; i++)
@@ -74,15 +64,16 @@ std::vector< RGPPoint2D * > getGraham(std::vector< RGPPoint2D * > RGPPoint2DsOri
   // has larger polar angle (in counterclockwise
   // direction) than p1
   sort(RGPPoint2Ds.begin() + 1, RGPPoint2Ds.end(), pointsComparatorGraham(&RGPPoint2Ds[0]));
-  
+
   if (n < 3)
   {
-    //    std::vector < RGPPoint2D* > convexHull;
-    return getConvexHullBruteForce(RGPPoint2Ds);
+    std::vector<RGPPoint2D *> convexHull = getConvexHullBruteForce(RGPPoint2Ds);
+    // printPoints1(convexHull);
+    return convexHull;
   }
 
   // Create an empty stack and push first three RGPPoint2Ds to it.
-  std::stack< RGPPoint2D * > S;
+  std::stack<RGPPoint2D *> S;
   S.push(RGPPoint2Ds[0]);
   S.push(RGPPoint2Ds[1]);
   S.push(RGPPoint2Ds[2]);
@@ -109,8 +100,8 @@ std::vector< RGPPoint2D * > getGraham(std::vector< RGPPoint2D * > RGPPoint2DsOri
     }
   }
 
-  std::vector< RGPPoint2D * > convexHull((int)S.size(), NULL);
-  
+  std::vector<RGPPoint2D *> convexHull((int)S.size(), NULL);
+
   // Now stack has the output RGPPoint2Ds, prNumber contents of stack
   while (!S.empty())
   {

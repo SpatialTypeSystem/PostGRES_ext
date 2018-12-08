@@ -65,8 +65,7 @@ void verticalLine(int n, int k)
   file.close();
 }
 
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
   // Number of datasets to generate for each type
   int k = atoi(argv[1]);
@@ -74,9 +73,9 @@ int main(int argc, char** argv)
   // numbers will be generated in the order 10, 100, 1000
   // till it reaches the below MAX_N
   int n = atoi(argv[2]);
-  
+
   std::cout << "K: " << k << " N: " << n << std::endl;
-  
+
   for (int i = 10; i <= n; i *= 10)
   {
     for (int j = 0; j < k; j++)
