@@ -65,5 +65,5 @@ bool Point2D::operator!=(const Point2D &p2d)
 
 std::vector<RGPSegment2D> Point2D::getBoundingBox()
 {
-	return handle->implPointer->getBoundingBox();
+	//return handle->implPointer->getBoundingBox();
 }
