@@ -1,3 +1,4 @@
+#include "cmath"
 #include "iostream"
 #include "sstream"
 
@@ -55,13 +56,69 @@ bool init_negative_decimal()
     return a.to_string(5) == "-4.87654";
 }
 
-bool malformed_number()
+bool malformed_number1()
 {
-    BOOST_CHECK_THROW(Number a("7 - 99"), std::invalid_argument);
-    BOOST_CHECK_THROW(Number a("5/3"), std::invalid_argument);
-    BOOST_CHECK_THROW(Number a("1.45e+14"), std::invalid_argument);
-    BOOST_CHECK_THROW(Number a("500.729.789"), std::invalid_argument);
-    BOOST_CHECK_THROW(Number a("500.729abc"), std::invalid_argument);
+    try
+    {
+        Number a("7 - 99");
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_number2()
+{
+    try
+    {
+        Number a("5/3");
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_number3()
+{
+    try
+    {
+        Number a("1.45e+14");
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_number4()
+{
+    try
+    {
+        Number a("500.729.789");
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_number5()
+{
+    try
+    {
+        Number a("500.729abc");
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
 }
 
 bool assignment()
@@ -219,7 +276,7 @@ bool sqrt_approx()
     a = a.sqrt();
     double sqrt5 = 2.236068;
     double result = std::stod(a.to_string(6));
-    BOOST_CHECK_CLOSE(result, sqrt5, 0.0001);
+    return std::abs(result - sqrt5) < 0.000001;
 }
 
 bool sqrt_digits()
@@ -234,8 +291,16 @@ bool sqrt_digits()
 
 bool sqrt_digits_neg()
 {
-    Number a("-5");
-    BOOST_CHECK_THROW(a.sqrt(2), std::runtime_error);
+    try
+    {
+        Number a("-5");
+        a.sqrt(2);
+    }
+    catch (std::runtime_error)
+    {
+        return true;
+    }
+    return false;
 }
 
 bool input_stream()
@@ -247,20 +312,89 @@ bool input_stream()
     return a.to_string(4) == "5.6789";
 }
 
-bool malformed_input()
+bool malformed_input1()
 {
     Number a;
     std::stringstream ss;
     ss << "7 - 99\n";
-    BOOST_CHECK_THROW(ss >> a, std::invalid_argument);
+
+    try
+    {
+        ss >> a;
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_input2()
+{
+    Number a;
+    std::stringstream ss;
     ss << "5/3\n";
-    BOOST_CHECK_THROW(ss >> a, std::invalid_argument);
+
+    try
+    {
+        ss >> a;
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_input3()
+{
+    Number a;
+    std::stringstream ss;
     ss << "1.45e+14\n ";
-    BOOST_CHECK_THROW(ss >> a, std::invalid_argument);
+
+    try
+    {
+        ss >> a;
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_input4()
+{
+    Number a;
+    std::stringstream ss;
     ss << "500.729.789\n";
-    BOOST_CHECK_THROW(ss >> a, std::invalid_argument);
+
+    try
+    {
+        ss >> a;
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
+}
+
+bool malformed_input5()
+{
+    Number a;
+    std::stringstream ss;
     ss << "500.729abc\n";
-    BOOST_CHECK_THROW(ss >> a, std::invalid_argument);
+
+    try
+    {
+        ss >> a;
+    }
+    catch (std::invalid_argument)
+    {
+        return true;
+    }
+    return false;
 }
 
 bool halfsegment_isleft()
