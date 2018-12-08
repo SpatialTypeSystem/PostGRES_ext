@@ -9,7 +9,11 @@ RGPHalfSegment2D::RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp)
     isLeftFlag = true;
   else
     isLeftFlag = false;
-  m = (s.point2.y - s.point1.y) / (s.point2.x - s.point2.x);
+	if(s.point2.x - s.point2.x != Number("0")) {
+	  m = (s.point2.y - s.point1.y) / (s.point2.x - s.point2.x);
+	} else {
+		m = s.point2.x - s.point2.x;
+	}
 }
 RGPHalfSegment2D::~RGPHalfSegment2D() {}
 
