@@ -156,7 +156,7 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Point2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::DISJOINT);
 
   // return !leftFeature[poi_shared] && leftFeature[poi_disjoint];
 }
@@ -179,7 +179,7 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::DISJOINT);
 
   // return !leftFeature[poi_on_interior] && !leftFeature[poi_on_bound];
 }
@@ -201,7 +201,7 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::disjoint);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::DISJOINT);
 
   // return !leftFeature[poi_inside] && !leftFeature[poi_on_bound];
 }
@@ -224,13 +224,7 @@ bool Relationship2D::disjoint(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
-
-  // return !(leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
-  //     !rightFeature[bound_on_interior] &&
-  //     leftFeature[seg_unshared] &&
-  //     !leftFeature[bound_on_interior] &&
-  //     !leftFeature[bound_shared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::DISJOINT);
 }
 
 bool Relationship2D::disjoint(Line2D &leftOperand, Region2D &rightOperand)
@@ -251,13 +245,7 @@ bool Relationship2D::disjoint(Line2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
-
-  // return !leftFeature[seg_inside] &&
-  //     !(leftFeature[seg_shared] || leftFeature[poi_shared]) &&
-  //     leftFeature[seg_outside] &&
-  //     !leftFeature[bound_inside] &&
-  //     !leftFeature[bound_shared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::DISJOINT);
 }
 
 bool Relationship2D::disjoint(Region2D &leftOperand, Region2D &rightOperand)
@@ -278,13 +266,7 @@ bool Relationship2D::disjoint(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
-
-  // return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]) &&
-  //     (leftFeature[zero_one] || leftFeature[one_zero]) &&
-  //     (rightFeature[zero_one] || rightFeature[one_zero]);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::DISJOINT);
 }
 
 // Meet
@@ -306,9 +288,7 @@ bool Relationship2D::meet(Point2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
-
-  // return !leftFeature[poi_on_interior] && leftFeature[poi_on_bound];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::MEET);
 }
 
 bool Relationship2D::meet(Point2D &leftOperand, Region2D &rightOperand)
@@ -328,9 +308,7 @@ bool Relationship2D::meet(Point2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::meet);
-
-  // return !leftFeature[poi_inside] && leftFeature[poi_on_bound];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::MEET);
 }
 
 bool Relationship2D::meet(Line2D &leftOperand, Line2D &rightOperand)
@@ -351,9 +329,7 @@ bool Relationship2D::meet(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
-
-  // return !(leftFeature[seg_shared] || leftFeature[interior_poi_shared]) && leftFeature[seg_unshared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::MEET);
 }
 
 bool Relationship2D::meet(Line2D &leftOperand, Region2D &rightOperand)
@@ -374,11 +350,7 @@ bool Relationship2D::meet(Line2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
-
-  // return !leftFeature[seg_inside] &&
-  //     !leftFeature[seg_outside] &&
-  //     !leftFeature[bound_inside];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::MEET);
 }
 
 bool Relationship2D::meet(Region2D &leftOperand, Region2D &rightOperand)
@@ -399,13 +371,7 @@ bool Relationship2D::meet(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
-
-  // return !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(rightFeature[one_two] || rightFeature[two_one]) &&
-  //     (leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(leftFeature[one_two] || leftFeature[two_one]) &&
-  //     (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::MEET);
 }
 
 // Overlap
@@ -426,9 +392,7 @@ bool Relationship2D::overlap(Point2D &leftOperand, Point2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
-
-  // return leftFeature[poi_shared] && leftFeature[poi_disjoint] && rightFeature[poi_disjoint];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::OVERLAP);
 }
 
 bool Relationship2D::overlap(Point2D &leftOperand, Line2D &rightOperand)
@@ -449,9 +413,7 @@ bool Relationship2D::overlap(Point2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
-
-  // return leftFeature[poi_on_interior] && leftFeature[poi_disjoint];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::OVERLAP);
 }
 
 bool Relationship2D::overlap(Point2D &leftOperand, Region2D &rightOperand)
@@ -471,9 +433,7 @@ bool Relationship2D::overlap(Point2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::overlap);
-
-  // return leftFeature[poi_inside] && leftFeature[poi_outside];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::OVERLAP);
 }
 
 bool Relationship2D::overlap(Line2D &leftOperand, Line2D &rightOperand)
@@ -494,9 +454,7 @@ bool Relationship2D::overlap(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
-
-  // return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) && rightFeature[seg_unshared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::OVERLAP);
 }
 
 bool Relationship2D::overlap(Line2D &leftOperand, Region2D &rightOperand)
@@ -517,10 +475,7 @@ bool Relationship2D::overlap(Line2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
-
-  // return leftFeature[seg_inside] &&
-  //     leftFeature[seg_outside];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::OVERLAP);
 }
 
 bool Relationship2D::overlap(Region2D &leftOperand, Region2D &rightOperand)
@@ -541,11 +496,7 @@ bool Relationship2D::overlap(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
-
-  // return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     (leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     (leftFeature[one_two] || leftFeature[two_one] || leftFeature[one_one] || rightFeature[zero_one] || rightFeature[one_zero]);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::OVERLAP);
 }
 
 // Equal
@@ -566,9 +517,7 @@ bool Relationship2D::equal(Point2D &leftOperand, Point2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::equal);
-
-  // return !leftFeature[poi_disjoint] && !rightFeature[poi_disjoint];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::EQUAL);
 }
 
 bool Relationship2D::equal(Line2D &leftOperand, Line2D &rightOperand)
@@ -589,13 +538,7 @@ bool Relationship2D::equal(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::equal);
-
-  // return !rightFeature[bound_on_interior] &&
-  //     !leftFeature[seg_unshared] &&
-  //     !leftFeature[bound_on_interior] &&
-  //     !leftFeature[bound_disjoint] &&
-  //     !rightFeature[seg_unshared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::EQUAL);
 }
 
 bool Relationship2D::equal(Region2D &leftOperand, Region2D &rightOperand)
@@ -616,13 +559,7 @@ bool Relationship2D::equal(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::equal);
-
-  // return !(rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(leftFeature[one_two] || leftFeature[two_one]) &&
-  //     !(leftFeature[zero_one] || leftFeature[one_zero]) &&
-  //     !(leftFeature[one_two] || leftFeature[two_one] || leftFeature[one_one] || rightFeature[zero_one] || rightFeature[one_zero]);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::EQUAL);
 }
 
 // Inside
@@ -643,9 +580,7 @@ bool Relationship2D::inside(Point2D &leftOperand, Point2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
-
-  // return !leftFeature[poi_disjoint] && rightFeature[poi_disjoint];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::INSIDE);
 }
 
 bool Relationship2D::inside(Point2D &leftOperand, Line2D &rightOperand)
@@ -666,9 +601,7 @@ bool Relationship2D::inside(Point2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
-
-  // return leftFeature[poi_on_interior] && !leftFeature[poi_disjoint];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::INSIDE);
 }
 
 bool Relationship2D::inside(Point2D &leftOperand, Region2D &rightOperand)
@@ -688,9 +621,7 @@ bool Relationship2D::inside(Point2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::inside);
-
-  // return leftFeature[poi_inside] && !leftFeature[poi_outside];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::INSIDE);
 }
 
 bool Relationship2D::inside(Line2D &leftOperand, Line2D &rightOperand)
@@ -711,14 +642,7 @@ bool Relationship2D::inside(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
-
-  // return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
-  //     !rightFeature[bound_on_interior] &&
-  //     !leftFeature[seg_unshared] &&
-  //     !leftFeature[bound_shared] &&
-  //     !leftFeature[bound_disjoint] &&
-  //     rightFeature[seg_unshared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::INSIDE);
 }
 
 bool Relationship2D::inside(Line2D &leftOperand, Region2D &rightOperand)
@@ -739,11 +663,7 @@ bool Relationship2D::inside(Line2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
-
-  // return leftFeature[seg_inside] &&
-  //     !leftFeature[seg_outside] &&
-  //     !leftFeature[bound_shared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::INSIDE);
 }
 
 bool Relationship2D::inside(Region2D &leftOperand, Region2D &rightOperand)
@@ -764,13 +684,7 @@ bool Relationship2D::inside(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
-
-  // return !(rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     (leftFeature[one_two] || leftFeature[two_one]) &&
-  //     !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]) &&
-  //     !(leftFeature[zero_one] || leftFeature[one_zero]);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::INSIDE);
 }
 
 // Contains
@@ -791,9 +705,7 @@ bool Relationship2D::contains(Point2D &leftOperand, Point2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::contains);
-
-  // return leftFeature[poi_shared] && leftFeature[poi_disjoint] && !rightFeature[poi_disjoint];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::CONTAINS);
 }
 
 bool Relationship2D::contains(Line2D &leftOperand, Line2D &rightOperand)
@@ -814,13 +726,7 @@ bool Relationship2D::contains(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::contains);
-
-  // return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
-  //     leftFeature[seg_unshared] &&
-  //     !leftFeature[bound_on_interior] &&
-  //     !leftFeature[bound_shared] &&
-  //     !rightFeature[seg_unshared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::CONTAINS);
 }
 
 bool Relationship2D::contains(Region2D &leftOperand, Region2D &rightOperand)
@@ -841,13 +747,7 @@ bool Relationship2D::contains(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::contains);
-
-  // return (rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(leftFeature[one_two] || leftFeature[two_one]) &&
-  //     !(leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]) &&
-  //     (leftFeature[zero_one] || leftFeature[one_zero]) &&
-  //     !(leftFeature[one_two] || leftFeature[two_one] || leftFeature[one_one] || rightFeature[zero_one] || rightFeature[one_zero]);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::CONTAINS);
 }
 
 // Covers
@@ -869,13 +769,7 @@ bool Relationship2D::covers(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::covers);
-
-  // return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
-  //     leftFeature[seg_unshared] &&
-  //     !leftFeature[bound_on_interior] &&
-  //     leftFeature[bound_shared] &&
-  //     !rightFeature[seg_unshared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::COVERS);
 }
 
 bool Relationship2D::covers(Region2D &leftOperand, Region2D &rightOperand)
@@ -896,13 +790,7 @@ bool Relationship2D::covers(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::covers);
-
-  // return (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_two] || leftFeature[two_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-  //     !(leftFeature[one_two] || leftFeature[two_one]) &&
-  //     (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]) &&
-  //     !(leftFeature[one_two] || leftFeature[two_one] || leftFeature[one_one] || rightFeature[zero_one] || rightFeature[one_zero]) &&
-  //     !(rightFeature[zero_one] || rightFeature[one_zero]);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::COVERS);
 }
 
 // CoveredBy
@@ -924,14 +812,7 @@ bool Relationship2D::coveredBy(Line2D &leftOperand, Line2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::coveredBy);
-
-  // return (leftFeature[seg_shared] || leftFeature[interior_poi_shared]) &&
-  //     !rightFeature[bound_on_interior] &&
-  //     !leftFeature[seg_unshared] &&
-  //     leftFeature[bound_shared] &&
-  //     !leftFeature[bound_disjoint] &&
-  //     rightFeature[seg_unshared];
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::COVEREDBY);
 }
 
 bool Relationship2D::coveredBy(Line2D &leftOperand, Region2D &rightOperand)
@@ -952,11 +833,7 @@ bool Relationship2D::coveredBy(Line2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::coveredBy);
-
-  /* return leftFeature[seg_inside] &&
-      !leftFeature[seg_outside] &&
-      leftFeature[bound_shared]; */
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::COVEREDBY);
 }
 
 bool Relationship2D::coveredBy(Region2D &leftOperand, Region2D &rightOperand)
@@ -977,11 +854,5 @@ bool Relationship2D::coveredBy(Region2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::coveredBy);
-
-  /* return !(rightFeature[one_two] || rightFeature[two_one]) &&
-      !(leftFeature[zero_one] || leftFeature[one_zero] || leftFeature[one_one] || rightFeature[one_two] || rightFeature[two_one]) &&
-      (leftFeature[zero_two] || leftFeature[two_zero] || leftFeature[one_one] || leftFeature[bound_poi_shared]) &&
-      !(leftFeature[zero_one] || leftFeature[one_zero]) &&
-      (leftFeature[one_two] || leftFeature[two_one] || leftFeature[one_one] || rightFeature[zero_one] || rightFeature[one_zero]); */
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::COVEREDBY);
 }
