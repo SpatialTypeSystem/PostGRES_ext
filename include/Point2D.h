@@ -16,6 +16,26 @@ public:
 	Point2D(std::string listOfPoint2DString);	// Read the string as a vector of RGPPoint2D and form a Point2D
 	~Point2D();
 
+	class iterator
+	{
+		public:
+			iterator(RGPPoint2D*);
+			RGPPoint2D operator*();
+			RGPPoint2D operator++(int);
+			RGPPoint2D operator++();
+			bool operator!=(const iterator&);
+			bool operator==(const iterator&);
+			RGPPoint2D *ptr;
+	};
+
+	iterator begin();
+	iterator end();
+
+	bool add(RGPPoint2D rgpp2d);	// Adds a new RGPPoint2D to the existing Point2D object
+	bool update(iterator it, RGPPoint2D rgpp2d);	// Updates RGPPoint2D existing at specified index
+	bool remove(iterator it);	// Removes a RGPPoint2D at specified index
+
+
 	// Methods
 	std::string getPointString();  // Get the point as human readable ASCII string
 	bool isEmptyPoint();	// Checks if the Point2D object is empty
