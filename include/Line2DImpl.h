@@ -35,12 +35,12 @@ class Line2DImpl
 		iterator end();   // return an iterator to the last element
 		
 		// Methods
-		std::string getLineString(); // Get the line as human readable ASCII string
 		void printAllLines(); // print all half segments in the vector
 		bool isEmptyLine(); // checks if the line object is empty
 		bool isValidLine();
 		int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
-		Line2DImpl getBoundingBox(); // find the bounding box diaginal
+		RGPSegment2D getBoundingBox(); // find the bounding box diaginal
+		std::vector<RGPHalfSegment2D> getVectorOfSegments();
 		
 		bool add(RGPSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
 		bool update(iterator it, RGPSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
