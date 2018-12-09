@@ -6,41 +6,35 @@
 #define RGPSEGMENT2D_H
 
 #include "RGPPoint2D.h"
-#include "Optional.h"
 
-class RGPSegment2D
-{
+class RGPSegment2D {
 public:
+  // Members
 
-    // Members
+  RGPPoint2D point1, point2;
 
-    RGPPoint2D point1, point2;
+  // Constructors
 
-    // Constructors
+  RGPSegment2D(RGPPoint2D p1, RGPPoint2D p2);
+  ~RGPSegment2D();
 
-    RGPSegment2D(RGPPoint2D p1, RGPPoint2D p2);
-    ~RGPSegment2D();
+  // Methods
 
-    // Methods
+  bool operator==(const RGPSegment2D &rhs);
+  bool operator!=(const RGPSegment2D &rhs);
+  bool operator<(const RGPSegment2D &rhs);
+  bool operator<=(const RGPSegment2D &rhs);
+  bool operator>(const RGPSegment2D &rhs);
+  bool operator>=(const RGPSegment2D &rhs);
+  bool contains(const RGPPoint2D p);
 
-    bool operator==(const RGPSegment2D &rhs) const;
-    bool operator!=(const RGPSegment2D &rhs) const;
-    bool operator<(const RGPSegment2D &rhs) const;
-    bool operator<=(const RGPSegment2D &rhs) const;
-    bool operator>(const RGPSegment2D &rhs) const;
-    bool operator>=(const RGPSegment2D &rhs) const;
+  // Allows ouptut of an RGPSegment2D in the format of "(x1,y1),(x2,y2)"
+  friend std::ostream &operator<<(std::ostream &os, const RGPSegment2D p);
 
-    bool operator<(const RGPPoint2D &rhs) const;
-    bool operator>(const RGPPoint2D &rhs) const;
-
-    // Allows ouptut of an RGPSegment2D in the format of "(x1,y1),(x2,y2)"
-    friend std::ostream& operator<<(std::ostream& os, const RGPSegment2D p);
-
-    // Allows input of an RGPSegment2D in the format of "(x1,y1),(x2,y2)"
-    // where ',' will be the delimiter between the x and y values of point1
-    // and point2
-    friend std::istream& operator>>(std::istream& is, const RGPSegment2D p);
-
+  // Allows input of an RGPSegment2D in the format of "(x1,y1),(x2,y2)"
+  // where ',' will be the delimiter between the x and y values of point1
+  // and point2
+  friend std::istream &operator>>(std::istream &is, const RGPSegment2D p);
 };
 
-#endif //RGPSEGMENT2D_H
+#endif // RGPSEGMENT2D_H

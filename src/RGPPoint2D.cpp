@@ -2,28 +2,42 @@
 
 // Constructors
 
-RGPPoint2D::RGPPoint2D(Number x, Number y) : y(x), x(y) {}
+RGPPoint2D::RGPPoint2D(Number x, Number y) : x(x), y(y) {}
 RGPPoint2D::~RGPPoint2D() {}
 
 // Methods
 
-bool RGPPoint2D::operator==(const RGPPoint2D &rhs) const {}
-bool RGPPoint2D::operator!=(const RGPPoint2D &rhs) const {}
-bool RGPPoint2D::operator<(const RGPPoint2D &rhs) const {}
-bool RGPPoint2D::operator<=(const RGPPoint2D &rhs) const {}
-bool RGPPoint2D::operator>(const RGPPoint2D &rhs) const {}
-bool RGPPoint2D::operator>=(const RGPPoint2D &rhs) const {}
+bool RGPPoint2D::operator==(const RGPPoint2D &rhs) {
+  if (x == rhs.x && y == rhs.y)
+    return true;
+  else
+    return false;
+}
+bool RGPPoint2D::operator!=(const RGPPoint2D &rhs) { return !((*this) == rhs); }
+bool RGPPoint2D::operator<(const RGPPoint2D &rhs) {
+  if (x < rhs.x || (x == rhs.x && y < rhs.y))
+    return true;
+  else
+    return false;
+}
+bool RGPPoint2D::operator<=(const RGPPoint2D &rhs) {
+  return (*this) < rhs || (*this) == rhs;
+}
+bool RGPPoint2D::operator>(const RGPPoint2D &rhs) { return !((*this) <= rhs); }
+bool RGPPoint2D::operator>=(const RGPPoint2D &rhs) { return !((*this) < rhs); }
 
-// bool RGPPoint2D::operator<(const RGPHalfSegment2D &rhs) const {
-//   return true;
-// }
-// bool RGPPoint2D::operator>(const RGPHalfSegment2D &rhs) const {
-//   return true;
-// }
+std::ostream &operator<<(std::ostream &os, const RGPPoint2D p) {
+  os << "(" << p.x << "," << p.y << ")";
+  return os;
+}
 
-// bool RGPPoint2D::operator<(const RGPAnnotatedHalfSegment2D &rhs) const {
-//   return true;
-// }
-// bool RGPPoint2D::operator>(const RGPAnnotatedHalfSegment2D &rhs) const {
-//   return true;
-// }
+std::istream &operator>>(std::istream &is, RGPPoint2D p) {
+  // TODO: Check for invalid conditions
+  char c;
+  is >> c;
+  is >> p.x;
+  is >> c;
+  is >> p.y;
+  is >> c;
+  return is;
+}

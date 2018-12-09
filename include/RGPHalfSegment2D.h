@@ -1,53 +1,47 @@
 #ifndef RGPHALFSEGMENT2D_H
 #define RGPHALFSEGMENT2D_H
 
-#include "RGPSegment2D.h"
 #include "RGPPoint2D.h"
-#include "Optional.h"
+#include "RGPSegment2D.h"
 
-class RGPHalfSegment2D
-{
+class RGPHalfSegment2D {
 public:
+  // Members
 
-    // Members
+  RGPSegment2D segment;
+  RGPPoint2D dominantPoint;
+  bool isLeftFlag;
+  Number m; // Slope
 
-    RGPSegment2D segment;
-    RGPPoint2D dominantPoint;
+  // Constructors
 
-    // Constructors
+  RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp);
+  ~RGPHalfSegment2D();
 
-    RGPHalfSegment2D(RGPSegment2D s, RGPPoint2D dp);
-    ~RGPHalfSegment2D();
+  // Methods
 
-    // Methods
-
-    bool operator==(const RGPHalfSegment2D &rhs) const;
-    bool operator!=(const RGPHalfSegment2D &rhs) const;
-    bool operator<(const RGPHalfSegment2D &rhs) const;
-    bool operator<=(const RGPHalfSegment2D &rhs) const;
-    bool operator>(const RGPHalfSegment2D &rhs) const;
-    bool operator>=(const RGPHalfSegment2D &rhs) const;
-
-    bool operator<(const RGPPoint2D &rhs) const;
-    bool operator>(const RGPPoint2D &rhs) const;
-
+  bool operator==(const RGPHalfSegment2D &rhs);
+  bool operator!=(const RGPHalfSegment2D &rhs);
+  bool operator<(const RGPHalfSegment2D &rhs);
+  bool operator<=(const RGPHalfSegment2D &rhs);
+  bool operator>(const RGPHalfSegment2D &rhs);
+  bool operator>=(const RGPHalfSegment2D &rhs);
+  bool isLeft();
+  Number sqLen() const; // Square of length
 };
 
-class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D
-{
+class RGPAnnotatedHalfSegment2D : public RGPHalfSegment2D {
 public:
+  // Members
 
-    // Members
+  bool insideIsAbove;
 
-    bool interiorIsAbove;
+  // Constructors
 
-    // Constructors
+  RGPAnnotatedHalfSegment2D(RGPSegment2D s, RGPPoint2D dp, bool regAbove);
+  ~RGPAnnotatedHalfSegment2D();
 
-    RGPAnnotatedHalfSegment2D(RGPSegment2D s, RGPPoint2D dp, bool regAbove);
-    ~RGPAnnotatedHalfSegment2D();
-
-    // Methods
-
+  // Methods
 };
 
-#endif //RGPHALFSEGMENT2D_H
+#endif // RGPHALFSEGMENT2D_H

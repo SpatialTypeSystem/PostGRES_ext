@@ -1,81 +1,66 @@
 #include "Line2D.h"
+#include "Line2DImpl.h"
 
-class Line2D::Line2DImpl {};
+struct Line2D::Line2DStore {
+	Line2DImpl *implPointer;
 
-Line2D::Line2D()
-{
-	// Emtpy
-}
+	Line2DStore(std::string linesString) 
+	{
+		implPointer = new Line2DImpl(linesString);
+	}
 
-Line2D::Line2D(std::vector<RGPHalfSegment2D> listOfSegments)
-{
-	// Emtpy
-}
+	Line2DStore(std::ifstream& file) 
+	{
+		implPointer = new Line2DImpl(file);
+	}
+};
 
 Line2D::Line2D(std::string listOfLine2DString)
 {
-	// Emtpy
+	handle = new Line2DStore(listOfLine2DString);
 }
 
 Line2D::Line2D(std::ifstream& file) // Send in file for constructor
 {
-	// Emtpy
+	handle = new Line2DStore(file);
 }
 
 Line2D::~Line2D()
 {
-	// Emtpy
+	delete handle->implPointer;
+	delete handle;
 }
-
 
 // Methods
 std::string Line2D::getLineString() // Get the line as human readable ASCII string
 {
-	// Emtpy
+	return handle->implPointer->getLineString();
 }
 
 // static
 bool Line2D::isEmptyLine()
 {
-	// Emtpy
+	return handle->implPointer->isEmptyLine();
 }
 
 int Line2D::Line2D::getNumberOfSegments()
 {
-	// Emtpy
-}
-
-std::vector<RGPSegment2D> Line2D::getBoundingBox()
-{
-	// Emtpy
-}
-
-bool Line2D::add(RGPSegment2D rgp2d)
-{
-	// Emtpy
-}
-
-bool Line2D::remove(int index)
-{
-	// Emtpy
-}
-
-bool update(int index, RGPSegment2D rgps2d)
-{
-	// Emtpy
+	return handle->implPointer->getNumberOfSegments();
 }
 
 bool Line2D::operator==(const Line2D &l2d)
 {
-	// Emtpy
+	// TODO
+	//return handle->implPointer->operator==(&l2d);
 }
 
 bool Line2D::operator!=(const Line2D &l2d)
 {
-	// Emtpy
+	// TODO
+	//return handle->implPointer->operator!=(&l2d);
 }
 
-RGPSegment2D Line2D::operator[](int index)
+Line2DImpl Line2D::getBoundingBox()
 {
-	// Emtpy
+	return handle->implPointer->getBoundingBox();
 }

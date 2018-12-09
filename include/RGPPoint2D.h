@@ -6,45 +6,33 @@
 #define RGPPOINT2D_H
 
 #include "Number.h"
-#include "Optional.h"
 
-class RGPPoint2D
-{
+class RGPPoint2D {
 public:
+  // Members
 
-    // Members
+  Number x, y;
 
-    Number x, y;
+  // Constructors
 
-    // Constructors
+  RGPPoint2D(Number x, Number y);
+  ~RGPPoint2D();
 
-    RGPPoint2D(Number x, Number y);
-    ~RGPPoint2D();
+  // Methods
 
-    // Methods
+  bool operator==(const RGPPoint2D &rhs);
+  bool operator!=(const RGPPoint2D &rhs);
+  bool operator<(const RGPPoint2D &rhs);
+  bool operator<=(const RGPPoint2D &rhs);
+  bool operator>(const RGPPoint2D &rhs);
+  bool operator>=(const RGPPoint2D &rhs);
 
-    bool operator==(const RGPPoint2D &rhs) const;
-    bool operator!=(const RGPPoint2D &rhs) const;
-    bool operator<(const RGPPoint2D &rhs) const;
-    bool operator<=(const RGPPoint2D &rhs) const;
-    bool operator>(const RGPPoint2D &rhs) const;
-    bool operator>=(const RGPPoint2D &rhs) const;
+  // Allows ouptut of an RGPPoint2D in the format of "(x,y)"
+  friend std::ostream &operator<<(std::ostream &os, const RGPPoint2D p);
 
-    // bool operator<(const RGPHalfSegment2D &rhs) const;
-    // bool operator>(const RGPHalfSegment2D &rhs) const;
-
-    // bool operator<(const RGPAnnotatedHalfSegment2D &rhs) const;
-    // bool operator>(const RGPAnnotatedHalfSegment2D &rhs) const;
-
-
-
-    // Allows ouptut of an RGPPoint2D in the format of "(x,y)"
-    friend std::ostream& operator<<(std::ostream& os, const RGPPoint2D p);
-
-    // Allows input of an RGPPoint2D in the format of "(x,y)" where ',' will be
-    // the delimiter between the x and y values
-    friend std::istream& operator>>(std::istream& is, const RGPPoint2D p);
-
+  // Allows input of an RGPPoint2D in the format of "(x,y)" where ',' will be
+  // the delimiter between the x and y values
+  friend std::istream &operator>>(std::istream &is, RGPPoint2D p);
 };
 
-#endif //RGPPOINT2D_H
+#endif // RGPPOINT2D_H
