@@ -37,7 +37,6 @@ public:
 	bool add(RGPPoint2D rgpp2d);	// Adds a new RGPPoint2D to the existing Point2D object
 	bool update(iterator it, RGPPoint2D rgpp2d);	// Updates RGPPoint2D existing at specified index
 	bool remove(iterator it);	// Removes a RGPPoint2D at specified index
-	//RGPPoint2D operator[](int index);	// Retrieves a RGPPoint2D at specified index
 
 private:
 	struct Point2DProgrammerStore;
