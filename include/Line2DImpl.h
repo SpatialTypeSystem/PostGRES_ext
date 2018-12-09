@@ -12,12 +12,13 @@ class Line2DImpl
 {
 	public:	
 		// Constructors
-		Line2DImpl();
-		Line2DImpl(std::vector<RGPSegment2D> listOfSegments);
-		Line2DImpl(std::string listOfLine2DString);
+		Line2DImpl(); // no args
+		Line2DImpl(std::vector<RGPSegment2D> listOfSegments); //send in a vector of segments
+		Line2DImpl(std::string listOfLine2DString); // send in a string
 		Line2DImpl(std::ifstream& file); // Send in file for constructor
-		~Line2DImpl();
+		~Line2DImpl(); //destructor
 
+		//iterator to run through the list of half segments
 		class iterator
 		{
 			public:
@@ -30,16 +31,16 @@ class Line2DImpl
 				RGPHalfSegment2D *ptr;
 		};
 		
-		iterator begin();
-		iterator end();
+		iterator begin(); // return an iterator to the first element
+		iterator end();   // return an iterator to the last element
 		
 		// Methods
 		std::string getLineString(); // Get the line as human readable ASCII string
-		void printAllLines();
-		bool isEmptyLine();
+		void printAllLines(); // print all half segments in the vector
+		bool isEmptyLine(); // checks if the line object is empty
 		bool isValidLine();
 		int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
-		Line2DImpl getBoundingBox();
+		Line2DImpl getBoundingBox(); // find the bounding box diaginal
 		
 		bool add(RGPSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
 		bool update(iterator it, RGPSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
