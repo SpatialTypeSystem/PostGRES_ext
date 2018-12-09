@@ -10,7 +10,7 @@
 // --------------------------- Determination -----------------------------------
 // =============================================================================
 
-PREDICATE Relationship2D::determine(Point2D &leftOperand, Point2D &rightOperand)
+Predicate Relationship2D::determine(Point2D &leftOperand, Point2D &rightOperand)
 {
   // Explore
   explore(leftOperand, rightOperand, leftFeature, rightFeature);
@@ -18,7 +18,7 @@ PREDICATE Relationship2D::determine(Point2D &leftOperand, Point2D &rightOperand)
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
  
-PREDICATE Relationship2D::determine(Point2D &leftOperand, Line2D &rightOperand)
+Predicate Relationship2D::determine(Point2D &leftOperand, Line2D &rightOperand)
 {
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
@@ -26,7 +26,7 @@ PREDICATE Relationship2D::determine(Point2D &leftOperand, Line2D &rightOperand)
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
   
-PREDICATE Relationship2D::determine(Point2D &leftOperand, Region2D &rightOperand)
+Predicate Relationship2D::determine(Point2D &leftOperand, Region2D &rightOperand)
 {
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
@@ -34,7 +34,7 @@ PREDICATE Relationship2D::determine(Point2D &leftOperand, Region2D &rightOperand
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
 
-PREDICATE Relationship2D::determine(Line2D &leftOperand, Line2D &rightOperand)
+Predicate Relationship2D::determine(Line2D &leftOperand, Line2D &rightOperand)
 {
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
@@ -42,7 +42,7 @@ PREDICATE Relationship2D::determine(Line2D &leftOperand, Line2D &rightOperand)
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
 
-PREDICATE Relationship2D::determine(Line2D &leftOperand, Region2D &rightOperand)
+Predicate Relationship2D::determine(Line2D &leftOperand, Region2D &rightOperand)
 {
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
@@ -50,7 +50,7 @@ PREDICATE Relationship2D::determine(Line2D &leftOperand, Region2D &rightOperand)
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
  
-PREDICATE Relationship2D::determine(Region2D &leftOperand, Region2D &rightOperand)
+Predicate Relationship2D::determine(Region2D &leftOperand, Region2D &rightOperand)
 {
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);

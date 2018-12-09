@@ -1,6 +1,7 @@
 #ifndef POSTGRES_EXT_RELATIONSHIP2D_H
 #define POSTGRES_EXT_RELATIONSHIP2D_H
 
+#include "PredicateEnum.h"
 #include "Point2D.h"
 #include "Line2D.h"
 #include "Region2D.h"
@@ -14,13 +15,13 @@ public:
 
   // Determine relationship
   // Reference these from Evaluate.h
-  enum PREDICATE { disjoint, meet, overlap, covers, contains, equal, inside, coveredBy };
-  static PREDICATE determine(Point2D &leftOperand, Point2D &rightOperand);
-  static PREDICATE determine(Point2D &leftOperand, Line2D &rightOperand);
-  static PREDICATE determine(Point2D &leftOperand, Region2D &rightOperand);
-  static PREDICATE determine(Line2D &leftOperand, Line2D &rightOperand);
-  static PREDICATE determine(Line2D &leftOperand, Region2D &rightOperand);
-  static PREDICATE determine(Region2D &leftOperand, Region2D &rightOperand);
+ //  enum PREDICATE { disjoint, meet, overlap, covers, contains, equal, inside, coveredBy };
+  static Predicate determine(Point2D &leftOperand, Point2D &rightOperand);
+  static Predicate determine(Point2D &leftOperand, Line2D &rightOperand);
+  static Predicate determine(Point2D &leftOperand, Region2D &rightOperand);
+  static Predicate determine(Line2D &leftOperand, Line2D &rightOperand);
+  static Predicate determine(Line2D &leftOperand, Region2D &rightOperand);
+  static Predicate determine(Region2D &leftOperand, Region2D &rightOperand);
 
   // Disjoint
   static bool disjoint(Point2D &leftOperand, Point2D &rightOperand);
