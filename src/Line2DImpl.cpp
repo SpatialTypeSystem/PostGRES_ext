@@ -139,9 +139,7 @@ Line2DImpl::Line2DImpl(std::ifstream& file)
 
 Line2DImpl::~Line2DImpl()
 {
-	// TODO
-	// delete handle->vectorOfSegments;
-	// delete handle;
+	delete handle;
 }
 
 // Methods
@@ -165,18 +163,6 @@ void Line2DImpl::printAllLines()
 bool Line2DImpl::isEmptyLine()
 {
 	return handle->vectorOfSegments.empty();
-}
-
-bool Line2DImpl::isValidLine()
-{
-	bool validity = false;
-	if(!handle->vectorOfSegments.empty()) 
-	{
-		//Check for validity
-		//TODO
-	}
-
-	return validity;
 }
 
 //method to get total number of segments in out object
