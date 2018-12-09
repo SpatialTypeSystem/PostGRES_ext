@@ -17,9 +17,9 @@ bool Evaluate::validate( Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
-bool Evaluate::validate( Point2DImpl  &spatialObj_F, Region2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
+bool Evaluate::validate( Point2DImpl  &spatialObj_F, Region2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF Predicate predicate)
 {
-	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
+	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF) == predicate ) { return true; } else { return false; }
 }
 
 bool Evaluate::validate( Line2DImpl   &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
@@ -122,7 +122,7 @@ Predicate Evaluate::determine( Point2DImpl  &spatialObj_F, Line2DImpl &spatialOb
 	}
 }
 
-Predicate Evaluate::determine( Point2DImpl  &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+Predicate Evaluate::determine( Point2DImpl  &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF)
 {
 	enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
 	
