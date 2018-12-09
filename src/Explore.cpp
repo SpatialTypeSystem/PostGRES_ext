@@ -1,7 +1,8 @@
 #include "../include/Explore.h"
 
 // Point x Point
-void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+// void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+void Explore::explore(std::vector<RGPPoint2D>::iterator pointerObj_F, std::vector<RGPPoint2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
   // Indicates what index in the bool vector represents what flag
   enum VectorFlag {poi_shared, poi_disjoint};
@@ -42,7 +43,8 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, s
 }
 
 // Point x Line
-void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+// void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+void Explore::explore(std::vector<RGPPoint2D>::iterator pointerObj_F, std::vector<RGPHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
   // Indicates what index in the bool vector represents what flag
   enum VectorFlag {poi_disjoint, poi_on_interior, poi_on_bound, bound_poi_disjoint};
@@ -129,7 +131,8 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, s
 }
 
 // Point x Region
-void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, std::vector<bool> &featureVectorF)
+// void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, std::vector<bool> &featureVectorF)
+void Explore::explore(std::vector<RGPPoint2D>::iterator pointerObj_F, std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
   // Indicates what index in the bool vector represents what flag
   enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
@@ -196,7 +199,8 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, st
 }
 
 // Line x Line
-void Explore::explore(Line2DImpl &spatialObj_F, Line2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+// void Explore::explore(Line2DImpl &spatialObj_F, Line2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+void Explore::explore(std::vector<RGPHalfSegment2D>::iterator pointerObj_F, std::vector<RGPHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
   // Indicates what index in the bool vector represents what flag
   enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
@@ -385,7 +389,8 @@ void Explore::explore(Line2DImpl &spatialObj_F, Line2DImpl &spatialObj_G, std::v
 }
 
 // Line x Region
-void Explore::explore(Line2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+// void Explore::explore(Line2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+void Explore::explore(std::vector<RGPHalfSegment2D>::iterator pointerObj_F, std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
   // Indicates what index in the bool vector represents what flag
   enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
@@ -544,7 +549,8 @@ void Explore::explore(Line2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std
 }
 
 // Region x Region
-void Explore::explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+//void Explore::explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+void Explore::explore(std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_F, std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
   // Indicates what index in the bool vector represents what flag
   enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};

@@ -17,7 +17,7 @@ bool Evaluate::validate( Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
-bool Evaluate::validate( Point2DImpl  &spatialObj_F, Region2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF Predicate predicate)
+bool Evaluate::validate( Point2DImpl  &spatialObj_F, Region2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, Predicate predicate)
 {
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF) == predicate ) { return true; } else { return false; }
 }

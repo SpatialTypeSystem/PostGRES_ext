@@ -31,7 +31,7 @@ Predicate Relationship2D::determine(Point2D &leftOperand, Region2D &rightOperand
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
+  return Evaluate::determine(leftOperand, rightOperand, leftFeature);
 }
 
 Predicate Relationship2D::determine(Line2D &leftOperand, Line2D &rightOperand)
@@ -197,7 +197,7 @@ bool Relationship2D::meet(Point2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::meet);
 
   // return !leftFeature[poi_inside] && leftFeature[poi_on_bound];
 }
@@ -299,7 +299,7 @@ bool Relationship2D::overlap(Point2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::overlap);
 
   // return leftFeature[poi_inside] && leftFeature[poi_outside];
 }
@@ -455,7 +455,7 @@ bool Relationship2D::inside(Point2D &leftOperand, Region2D &rightOperand)
   // Explore
   Explore::explore(leftOperand, rightOperand, leftFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::inside);
 
   // return leftFeature[poi_inside] && !leftFeature[poi_outside];
 }

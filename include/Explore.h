@@ -15,12 +15,12 @@ public:
     ~Explore();
 
     // F and G are spatial objects where F is of same or lower dimension then G
-    void explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-    void explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-    void explore(Point2DImpl  &spatialObj_F, Region2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF);
-    void explore(Line2DImpl   &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-    void explore(Line2DImpl   &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
-    void explore(Region2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+    void explore(std::vector<RGPPoint2D>::iterator pointerObj_F, std::vector<RGPPoint2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+    void explore(std::vector<RGPPoint2D>::iterator pointerObj_F, std::vector<RGPHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);    
+    void explore(std::vector<RGPPoint2D>::iterator pointerObj_F, std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+    void explore(std::vector<RGPHalfSegment2D>::iterator pointerObj_F, std::vector<RGPHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+    void explore(std::vector<RGPHalfSegment2D>::iterator pointerObj_F, std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
+    void explore(std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_F, std::vector<RGPAnnotatedHalfSegment2D>::iterator pointerObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG);
 
 private:
 
