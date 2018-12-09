@@ -485,12 +485,7 @@ bool Region2DImpl::addFace(std::vector<RGPSegment2D>)
 	// Emtpy
 }
 
-bool Region2DImpl::update(int index, std::vector<RGPSegment2D>)
-{
-	// Emtpy
-}
-
-bool Region2DImpl::remove(int index)
+bool Region2DImpl::removeFace(int index)
 {
 	// Emtpy
 }
