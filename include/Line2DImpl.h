@@ -37,7 +37,6 @@ class Line2DImpl
 		// Methods
 		void printAllLines(); // print all half segments in the vector
 		bool isEmptyLine(); // checks if the line object is empty
-		bool isValidLine();
 		int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
 		RGPSegment2D getBoundingBox(); // find the bounding box diaginal
 		std::vector<RGPHalfSegment2D> getVectorOfSegments();
