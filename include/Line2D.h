@@ -36,7 +36,6 @@ public:
 	// Methods
 	void printAllLines(); // print all half segments in the vector
 	bool isEmptyLine();
-	bool isValidLine();
 	int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
 
 	bool operator==(const Line2D &l2d);	// Override of operator == to check equality of two Line2Ds
