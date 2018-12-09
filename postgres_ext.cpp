@@ -10,7 +10,7 @@
 #include "include/Region2DImpl.h"
 
 #include "include/Point2D.h"
-#include "include/Line2DImpl.h"
+#include "include/Line2D.h"
 
 void callLine();
 int main(void)
@@ -160,13 +160,13 @@ void callLine()
 	
 	//adding through strings.
 	std::string str = "(((3,4),(2,2)),((6,2),(5,3)),((6,1),(7,9)),((8,4),(6,6)))";
-	Line2DImpl ln(str);
+	Line2D ln(str);
 	std::string str2 = "(((3,4),(2,2)),((6,2),(5,3)),((6,1),(7,9)),((8,4),(6,6)))";
-	Line2DImpl ln2(str2);
+	Line2D ln2(str2);
 
 	//adding through strings when input format is not correct
 	std::string str3 = "(((3,4),(2,2)),((6,2),(5,3)),((6,1)(7,9)),((8,4),(6,6)))";
-	Line2DImpl wrongInp(str3);
+	Line2D wrongInp(str3);
 
 	//checking operator !=
 	std::cout<<"check if ln1!=ln2"<<std::endl;
@@ -191,7 +191,7 @@ void callLine()
 
 	//checking the functionality of an iterator
 	std::cout<<"Travesed segments through iterators"<<std::endl;
-	for(Line2DImpl::iterator it = ln.begin(); it!=ln.end(); it++)
+	for(Line2D::iterator it = ln.begin(); it!=ln.end(); it++)
 	{
 		std::cout<<(*it).segment;
 	}
@@ -203,26 +203,26 @@ void callLine()
 	RGPSegment2D seg(p1,p2);
 	std::cout<<"list after adding"<<std::endl;
 	ln.add(seg);
-	for(Line2DImpl::iterator it = ln.begin(); it!=ln.end(); it++)
+	for(Line2D::iterator it = ln.begin(); it!=ln.end(); it++)
 	{
 		std::cout<<(*it).segment;
 	}
 	std::cout<<std::endl;
 
 	//code for removing a segment from an object
-	Line2DImpl::iterator it = ln.begin();
+	Line2D::iterator it = ln.begin();
 	it++;
 	it++;
 	ln.remove(it);
 	std::cout<<"list after removing the segment"<<std::endl;
-	for(Line2DImpl::iterator it = ln.begin(); it!=ln.end(); it++)
+	for(Line2D::iterator it = ln.begin(); it!=ln.end(); it++)
 	{
 		std::cout<<(*it).segment;
 	}
 	std::cout<<std::endl;
 
 	//code for updating a segment through iterator
-	Line2DImpl::iterator it1 = ln.begin();
+	Line2D::iterator it1 = ln.begin();
 	it1++;
 	RGPPoint2D p3(Number("12"),Number("5"));
 	RGPPoint2D p4(Number("2"),Number("5"));
@@ -235,21 +235,13 @@ void callLine()
 	}
 	std::cout<<std::endl;
 
-	//checking functionality of index and "=" operator overloading
-	Line2DImpl ln3;
-	ln3 = ln[2];
-	Line2DImpl::iterator it4 = ln3.begin();
-	std::cout<<"after assigning the vector is "<<std::endl;
-	std::cout<<(*it4).segment<<std::endl;
-
 	//checking method to print all lines
 	std::cout<<"method to print all the segments in our object"<<std::endl;
 	ln.printAllLines();
 	std::cout<<std::endl;
 
 	//method to get the bounding boxe
-	Line2DImpl ln4 = ln.getBoundingBox();
-	Line2DImpl::iterator it5 = ln4.begin();
+	RGPSegment2D ln4 = ln.getBoundingBox();
 	std::cout<<"bounding box is "<<std::endl;
-	std::cout<<(*it5).segment<<std::endl;
+	std::cout<<ln4<<std::endl;
 }
