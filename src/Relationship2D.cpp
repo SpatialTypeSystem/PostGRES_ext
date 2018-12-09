@@ -12,48 +12,124 @@
 
 Predicate Relationship2D::determine(Point2D &leftOperand, Point2D &rightOperand)
 {
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Point2DForProgrammer rightFP = Point2DForProgrammer(rightOperand);
+
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPPoint2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
+  std::vector<bool> leftFeature(2, false);
+  std::vector<bool> rightFeature(1, false);
+
   // Explore
-  explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
- 
+
 Predicate Relationship2D::determine(Point2D &leftOperand, Line2D &rightOperand)
 {
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
+
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
+  std::vector<bool> leftFeature(3, false);
+  std::vector<bool> rightFeature(1, false);
+
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
-  
+
 Predicate Relationship2D::determine(Point2D &leftOperand, Region2D &rightOperand)
 {
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
+
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
+  std::vector<bool> leftFeature(3, false);
+
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
   return Evaluate::determine(leftOperand, rightOperand, leftFeature);
 }
 
 Predicate Relationship2D::determine(Line2D &leftOperand, Line2D &rightOperand)
 {
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
+
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
+  std::vector<bool> leftFeature(6, false);
+  std::vector<bool> rightFeature(3, false);
+
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
 
 Predicate Relationship2D::determine(Line2D &leftOperand, Region2D &rightOperand)
 {
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
+
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
+  std::vector<bool> leftFeature(7, false);
+  std::vector<bool> rightFeature(1, false);
+
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
- 
+
 Predicate Relationship2D::determine(Region2D &leftOperand, Region2D &rightOperand)
 {
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
+
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
+  std::vector<bool> leftFeature(8, false);
+  std::vector<bool> rightFeature(4, false);
+
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::determine(leftOperand, rightOperand, leftFeature, rightFeature);
 }
@@ -65,14 +141,20 @@ Predicate Relationship2D::determine(Region2D &leftOperand, Region2D &rightOperan
 // Disjoint
 bool Relationship2D::disjoint(Point2D &leftOperand, Point2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_shared, poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Point2DForProgrammer rightFP = Point2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPPoint2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
 
@@ -81,14 +163,21 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Point2D &rightOperand)
 
 bool Relationship2D::disjoint(Point2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_disjoint, poi_on_interior, poi_on_bound, bound_poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
 
@@ -97,29 +186,43 @@ bool Relationship2D::disjoint(Point2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::disjoint(Point2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
-  return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
+  return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::disjoint);
 
   // return !leftFeature[poi_inside] && !leftFeature[poi_on_bound];
 }
 
 bool Relationship2D::disjoint(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
 
@@ -132,14 +235,21 @@ bool Relationship2D::disjoint(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::disjoint(Line2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
 
@@ -152,14 +262,21 @@ bool Relationship2D::disjoint(Line2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::disjoint(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::disjoint);
 
@@ -173,14 +290,21 @@ bool Relationship2D::disjoint(Region2D &leftOperand, Region2D &rightOperand)
 // Meet
 bool Relationship2D::meet(Point2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_disjoint, poi_on_interior, poi_on_bound, bound_poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
 
@@ -189,13 +313,20 @@ bool Relationship2D::meet(Point2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::meet(Point2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::meet);
 
@@ -204,14 +335,21 @@ bool Relationship2D::meet(Point2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::meet(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
 
@@ -220,14 +358,21 @@ bool Relationship2D::meet(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::meet(Line2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
 
@@ -238,14 +383,21 @@ bool Relationship2D::meet(Line2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::meet(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::meet);
 
@@ -259,14 +411,20 @@ bool Relationship2D::meet(Region2D &leftOperand, Region2D &rightOperand)
 // Overlap
 bool Relationship2D::overlap(Point2D &leftOperand, Point2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_shared, poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Point2DForProgrammer rightFP = Point2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPPoint2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
 
@@ -275,14 +433,21 @@ bool Relationship2D::overlap(Point2D &leftOperand, Point2D &rightOperand)
 
 bool Relationship2D::overlap(Point2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_disjoint, poi_on_interior, poi_on_bound, bound_poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
 
@@ -291,13 +456,20 @@ bool Relationship2D::overlap(Point2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::overlap(Point2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::overlap);
 
@@ -306,14 +478,21 @@ bool Relationship2D::overlap(Point2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::overlap(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
 
@@ -322,14 +501,21 @@ bool Relationship2D::overlap(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::overlap(Line2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
 
@@ -339,14 +525,21 @@ bool Relationship2D::overlap(Line2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::overlap(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::overlap);
 
@@ -358,14 +551,20 @@ bool Relationship2D::overlap(Region2D &leftOperand, Region2D &rightOperand)
 // Equal
 bool Relationship2D::equal(Point2D &leftOperand, Point2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_shared, poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Point2DForProgrammer rightFP = Point2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPPoint2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::equal);
 
@@ -374,14 +573,21 @@ bool Relationship2D::equal(Point2D &leftOperand, Point2D &rightOperand)
 
 bool Relationship2D::equal(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::equal);
 
@@ -394,14 +600,21 @@ bool Relationship2D::equal(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::equal(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::equal);
 
@@ -415,14 +628,20 @@ bool Relationship2D::equal(Region2D &leftOperand, Region2D &rightOperand)
 // Inside
 bool Relationship2D::inside(Point2D &leftOperand, Point2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_shared, poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Point2DForProgrammer rightFP = Point2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPPoint2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
 
@@ -431,14 +650,21 @@ bool Relationship2D::inside(Point2D &leftOperand, Point2D &rightOperand)
 
 bool Relationship2D::inside(Point2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_disjoint, poi_on_interior, poi_on_bound, bound_poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
 
@@ -447,13 +673,20 @@ bool Relationship2D::inside(Point2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::inside(Point2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, Predicate::inside);
 
@@ -462,14 +695,21 @@ bool Relationship2D::inside(Point2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::inside(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
 
@@ -483,14 +723,21 @@ bool Relationship2D::inside(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::inside(Line2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
 
@@ -501,14 +748,21 @@ bool Relationship2D::inside(Line2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::inside(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::inside);
 
@@ -522,14 +776,20 @@ bool Relationship2D::inside(Region2D &leftOperand, Region2D &rightOperand)
 // Contains
 bool Relationship2D::contains(Point2D &leftOperand, Point2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {poi_shared, poi_disjoint};
+  // Conversion to programmer data type
+  Point2DForProgrammer leftFP = Point2DForProgrammer(leftOperand);
+  Point2DForProgrammer rightFP = Point2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPPoint2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPPoint2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(2, false);
   std::vector<bool> rightFeature(1, false);
 
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::contains);
 
@@ -538,14 +798,21 @@ bool Relationship2D::contains(Point2D &leftOperand, Point2D &rightOperand)
 
 bool Relationship2D::contains(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::contains);
 
@@ -558,14 +825,21 @@ bool Relationship2D::contains(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::contains(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::contains);
 
@@ -579,14 +853,21 @@ bool Relationship2D::contains(Region2D &leftOperand, Region2D &rightOperand)
 // Covers
 bool Relationship2D::covers(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::covers);
 
@@ -599,14 +880,21 @@ bool Relationship2D::covers(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::covers(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::covers);
 
@@ -620,14 +908,21 @@ bool Relationship2D::covers(Region2D &leftOperand, Region2D &rightOperand)
 // CoveredBy
 bool Relationship2D::coveredBy(Line2D &leftOperand, Line2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Line2DForProgrammer rightFP = Line2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(6, false);
   std::vector<bool> rightFeature(3, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::coveredBy);
 
@@ -641,14 +936,21 @@ bool Relationship2D::coveredBy(Line2D &leftOperand, Line2D &rightOperand)
 
 bool Relationship2D::coveredBy(Line2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
+  // Conversion to programmer data type
+  Line2DForProgrammer leftFP = Line2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(7, false);
   std::vector<bool> rightFeature(1, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::coveredBy);
 
@@ -659,14 +961,21 @@ bool Relationship2D::coveredBy(Line2D &leftOperand, Region2D &rightOperand)
 
 bool Relationship2D::coveredBy(Region2D &leftOperand, Region2D &rightOperand)
 {
-  // Indicates what index in the bool vector represents what flag
-  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+  // Conversion to programmer data type
+  Region2DForProgrammer leftFP = Region2DForProgrammer(leftOperand);
+  Region2DForProgrammer rightFP = Region2DForProgrammer(rightOperand);
 
+  // Retrieve iterators from objects
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator leftIterator = leftFP.iterator();
+  std::vector<RGPAnnotatedHalfSegment2D>::iterator rightIterator = rightFP.iterator();
+
+  // Topological feature vectors
   std::vector<bool> leftFeature(8, false);
   std::vector<bool> rightFeature(4, false);
 
+
   // Explore
-  Explore::explore(leftOperand, rightOperand, leftFeature, rightFeature);
+  Explore::explore(leftIterator, rightIterator, leftFeature, rightFeature);
   // Evaluate
   return Evaluate::validate(leftOperand, rightOperand, leftFeature, rightFeature, Predicate::coveredBy);
 
