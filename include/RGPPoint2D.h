@@ -6,6 +6,7 @@
 #define RGPPOINT2D_H
 
 #include "Number.h"
+#include "Optional.h"
 
 class RGPPoint2D {
 public:

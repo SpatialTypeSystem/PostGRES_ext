@@ -6,6 +6,7 @@
 #define RGPSEGMENT2D_H
 
 #include "RGPPoint2D.h"
+#include "Optional.h"
 
 class RGPSegment2D {
 public:

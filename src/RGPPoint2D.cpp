@@ -41,3 +41,4 @@ std::istream &operator>>(std::istream &is, RGPPoint2D p) {
   is >> c;
   return is;
 }
+
