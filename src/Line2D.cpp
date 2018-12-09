@@ -11,12 +11,6 @@ struct Line2D::Line2DStore {
 		implPointer = new Line2DImpl(linesString);
 		vectorOfSegments = implPointer->getVectorOfSegments();
 	}
-
-	Line2DStore(std::ifstream& file) 
-	{
-		implPointer = new Line2DImpl(file);
-		vectorOfSegments = implPointer->getVectorOfSegments();
-	}
 };
 
 //constructor for Line2D iterator

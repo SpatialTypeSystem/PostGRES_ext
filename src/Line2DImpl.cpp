@@ -111,32 +111,6 @@ Line2DImpl::Line2DImpl(std::string listOfLine2DString)
 	}
 }
 
-//constructor to take in data from a file and create our segments
-Line2DImpl::Line2DImpl(std::ifstream& file)
-{
-	handle = new Line2DImplStore;
-	
-	std::string inputString;
-	if(file.is_open())
-	{
-		std::stringstream strBuffer;
-		strBuffer << file.rdbuf();
-		inputString = strBuffer.str();
-	}
-	else
-	{
-		throw std::runtime_error("Error while reading the file");
-	}
-	
-	//same as the above constructor, makes it a string and parses it
-	if(parseStringToVectorOfLines(inputString))
-		std::cout << "success" << std::endl;
-	else{
-		std::cout << "failed" << std::endl;
-		handle->vectorOfSegments.clear();
-	}
-}
-
 Line2DImpl::~Line2DImpl()
 {
 	delete handle;

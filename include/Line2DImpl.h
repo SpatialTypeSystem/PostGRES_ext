@@ -15,7 +15,6 @@ class Line2DImpl
 		Line2DImpl(); // no args
 		Line2DImpl(std::vector<RGPSegment2D> listOfSegments); //send in a vector of segments
 		Line2DImpl(std::string listOfLine2DString); // send in a string
-		Line2DImpl(std::ifstream& file); // Send in file for constructor
 		~Line2DImpl(); //destructor
 
 		//iterator to run through the list of half segments
