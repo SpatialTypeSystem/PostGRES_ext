@@ -32,7 +32,6 @@ public:
 
 	// Methods
 	bool isEmptyPoint();	// Checks if the Point2D object is empty
-	bool isValidPoint();	// Checks if the Point2D object is empty
 	int getNumberOfPoints();	// Get the total number of RGPPoint2Ds listed
 	void printAllPoints();
 	bool add(RGPPoint2D rgpp2d);	// Adds a new RGPPoint2D to the existing Point2D object
