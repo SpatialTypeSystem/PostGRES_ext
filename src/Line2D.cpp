@@ -3,6 +3,7 @@
 
 struct Line2D::Line2DStore {
 	Line2DImpl *implPointer;
+	// Maintains a dummy copy for iterator to work
 	std::vector<RGPHalfSegment2D> vectorOfSegments;
 
 	Line2DStore(std::string linesString) 
@@ -87,7 +88,7 @@ bool Line2D::add(RGPSegment2D rgpSeg2d)
 bool Line2D::update(Line2D::iterator it, RGPSegment2D rgpSeg2d)
 {
 	Line2DImpl::iterator newIt = handle->implPointer->begin();
-	for(Line2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();++implit)
+	for(Line2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();implit++)
 	{
 		if(*it == *implit)
 		{
@@ -105,7 +106,7 @@ bool Line2D::update(Line2D::iterator it, RGPSegment2D rgpSeg2d)
 bool Line2D::remove(Line2D::iterator it)
 {
 	Line2DImpl::iterator newIt = handle->implPointer->begin();
-	for(Line2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();++implit)
+	for(Line2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();implit++)
 	{
 		if(*it == *implit)
 		{
@@ -147,14 +148,40 @@ int Line2D::Line2D::getNumberOfSegments()
 
 bool Line2D::operator==(const Line2D &l2d)
 {
-	// TODO
-	//return handle->implPointer->operator==(&l2d);
+	int i = 0;
+	if(handle->vectorOfSegments.size() != l2d.handle->vectorOfSegments.size())
+	{
+		return false;
+	}
+	
+	while(i < l2d.handle->vectorOfSegments.size())
+    {
+		if(handle->vectorOfSegments[i] != l2d.handle->vectorOfSegments[i])
+		{
+			return false;
+		}
+		else
+			i++;
+	}
+	return true;
 }
 
 bool Line2D::operator!=(const Line2D &l2d)
 {
-	// TODO
-	//return handle->implPointer->operator!=(&l2d);
+	int i = 0;
+	if(handle->vectorOfSegments.size() != l2d.handle->vectorOfSegments.size())
+	{
+		return true;
+	}
+
+	while(i < l2d.handle->vectorOfSegments.size())
+    {
+		if(handle->vectorOfSegments[i] != l2d.handle->vectorOfSegments[i])
+			return true;
+		else
+			i++;
+	}
+	return false;
 }
 
 RGPSegment2D Line2D::getBoundingBox()
