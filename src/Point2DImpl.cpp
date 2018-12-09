@@ -146,30 +146,6 @@ bool Point2DImpl::isEmptyPoint()
 	return handle->vectorOfPoints.empty();
 }
 
-// Get the point as human readable ASCII string
-std::string Point2DImpl::getPointString() 
-{
-	std::string resultString = "test";
-	/*
-	bool p = isEmptyPoint();
-	if(p==false) 
-	{
-		resultString += "(";
-		for (RGPPoint2D rgpPoint : vectorOfPoints) 
-		{
-			std::ostringstream stream;
-			stream << rgpPoint;
-			std::string str =  stream.str();
-			
-			resultString += str;
-			resultString += ",";
-		}
-		resultString += ")";
-	}
-	*/
-	return resultString;
-}
-
 //method to print all points in the Point2D object
 void Point2DImpl::printAllPoints()
 {
@@ -199,7 +175,7 @@ int Point2DImpl::getNumberOfPoints()
 }
 
 //returns bounding box for the object
-Line2DImpl Point2DImpl::getBoundingBox()
+RGPSegment2D Point2DImpl::getBoundingBox()
 {
 	std::vector<RGPPoint2D> points;
 	std::vector<RGPPoint2D> boundPoints;
@@ -227,7 +203,7 @@ Line2DImpl Point2DImpl::getBoundingBox()
 
 	segs.push_back(seg);
 	Line2DImpl ln(segs);
-	return ln;
+	return seg;
 }
 
 //method checks if the both Point2D objects are equal
@@ -277,6 +253,11 @@ Point2DImpl Point2DImpl::operator=(const Point2DImpl &p2d)
 {
 	handle->vectorOfPoints.clear();
 	handle->vectorOfPoints = p2d.handle->vectorOfPoints;
+}
+
+std::vector<RGPPoint2D> Point2DImpl::getVectorOfPoints()
+{
+	return handle->vectorOfPoints;
 }
 
 //this method is used to add a new point to Point2D object
