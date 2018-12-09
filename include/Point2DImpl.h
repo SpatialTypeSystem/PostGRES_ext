@@ -30,7 +30,6 @@ class Point2DImpl
 		std::string getPointString();  // Get the point as human readable ASCII string
 		void printAllPoints();   // prints all the points in the object
 		bool isEmptyPoint();	// Checks if the Point2D object is empty
-		bool isValidPoint();	// Checks if the Point2D object is empty
 		int getNumberOfPoints();	// Get the total number of RGPPoint2Ds listed
 		std::vector<RGPPoint2D> getVectorOfPoints();
 		iterator begin();  //returns iterator to the first point
