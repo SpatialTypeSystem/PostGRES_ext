@@ -7,8 +7,6 @@
 #include "Region2DImpl.h"
 #include <vector>
 
-enum PREDICATE { disjoint, meet, overlap, covers, contains, equal, inside, coveredBy };
-
 class Evaluate {
 public:
     Evaluate();
