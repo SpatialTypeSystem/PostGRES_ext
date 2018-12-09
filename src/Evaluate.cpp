@@ -1,4 +1,5 @@
 #include "Evaluate.h"
+#include "PredicateEnum.h"
 
 Evaluate::Evaluate() {}
 
@@ -6,63 +7,63 @@ Evaluate::~Evaluate() {}
 
 // ------------ Validate -----------------
 
-bool Evaluate::validate( Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, PREDICATE predicate)
+bool Evaluate::validate( Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
 {
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
-bool Evaluate::validate( Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, PREDICATE predicate)
+bool Evaluate::validate( Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
 {
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
-bool Evaluate::validate( Point2DImpl  &spatialObj_F, Region2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, PREDICATE predicate)
+bool Evaluate::validate( Point2DImpl  &spatialObj_F, Region2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
 {
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
-bool Evaluate::validate( Line2DImpl   &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, PREDICATE predicate)
+bool Evaluate::validate( Line2DImpl   &spatialObj_F, Line2DImpl    &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
 {
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
-bool Evaluate::validate( Line2DImpl   &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, PREDICATE predicate)
+bool Evaluate::validate( Line2DImpl   &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
 {
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
-bool Evaluate::validate( Region2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, PREDICATE predicate)
+bool Evaluate::validate( Region2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG, Predicate predicate)
 {
 	if( Evaluate::determine(spatialObj_F, spatialObj_G, featureVectorF, featureVectorG) == predicate ) { return true; } else { return false; }
 }
 
 // ------------ Determine -----------------
 
-PREDICATE Evaluate::determine( Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
+Predicate Evaluate::determine( Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
 	enum VectorFlag {poi_shared, poi_disjoint};
 
 	if ( featureVectorF[poi_disjoint] ) { // A0B-
 		if ( featureVectorF[poi_shared] ) { // A0B0, moved right
 			if ( featureVectorG[poi_disjoint] ) { // A-B0
-				return overlap; // 5
+				return Predicate::overlap; // 5
 			} else {
-				return contains; // 4
+				return Predicate::contains; // 4
 			}
 		} else {
-			return disjoint; // 1
+			return Predicate::disjoint; // 1
 		}
 	} else { // A-B0, moved left
 		if ( featureVectorG[poi_disjoint] ) { // vg[poi_disjoint]
-			return inside; // 3
+			return Predicate::inside; // 3
 		} else {
-			return equal; // 2
+			return Predicate::equal; // 2
 		}
 
 	}
 }
 
-PREDICATE Evaluate::determine( Point2DImpl  &spatialObj_F, Line2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
+Predicate Evaluate::determine( Point2DImpl  &spatialObj_F, Line2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
 	enum VectorFlag {poi_disjoint, poi_on_interior, poi_on_bound, bound_poi_disjoint};
 
@@ -70,29 +71,29 @@ PREDICATE Evaluate::determine( Point2DImpl  &spatialObj_F, Line2DImpl &spatialOb
 		if( featureVectorF[poi_on_bound] ) { // A0&B (boundary B) 
 			if( featureVectorF[poi_disjoint] ) { // A0B-
 				if ( featureVectorG[bound_poi_disjoint] ) { // A-&B
-					return overlap; // 14
+					return Predicate::overlap; // 14
 				} else {
-					return overlap; //13
+					return Predicate::overlap; //13
 				}
 			} else {
 				if ( featureVectorG[bound_poi_disjoint] ) { // A-&B
-					return inside; // 12
+					return Predicate::inside; // 12
 				} else {
-					return inside; // 11
+					return Predicate::inside; // 11
 				}
 			}
 		} else {
 			if (  featureVectorF[poi_disjoint]) { // A0B-
 				if ( featureVectorG[bound_poi_disjoint] ) { // A-&B
-					return overlap; // 9
+					return Predicate::overlap; // 9
 				} else {
-					return overlap; // 10
+					return Predicate::overlap; // 10
 				}
 			} else {
 				if ( featureVectorG[bound_poi_disjoint] ) { // A-&B
-					return inside; // 7
+					return Predicate::inside; // 7
 				} else {
-					return inside; // 8
+					return Predicate::inside; // 8
 				}
 			}
 		}
@@ -100,59 +101,59 @@ PREDICATE Evaluate::determine( Point2DImpl  &spatialObj_F, Line2DImpl &spatialOb
 		if( featureVectorF[poi_on_bound] ) { // A0&B
 			if ( featureVectorF[poi_disjoint] ) { // A0B-
 				if ( featureVectorG[bound_poi_disjoint] ) { // A-&B
-					return meet; // 6
+					return Predicate::meet; // 6
 				} else {
-					return meet; // 5
+					return Predicate::meet; // 5
 				}
 			} else {
 				if ( featureVectorG[bound_poi_disjoint] ) { // A-&B
-					return meet; // 4
+					return Predicate::meet; // 4
 				} else {
-					return meet; // 3
+					return Predicate::meet; // 3
 				}
 			}
 		} else { // A-&B
 			if ( featureVectorG[bound_poi_disjoint] ) {
-				return disjoint; // 2
+				return Predicate::disjoint; // 2
 			} else {
-				return disjoint; // 1
+				return Predicate::disjoint; // 1
 			}
 		}
 	}
 }
 
-PREDICATE Evaluate::determine( Point2DImpl  &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+Predicate Evaluate::determine( Point2DImpl  &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
 {
 	enum VectorFlag {poi_inside, poi_on_bound, poi_outside};
 	
 	if ( featureVectorF[poi_inside] ) { // A0B0
 		if ( featureVectorF[poi_on_bound] ) { // A0&B
 			if ( featureVectorF[poi_outside] ) { // A0B-
-				return overlap; // 7
+				return Predicate::overlap; // 7
 			} else {
-				return inside; // 6
+				return Predicate::inside; // 6
 			}
 		} else {
 			if ( featureVectorF[poi_outside] ) { // A0B-
-				return inside; // 4
+				return Predicate::inside; // 4
 			} else {
-				return overlap; // 5
+				return Predicate::overlap; // 5
 			}
 		}
 	} else {
 		if ( featureVectorF[poi_on_bound] ) { // A0&B
 			if ( featureVectorF[poi_outside] ) { //A0B-
-				return meet; // 3
+				return Predicate::meet; // 3
 			} else {
-				return meet; // 2
+				return Predicate::meet; // 2
 			}
 		} else {
-			return disjoint; // 1
+			return Predicate::disjoint; // 1
 		}
 	}
 }
 
-PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
+Predicate Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
 	enum VectorFlag {seg_unshared, bound_on_interior, bound_disjoint, seg_shared, interior_poi_shared, bound_shared};
 
@@ -168,17 +169,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return equal;
+							return Predicate::equal;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return inside;
+								return Predicate::inside;
 							}
 							else
 							{
-								return inside;
+								return Predicate::inside;
 							}
 						}
 					}
@@ -188,28 +189,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return disjoint;
+								return Predicate::disjoint;
 							}
 							else
 							{
-								return disjoint;
+								return Predicate::disjoint;
 							}
 						}
 						else
 						{
 							if (featureVectorG[seg_unshared])
 							{
-								return contains;
+								return Predicate::contains;
 							}
 							else
 							{
 								if (featureVectorG[bound_disjoint])
 								{
-									return overlap;
+									return Predicate::overlap;
 								}
 								else
 								{
-									return overlap;
+									return Predicate::overlap;
 								}
 							}
 						}
@@ -221,28 +222,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return disjoint;
+							return Predicate::disjoint;
 						}
 						else
 						{
-							return disjoint;
+							return Predicate::disjoint;
 						}
 					}
 					else
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return contains;
+							return Predicate::contains;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -256,28 +257,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorF[seg_unshared])
 						{
-							return inside;
+							return Predicate::inside;
 						}
 						else
 						{
 							if (featureVectorF[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -288,28 +289,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorF[seg_unshared])
 						{
-							return inside;
+							return Predicate::inside;
 						}
 						else
 						{
 							if (featureVectorF[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -326,22 +327,22 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 				}
@@ -351,17 +352,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return contains;
+							return Predicate::contains;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -369,11 +370,11 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -386,22 +387,22 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 				}
@@ -411,17 +412,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return contains;
+							return Predicate::contains;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -429,11 +430,11 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -452,17 +453,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return equal;
+							return Predicate::equal;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return coveredBy;
+								return Predicate::coveredBy;
 							}
 							else
 							{
-								return coveredBy;
+								return Predicate::coveredBy;
 							}
 						}
 					}
@@ -472,28 +473,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return meet;
+								return Predicate::meet;
 							}
 							else
 							{
-								return meet;
+								return Predicate::meet;
 							}
 						}
 						else
 						{
 							if (featureVectorG[seg_unshared])
 							{
-								return covers;
+								return Predicate::covers;
 							}
 							else
 							{
 								if (featureVectorG[bound_disjoint])
 								{
-									return overlap;
+									return Predicate::overlap;
 								}
 								else
 								{
-									return overlap;
+									return Predicate::overlap;
 								}
 							}
 						}
@@ -505,28 +506,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return covers;
+							return Predicate::covers;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -540,28 +541,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorF[seg_unshared])
 						{
-							return coveredBy;
+							return Predicate::coveredBy;
 						}
 						else
 						{
 							if (featureVectorF[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -572,28 +573,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorF[seg_unshared])
 						{
-							return coveredBy;
+							return Predicate::coveredBy;
 						}
 						else
 						{
 							if (featureVectorF[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -610,22 +611,22 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 				}
@@ -635,17 +636,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return covers;
+							return Predicate::covers;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -653,11 +654,11 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -670,22 +671,22 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 				}
@@ -695,17 +696,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return covers;
+							return Predicate::covers;
 						}
 						else
 						{
 							if (featureVectorG[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -713,11 +714,11 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 					{
 						if (featureVectorG[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -726,7 +727,7 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Line2DImpl &spatialOb
 	}
 }
 
-PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
+Predicate Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
 	enum VectorFlag {seg_unshared, seg_inside, seg_shared, seg_outside, poi_shared, bound_inside, bound_shared, bound_disjoint};
 
@@ -742,28 +743,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 					else
 					{
 						if (featureVectorF[seg_shared] || featureVectorF[poi_shared])
 						{
-							return disjoint;
+							return Predicate::disjoint;
 						}
 						else
 						{
 							if (featureVectorG[seg_unshared])
 							{
-								return meet;
+								return Predicate::meet;
 							}
 							else
 							{
-								return meet;
+								return Predicate::meet;
 							}
 						}
 					}
@@ -772,17 +773,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[seg_shared] || featureVectorF[poi_shared])
 					{
-						return disjoint;
+						return Predicate::disjoint;
 					}
 					else
 					{
 						if (featureVectorG[seg_unshared])
 						{
-							return meet;
+							return Predicate::meet;
 						}
 						else
 						{
-							return meet;
+							return Predicate::meet;
 						}
 					}
 				}
@@ -793,17 +794,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[seg_outside])
 					{
-						return inside;
+						return Predicate::inside;
 					}
 					else
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -813,17 +814,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 					{
 						if (featureVectorF[seg_outside])
 						{
-							return inside;
+							return Predicate::inside;
 						}
 						else
 						{
 							if (featureVectorF[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -831,17 +832,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 					{
 						if (featureVectorF[seg_outside])
 						{
-							return inside;
+							return Predicate::inside;
 						}
 						else
 						{
 							if (featureVectorF[bound_disjoint])
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 							else
 							{
-								return overlap;
+								return Predicate::overlap;
 							}
 						}
 					}
@@ -854,17 +855,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 			{
 				if (featureVectorF[seg_outside])
 				{
-					return inside;
+					return Predicate::inside;
 				}
 				else
 				{
 					if (featureVectorF[bound_disjoint])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 			}
@@ -874,17 +875,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[seg_outside])
 					{
-						return inside;
+						return Predicate::inside;
 					}
 					else
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -892,17 +893,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[seg_outside])
 					{
-						return inside;
+						return Predicate::inside;
 					}
 					else
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -919,28 +920,28 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[bound_disjoint])
 					{
-						return meet;
+						return Predicate::meet;
 					}
 					else
 					{
-						return meet;
+						return Predicate::meet;
 					}
 				}
 				else
 				{
 					if (featureVectorF[seg_outside])
 					{
-						return coveredBy;
+						return Predicate::coveredBy;
 					}
 					else
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -949,17 +950,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 			{
 				if (featureVectorF[seg_outside])
 				{
-					return coveredBy;
+					return Predicate::coveredBy;
 				}
 				else
 				{
 					if (featureVectorF[bound_disjoint])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 			}
@@ -970,17 +971,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 			{
 				if (featureVectorF[seg_outside])
 				{
-					return meet;
+					return Predicate::meet;
 				}
 				else
 				{
 					if (featureVectorF[bound_disjoint])
 					{
-						return meet;
+						return Predicate::meet;
 					}
 					else
 					{
-						return meet;
+						return Predicate::meet;
 					}
 				}
 			}
@@ -990,17 +991,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[seg_outside])
 					{
-						return coveredBy;
+						return Predicate::coveredBy;
 					}
 					else
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -1008,17 +1009,17 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[seg_outside])
 					{
-						return coveredBy;
+						return Predicate::coveredBy;
 					}
 					else
 					{
 						if (featureVectorF[bound_disjoint])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -1027,7 +1028,7 @@ PREDICATE Evaluate::determine( Line2DImpl   &spatialObj_F, Region2DImpl  &spatia
 	}
 }
 
-PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
+Predicate Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG )
 {
 	enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
 
@@ -1041,28 +1042,28 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return equal;
+						return Predicate::equal;
 					}
 					else
 					{
-						return coveredBy;
+						return Predicate::coveredBy;
 					}
 				}
 				else
 				{
 					if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
 					{
-						return inside;
+						return Predicate::inside;
 					}
 					else
 					{
 						if (featureVectorG[zero_one] || featureVectorG[one_zero])
 						{
-							return coveredBy;
+							return Predicate::coveredBy;
 						}
 						else
 						{
-							return coveredBy;
+							return Predicate::coveredBy;
 						}
 					}
 				}
@@ -1073,22 +1074,22 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_two] || featureVectorF[two_one] || featureVectorG[one_two] || featureVectorG[two_one])
 					{
-						return meet;
+						return Predicate::meet;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 				else
 				{
 					if (featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 			}
@@ -1099,7 +1100,7 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 			{
 				if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_two] || featureVectorF[two_one] || featureVectorG[one_two] || featureVectorG[two_one])
 				{
-					return meet;
+					return Predicate::meet;
 				}
 				else
 				{
@@ -1107,16 +1108,16 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 					{
 						if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
 						{
-							return covers;
+							return Predicate::covers;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 			}
@@ -1126,28 +1127,28 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
 					{
-						return disjoint;
+						return Predicate::disjoint;
 					}
 					else
 					{
-						return meet;
+						return Predicate::meet;
 					}
 				}
 				else
 				{
 					if (featureVectorF[one_two] || featureVectorF[two_one])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
 						if (featureVectorF[zero_two] || featureVectorF[two_zero] || featureVectorF[one_one] || featureVectorF[bound_poi_shared])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -1162,17 +1163,17 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 			{
 				if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
 				{
-					return covers;
+					return Predicate::covers;
 				}
 				else
 				{
 					if (featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 			}
@@ -1182,28 +1183,28 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return contains;
+						return Predicate::contains;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 				else
 				{
 					if (featureVectorF[one_two] || featureVectorF[two_one] || featureVectorF[one_one] || featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return covers;
+						return Predicate::covers;
 					}
 					else
 					{
 						if (featureVectorG[zero_one] || featureVectorG[one_zero])
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 						else
 						{
-							return overlap;
+							return Predicate::overlap;
 						}
 					}
 				}
@@ -1215,17 +1216,17 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 			{
 				if (featureVectorF[zero_one] || featureVectorF[one_zero])
 				{
-					return overlap;
+					return Predicate::overlap;
 				}
 				else
 				{
 					if (featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 			}
@@ -1235,22 +1236,22 @@ PREDICATE Evaluate::determine( Region2DImpl &spatialObj_F, Region2DImpl  &spatia
 				{
 					if (featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 				else
 				{
 					if (featureVectorG[zero_one] || featureVectorG[one_zero])
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 					else
 					{
-						return overlap;
+						return Predicate::overlap;
 					}
 				}
 			}
