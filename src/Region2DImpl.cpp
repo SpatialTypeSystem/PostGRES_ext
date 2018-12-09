@@ -31,11 +31,13 @@ Region2DImpl::Region2DImpl(std::string listOfRegion2DString)
 	}
 }
 
+// Sorts all the annotated half segments using mergeSort technique
 void Region2DImpl::sortAnnotatedHS(std::vector<RGPAnnotatedHalfSegment2D> vec)
 {
 	if(vec.size() < 1)
 	{
 		int mid = vec.size() / 2;
+		// Partition through midway for merge sort
 		std::vector<RGPAnnotatedHalfSegment2D> l;
 		std::vector<RGPAnnotatedHalfSegment2D> r;
 
@@ -50,6 +52,7 @@ void Region2DImpl::sortAnnotatedHS(std::vector<RGPAnnotatedHalfSegment2D> vec)
 	}
 }
 
+// merge sort internal function used for sorting the annotated half segments
 void Region2DImpl::mergeSort(std::vector<RGPAnnotatedHalfSegment2D> &left, std::vector<RGPAnnotatedHalfSegment2D> &right, std::vector<RGPAnnotatedHalfSegment2D> &bars)
 {
 	int nL = left.size();
@@ -79,8 +82,11 @@ void Region2DImpl::mergeSort(std::vector<RGPAnnotatedHalfSegment2D> &left, std::
     }
 }
 
+// Computes the area of a region input 
+// This has been used to compute areas of individual cycles of a region
 Number Region2DImpl::computeArea()
 {
+	// compute area of all the faces
 	Number tfaceArea("0");
 	for(int i=0; i<handle->vectorOfFaces.size(); i++)
 	{
@@ -91,6 +97,7 @@ Number Region2DImpl::computeArea()
 		}
 		tfaceArea = tfaceArea + area;
 	}
+	// compute area of all the holes
 	Number tholeArea("0");
 	for(int i=0; i<handle->vectorOfHoles.size(); i++)
 	{
@@ -105,6 +112,7 @@ Number Region2DImpl::computeArea()
 	return handle->areaOfRegion;
 }
 
+// Validates a region input according to the face and cycle information
 bool Region2DImpl::validateRegion()
 {
 	// check areas if adding upto positive Number
@@ -133,8 +141,9 @@ bool Region2DImpl::validateRegion()
 		holeAreas.push_back(area);
 		tholeArea = tholeArea + area;
 	}
-	handle->areaOfRegion = tfaceArea - tholeArea;
-		
+
+	// The total area of faces when subtracted by that of holes has to be a positive number
+	handle->areaOfRegion = tfaceArea - tholeArea;	
 	if(handle->areaOfRegion <= Number("0"))
 	{
 		return false;
@@ -152,6 +161,7 @@ bool Region2DImpl::validateRegion()
 			hArea = hArea + holeAreas[i];
 		}
 			
+		// Check if the face area is more than that of all the holes inside it
 		if(fArea - hArea <= Number("0"))
 		{
 			return false;
@@ -179,6 +189,7 @@ bool Region2DImpl::validateRegion()
 	}
 	handle->vectorOfAnnHalfSegments = allCyclesVec;
 
+	// Check for intersection between any two segments of the region including all the faces and cycles
 	for(int i=0; i<allCyclesVec.size(); i=i+2)
 	{
 		for(int j=i+2; j<allCyclesVec.size(); j=j+2)
@@ -195,6 +206,8 @@ bool Region2DImpl::validateRegion()
 	return true;
 }
 
+// To check if given 2 segments intersect at any point.
+// Returns true if they do intersect. false for the other scenario
 bool Region2DImpl::doSegmentsIntersect(RGPSegment2D a, RGPSegment2D b) 
 {
 	RGPPoint2D a_p1 = a.point1;
@@ -220,29 +233,13 @@ bool Region2DImpl::doSegmentsIntersect(RGPSegment2D a, RGPSegment2D b)
 	}
 }
 
-bool Region2DImpl::onSegment(RGPPoint2D pi, RGPPoint2D pj, RGPPoint2D pk)
-{
-	Number minX = (pi.x < pj.x) ? pi.x : pj.x;
-	Number maxX = (pi.x < pj.x) ? pj.x : pi.x;
-	Number minY = (pi.y < pj.y) ? pi.y : pj.y;
-	Number maxY = (pi.y < pj.y) ? pj.y : pi.y;
-
-	if((minX <= pk.x && pk.x <= maxX) && (minY <= pk.y && pk.y <= maxY))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 Number Region2DImpl::computeDirection(RGPPoint2D pi, RGPPoint2D pj, RGPPoint2D pk) 
 {
 	Number g = (pk.x - pi.x)*(pj.y - pi.y) - (pj.x - pi.x)*(pk.y - pi.y);
 	return g;
 }
 
+// Used for computing the area of a cycle given all the points
 Number Region2DImpl::getAreaOfCycle(std::vector<RGPAnnotatedHalfSegment2D> vectorOfSegments) 
 {
 	Number area("0");
@@ -271,6 +268,7 @@ Number Region2DImpl::getAreaOfCycle(std::vector<RGPAnnotatedHalfSegment2D> vecto
 
 }
 
+// Parses the given input string and creates the vector of faces and cycles
 bool Region2DImpl::parseWDR(std::string inputString) 
 {
 	std::map<int,int> faceToHoleMap;
@@ -338,6 +336,7 @@ bool Region2DImpl::parseWDR(std::string inputString)
 			}
 			facePoints.push_back(RGPPoint2D(Number(coord1), Number(coord2)));
 		}
+		// If start and end point of a cycle are not same, return false
 		if(facePoints[0] != facePoints[facePoints.size()-1])
 		{
 			return false;
@@ -346,6 +345,7 @@ bool Region2DImpl::parseWDR(std::string inputString)
 		std::vector<RGPAnnotatedHalfSegment2D> emptyFaceVec;
 		handle->vectorOfFaces.push_back(emptyFaceVec);
 		
+		// Fill the currently parsed vector into the face vector of region
 		for(int i=0; i<facePoints.size()-1;i++)
 		{
 			RGPSegment2D seg(facePoints[i],facePoints[i+1]);
@@ -387,11 +387,13 @@ bool Region2DImpl::parseWDR(std::string inputString)
 			}
 
 			std::vector hole = holePointVector[numOfHoles];
+			// Check if the first and last point for a hole cycle is the same
 			if(hole[0] != hole[hole.size()-1])
 			{
 				return false;
 			}
 
+			// Add the parsed hole cycle into the vector of holes of the region
 			for(int i=0; i<hole.size()-1;i++)
 			{
 				RGPSegment2D seg(hole[i],hole[i+1]);
@@ -401,15 +403,16 @@ bool Region2DImpl::parseWDR(std::string inputString)
 				handle->vectorOfHoles[numOfHoles].push_back(annHS2);
 			}
 
-
 			holesString = holesString.substr(holeSegmentStringLength+2, holesString.length());
 			if(holesString.length() != 0 && holesString.substr(0,1) == ",")
 			{
 					holesString.erase(0,1);
 			}
+			// Keep track of number of holes being added
 			numOfHoles++;
 		}
 
+		// Maintain the relation of face to corresponding hole
 		faceToHoleMap.insert(std::pair<int, int>(numOfFaces,numOfHoles));
 		numOfFaces++;	
 
@@ -433,11 +436,9 @@ Region2DImpl::~Region2DImpl()
 
 Number Region2DImpl::area()
 {
-	//TODO update region when faces are updated
 	return handle->areaOfRegion;
 }
 
-// static
 bool Region2DImpl::isEmptyRegion()
 {
 	return handle->vectorOfFaces.empty();
@@ -455,7 +456,6 @@ int Region2DImpl::getNumberOfHoles()
 
 RGPSegment2D Region2DImpl::getBoundingBox()
 {
-	//we are computing bounding box every time because it may change after adds, updates or removes
 	std::vector<RGPAnnotatedHalfSegment2D> halfSegments;
 	halfSegments = handle->vectorOfAnnHalfSegments;
 
@@ -480,24 +480,39 @@ RGPSegment2D Region2DImpl::getBoundingBox()
 	return handle->boundingBox[0];
 }
 
-bool Region2DImpl::addFace(std::vector<RGPSegment2D>)
+bool Region2DImpl::addFace(std::vector<RGPSegment2D> faceVec)
 {
-	// Emtpy
-}
-
-bool Region2DImpl::removeFace(int index)
-{
-	// Emtpy
+	std::vector<RGPAnnotatedHalfSegment2D> vecToAdd;
+	// Iterate and create annotated half segments
+	for(int i=0; i<faceVec.size(); i++)
+	{
+		faceVec[i];
+		RGPAnnotatedHalfSegment2D a(faceVec[i],faceVec[i].point1,true);
+		RGPAnnotatedHalfSegment2D b(faceVec[i],faceVec[i].point2,true);
+		vecToAdd.push_back(a);
+		vecToAdd.push_back(b);
+		handle->vectorOfAnnHalfSegments.push_back(a);
+		handle->vectorOfAnnHalfSegments.push_back(b);
+	}
+	handle->vectorOfFaces.push_back(vecToAdd);
+	handle->faceToHoleRelationMap.insert(std::pair<int, int>(handle->vectorOfFaces.size()+1,0));
+	
+	// Might throw exception as and when the validation fails
+	validateRegion();
+	// Sort the newly added half segments as well
+	sortAnnotatedHS(handle->vectorOfAnnHalfSegments);
 }
 
 bool Region2DImpl::operator==(const Region2DImpl &p2d)
 {
 	int i = 0;
+	//Check if size equal
 	if(handle->vectorOfAnnHalfSegments.size() != p2d.handle->vectorOfAnnHalfSegments.size())
 	{
 		return false;
 	}
 	
+	// Check iteratively if each segment is equal to other
 	while(i < p2d.handle->vectorOfAnnHalfSegments.size())
     {
 		if(handle->vectorOfAnnHalfSegments[i] != p2d.handle->vectorOfAnnHalfSegments[i])
@@ -513,11 +528,13 @@ bool Region2DImpl::operator==(const Region2DImpl &p2d)
 bool Region2DImpl::operator!=(const Region2DImpl &p2d)
 {
 	int i = 0;
+	//Check if size equal
 	if(handle->vectorOfAnnHalfSegments.size() != p2d.handle->vectorOfAnnHalfSegments.size())
 	{
 		return true;
 	}
 	
+	// Check iteratively if each segment is equal to other
 	while(i < p2d.handle->vectorOfAnnHalfSegments.size())
     {
 		if(handle->vectorOfAnnHalfSegments[i] != p2d.handle->vectorOfAnnHalfSegments[i])
@@ -530,16 +547,7 @@ bool Region2DImpl::operator!=(const Region2DImpl &p2d)
 	return false;
 }
 
-template <class T> std::vector<RGPSegment2D> getCycle(T it)
-{
-	// Emtpy
-}
-
-template <class T> std::vector<RGPSegment2D> getFace(T it)
-{
-	// Emtpy
-}
-
+// Iterators for faces and hole cycles
 Region2DImpl::iteratorforFaces::iteratorforFaces(std::vector<RGPAnnotatedHalfSegment2D> *ptr1)
 {
 	ptr = ptr1;
