@@ -8,6 +8,13 @@
 #include "PlaneSweep.h"
 #include <vector>
 
+// Explore class
+// This class runs and maintains the plane sweep algorithm. We overload the functions 
+// here because each explore function are implemented seperately.
+
+// This class it NOT for public use or distribution.
+// This is only for engineer use.
+
 class Explore
 {
 public:

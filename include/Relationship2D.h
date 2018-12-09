@@ -6,6 +6,12 @@
 #include "Line2D.h"
 #include "Region2D.h"
 
+// Relationship2D class
+// Contains all spatial relationship calls for end user to call.
+// By including this file, all users will be able to access and operate
+// the spatial engine of our software.
+// This file will be publicly distributed.
+
 class Relationship2D {
 
 public:
@@ -13,9 +19,8 @@ public:
   Relationship2D();
   ~Relationship2D();
 
-  // Determine relationship
-  // Reference these from Evaluate.h
- //  enum PREDICATE { disjoint, meet, overlap, covers, contains, equal, inside, coveredBy };
+  // Determine relationship - these will return a predicate enum telling us
+  // what the relationship is between the two objects passed in
   static Predicate determine(Point2D &leftOperand, Point2D &rightOperand);
   static Predicate determine(Point2D &leftOperand, Line2D &rightOperand);
   static Predicate determine(Point2D &leftOperand, Region2D &rightOperand);
@@ -23,7 +28,7 @@ public:
   static Predicate determine(Line2D &leftOperand, Region2D &rightOperand);
   static Predicate determine(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Disjoint
+  // Disjoint - returns a bool indicating if two objects have disjoint relationship
   static bool disjoint(Point2D &leftOperand, Point2D &rightOperand);
   static bool disjoint(Point2D &leftOperand, Line2D &rightOperand);
   static bool disjoint(Point2D &leftOperand, Region2D &rightOperand);
@@ -31,14 +36,14 @@ public:
   static bool disjoint(Line2D &leftOperand, Region2D &rightOperand);
   static bool disjoint(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Meet
+  // Meet - returns a bool indicating if two objects have meet relationship
   static bool meet(Point2D &leftOperand, Line2D &rightOperand);
   static bool meet(Point2D &leftOperand, Region2D &rightOperand);
   static bool meet(Line2D &leftOperand, Line2D &rightOperand);
   static bool meet(Line2D &leftOperand, Region2D &rightOperand);
   static bool meet(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Overlap
+  // Overlap - returns a bool indicating if two objects have overlap relationship
   static bool overlap(Point2D &leftOperand, Point2D &rightOperand);
   static bool overlap(Point2D &leftOperand, Line2D &rightOperand);
   static bool overlap(Point2D &leftOperand, Region2D &rightOperand);
@@ -46,12 +51,12 @@ public:
   static bool overlap(Line2D &leftOperand, Region2D &rightOperand);
   static bool overlap(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Equal
+  // Equal - returns a bool indicating if two objects have equal relationship
   static bool equal(Point2D &leftOperand, Point2D &rightOperand);
   static bool equal(Line2D &leftOperand, Line2D &rightOperand);
   static bool equal(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Inside
+  // Inside - returns a bool indicating if two objects have inside relationship
   static bool inside(Point2D &leftOperand, Point2D &rightOperand);
   static bool inside(Point2D &leftOperand, Line2D &rightOperand);
   static bool inside(Point2D &leftOperand, Region2D &rightOperand);
@@ -59,16 +64,16 @@ public:
   static bool inside(Line2D &leftOperand, Region2D &rightOperand);
   static bool inside(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Contains
+  // Contains - returns a bool indicating if two objects have contains relationship
   static bool contains(Point2D &leftOperand, Point2D &rightOperand);
   static bool contains(Line2D &leftOperand, Line2D &rightOperand);
   static bool contains(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Covers
+  // Covers - returns a bool indicating if two objects have covers relationship
   static bool covers(Line2D &leftOperand, Line2D &rightOperand);
   static bool covers(Region2D &leftOperand, Region2D &rightOperand);
 
-  // Covered by
+  // Covered by - returns a bool indicating if two objects have covered by relationship
   static bool coveredBy(Line2D &leftOperand, Line2D &rightOperand);
   static bool coveredBy(Line2D &leftOperand, Region2D &rightOperand);
   static bool coveredBy(Region2D &leftOperand, Region2D &rightOperand);
