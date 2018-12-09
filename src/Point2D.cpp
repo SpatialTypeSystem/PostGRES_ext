@@ -4,6 +4,7 @@
 struct Point2D::Point2DStore 
 {
 	Point2DImpl *implPointer;
+	// Maintains a dummy copy for iterator to work
 	std::vector<RGPPoint2D> vectorOfPoints;
 
 	Point2DStore(std::string pointsString) 
@@ -91,11 +92,6 @@ void Point2D::printAllPoints()
 	handle->implPointer->isEmptyPoint();
 }
 
-bool Point2D::isValidPoint()
-{
-	return handle->implPointer->isValidPoint();
-}
-
 int Point2D::getNumberOfPoints()
 {
 	return handle->implPointer->getNumberOfPoints();
@@ -114,7 +110,7 @@ bool Point2D::add(RGPPoint2D rgpp2d)
 bool Point2D::update(Point2D::iterator it, RGPPoint2D rgpp2d)
 {
 	Point2DImpl::iterator newIt = handle->implPointer->begin();
-	for(Point2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();++implit)
+	for(Point2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();implit++)
 	{
 		if(*it == *implit)
 		{
@@ -132,7 +128,7 @@ bool Point2D::update(Point2D::iterator it, RGPPoint2D rgpp2d)
 bool Point2D::remove(Point2D::iterator it)
 {
 	Point2DImpl::iterator newIt = handle->implPointer->begin();
-	for(Point2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();++implit)
+	for(Point2DImpl::iterator implit = handle->implPointer->begin(); implit!= handle->implPointer->end();implit++)
 	{
 		if(*it == *implit)
 		{
