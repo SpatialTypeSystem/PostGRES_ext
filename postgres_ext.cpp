@@ -12,8 +12,13 @@
 #include "include/Point2D.h"
 #include "include/Line2DImpl.h"
 
+void callLine();
 int main(void)
 {
+	//For point2D
+	std::cout<<"Point implementation from here : "<<std::endl;
+	std::cout<<std::endl;
+	
 	//adding through strings.
 	std::string str = "((333.33,22.22),(12,6),(3,4),(9,7),(4,5))";
   	Point2D x(str);
@@ -85,12 +90,27 @@ int main(void)
 	for(Point2D::iterator it = x.begin(); it!= x.end();++it)
 		std::cout<<*it;
 	std::cout<<std::endl;	
-	
-	//code for getting the bounding box of the set of points
-	RGPSegment2D bx = y.getBoundingBox();
-	std::cout<<"segment in the bounding box"<<std::endl;
-	std::cout<<bx;
 
+	//code for getting the bounding box of the set of points
+	RGPSegment2D bou = y.getBoundingBox();
+	std::cout<<"segment in the bounding box"<<std::endl;
+	std::cout<<bou;
+
+	std::cout<<std::endl;
+
+	//-------------------------------------------
+
+	//Line2D
+	std::cout<<std::endl;
+	std::cout<<"Line implementation from here : "<<std::endl;
+	std::cout<<std::endl;
+	callLine();
+
+	//-------------------------------------------
+
+	//For Region2D
+	std::cout<<std::endl;
+	std::cout<<"Region implementation from here : "<<std::endl;
 	std::cout<<std::endl;
 
 	std::string regStr = "[WCR((0 0,5 0,5 5,0 5,0 0),(1 1,3 1,3 3,1 3,1 1))]";
@@ -131,4 +151,105 @@ int main(void)
 	
 	std::cout << "All successfull!" << std::endl;
 	return 0;
+}
+
+void callLine()
+{
+	//For Line2D
+
+	
+	//adding through strings.
+	std::string str = "(((3,4),(2,2)),((6,2),(5,3)),((6,1),(7,9)),((8,4),(6,6)))";
+	Line2DImpl ln(str);
+	std::string str2 = "(((3,4),(2,2)),((6,2),(5,3)),((6,1),(7,9)),((8,4),(6,6)))";
+	Line2DImpl ln2(str2);
+
+	//adding through strings when input format is not correct
+	std::string str3 = "(((3,4),(2,2)),((6,2),(5,3)),((6,1)(7,9)),((8,4),(6,6)))";
+	Line2DImpl wrongInp(str3);
+
+	//checking operator !=
+	std::cout<<"check if ln1!=ln2"<<std::endl;
+	if(ln!=ln2)
+		std::cout<<"true"<<std::endl;
+	else
+		std::cout<<"false"<<std::endl;
+	
+	//checking operator ==
+	std::cout<<"check if ln1==ln2"<<std::endl;
+	if(ln==ln2)
+		std::cout<<"true"<<std::endl;
+	else
+		std::cout<<"false"<<std::endl;
+	
+	//checking if any object is empty
+	bool empty = ln.isEmptyLine();
+	std::cout<<"check if ln is empty : "<<empty<<std::endl;
+
+	//method to get total number of segments in the object
+	std::cout<<"total number of segments in our object are : "<<ln.getNumberOfSegments()<<empty<<std::endl;
+
+	//checking the functionality of an iterator
+	std::cout<<"Travesed segments through iterators"<<std::endl;
+	for(Line2DImpl::iterator it = ln.begin(); it!=ln.end(); it++)
+	{
+		std::cout<<(*it).segment;
+	}
+	std::cout<<std::endl;
+
+	//adding a segment to line2D
+	RGPPoint2D p1(Number("21"),Number("31"));
+	RGPPoint2D p2(Number("22"),Number("33"));
+	RGPSegment2D seg(p1,p2);
+	std::cout<<"list after adding"<<std::endl;
+	ln.add(seg);
+	for(Line2DImpl::iterator it = ln.begin(); it!=ln.end(); it++)
+	{
+		std::cout<<(*it).segment;
+	}
+	std::cout<<std::endl;
+
+	//code for removing a segment from an object
+	Line2DImpl::iterator it = ln.begin();
+	it++;
+	it++;
+	ln.remove(it);
+	std::cout<<"list after removing the segment"<<std::endl;
+	for(Line2DImpl::iterator it = ln.begin(); it!=ln.end(); it++)
+	{
+		std::cout<<(*it).segment;
+	}
+	std::cout<<std::endl;
+
+	//code for updating a segment through iterator
+	Line2DImpl::iterator it1 = ln.begin();
+	it1++;
+	RGPPoint2D p3(Number("12"),Number("5"));
+	RGPPoint2D p4(Number("2"),Number("5"));
+	RGPSegment2D seg2(p3,p4);
+	std::cout<<"list of segments after updating "<<std::endl;
+	ln.update(it1,seg2);
+	for(auto it = ln.begin(); it!=ln.end(); it++)
+	{
+		std::cout<<(*it).segment;
+	}
+	std::cout<<std::endl;
+
+	//checking functionality of index and "=" operator overloading
+	Line2DImpl ln3;
+	ln3 = ln[2];
+	Line2DImpl::iterator it4 = ln3.begin();
+	std::cout<<"after assigning the vector is "<<std::endl;
+	std::cout<<(*it4).segment<<std::endl;
+
+	//checking method to print all lines
+	std::cout<<"method to print all the segments in our object"<<std::endl;
+	ln.printAllLines();
+	std::cout<<std::endl;
+
+	//method to get the bounding boxe
+	Line2DImpl ln4 = ln.getBoundingBox();
+	Line2DImpl::iterator it5 = ln4.begin();
+	std::cout<<"bounding box is "<<std::endl;
+	std::cout<<(*it5).segment<<std::endl;
 }
