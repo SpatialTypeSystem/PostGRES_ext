@@ -145,26 +145,11 @@ Line2DImpl::~Line2DImpl()
 }
 
 // Methods
-std::string Line2DImpl::getLineString() // Get the line as human readable ASCII string
+
+std::vector<RGPHalfSegment2D> Line2DImpl::getVectorOfSegments()
 {
-	/*std::string resultString;
-	if(!isEmptyLine())
-	{
-		resultString += "(";
-		for (RGPHalfSegment2D rgpLine : handle->vectorOfSegments)
-		{
-			std::ostringstream stream;
-			stream << rgpLine;
-			std::string str =  stream.str();
-
-			resultString += str;
-			resultString += ",";
-		}
-		resultString += ")";
-	}
-
-	return resultString;*/
-}
+	return handle->vectorOfSegments;
+}	
 
 //method to print all the segments in the object
 void Line2DImpl::printAllLines()
@@ -201,7 +186,7 @@ int Line2DImpl::Line2DImpl::getNumberOfSegments()
 }
 
 //method to find bounding box diagonal for the given list of segments
-Line2DImpl Line2DImpl::getBoundingBox()
+RGPSegment2D Line2DImpl::getBoundingBox()
 {
 	//we are computing bounding box every time because it may change after adds, updates or removes
 	std::vector<RGPHalfSegment2D> halfSegments;
@@ -223,11 +208,9 @@ Line2DImpl Line2DImpl::getBoundingBox()
 
 	//we make the next point taking the x of p2 and maxy found in the above loop
 	RGPSegment2D seg(p1,RGPPoint2D(p2.x,maxy));
-	handle->boundingBox.push_back(seg);
-	Line2DImpl pt(handle->boundingBox);
 
 	//returing the diagonal that tells us the bounding box
-	return pt;
+	return seg;
 }
 
 //method to add new segments to our list of segments
