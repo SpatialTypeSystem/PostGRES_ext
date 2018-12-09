@@ -1,4 +1,4 @@
-#include "Explore.h"
+#include "../include/Explore.h"
 
 // Point x Point
 void Explore::explore(Point2DImpl  &spatialObj_F, Point2DImpl   &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
@@ -54,11 +54,11 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, s
   sweep.select_first();
 
   while (sweep.status != TraversalStatus::END_OF_G && sweep.status != TraversalStatus::END_OF_BOTH &&
-         !(featureVectorF[poi_disjoint] && featureVectorF[poi_on_interior] && featureVectorF[poi_on_bound] && featureVectorG[bound_poi_disjoint]))
+      !(featureVectorF[poi_disjoint] && featureVectorF[poi_on_interior] && featureVectorF[poi_on_bound] && featureVectorG[bound_poi_disjoint]))
   {
     if (sweep.object == ObjectSelected::OBJ_F)
     {
-      RGPPoint2D p = sweep.getEventF();
+      std::vector<const RGPPoint2D>::const_iterator p = sweep.getEventF();
 
       if (sweep.pointInSegment(p))
       {
@@ -71,18 +71,18 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, s
     }
     else if (sweep.object == ObjectSelected::OBJ_G)
     {
-      RGPHalfSegment2D h = sweep.getEventG();
+      std::vector<const RGPHalfSegment2D>::const_iterator h = sweep.getEventG();
 
-      if (h.dominantPoint == h.segment.point1) // Left halfsegment
+      if (h->dominantPoint == h->segment.point1) // Left halfsegment
       {
-        sweep.insert(h.segment);
+        sweep.insert(h);
       }
       else // Right halfsegment
       {
-        sweep.remove(h.segment);
+        sweep.remove(h);
       }
 
-      optional<RGPPoint2D> dp = make_optional(h.dominantPoint);
+      optional<RGPPoint2D> dp = make_optional(h->dominantPoint);
 
       if (lastDominantPoint != dp)
       {
@@ -96,18 +96,18 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Line2DImpl    &spatialObj_G, s
     }
     else // BOTH
     {
-      RGPHalfSegment2D h = sweep.getEventG();
+      std::vector<const RGPHalfSegment2D>::const_iterator h = sweep.getEventG();
 
-      if (h.dominantPoint == h.segment.point1) // Left halfsegment
+      if (h->dominantPoint == h->segment.point1) // Left halfsegment
       {
-        sweep.insert(h.segment);
+        sweep.insert(h);
       }
       else // Right halfsegment
       {
-        sweep.remove(h.segment);
+        sweep.remove(h);
       }
 
-      lastDominantPoint = make_optional(h.dominantPoint);
+      lastDominantPoint = make_optional(h->dominantPoint);
 
       if (sweep.lookAheadG(h))
       {
@@ -142,7 +142,7 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, st
   {
     if (sweep.object == ObjectSelected::OBJ_F)
     {
-      RGPPoint2D p = sweep.getEventF();
+      std::vector<const RGPPoint2D>::const_iterator p = sweep.getEventF();
 
       if (sweep.pointOnSegment(p))
       {
@@ -150,7 +150,7 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, st
       }
       else
       {
-        if (auto attr = sweep.getAttributeOfSegmentBelow(p))
+        if (auto attr = sweep.getAttributeOfSegmentBelowPoint(p))
         {
           if (*attr)
           {
@@ -169,15 +169,15 @@ void Explore::explore(Point2DImpl  &spatialObj_F, Region2DImpl &spatialObj_G, st
     }
     else
     {
-      RGPAnnotatedHalfSegment2D ah = sweep.getEventG();
+      std::vector<const RGPAnnotatedHalfSegment2D>::const_iterator ah = sweep.getEventG();
 
-      if (ah.dominantPoint == ah.segment.point1) // Left halfsegment
+      if (ah->dominantPoint == ah->segment.point1) // Left halfsegment
       {
-        sweep.insert(ah.segment);
+        sweep.insert(ah);
       }
       else // Right halfsegment
       {
-        sweep.remove(ah.segment);
+        sweep.remove(ah);
       }
 
       if (sweep.object == ObjectSelected::BOTH)
@@ -211,9 +211,9 @@ void Explore::explore(Line2DImpl &spatialObj_F, Line2DImpl &spatialObj_G, std::v
   sweep.select_first();
 
   while (sweep.status != TraversalStatus::END_OF_BOTH &&
-         !(featureVectorF[seg_shared] && featureVectorF[interior_poi_shared] && featureVectorF[seg_unshared] &&
-           featureVectorF[bound_on_interior] && featureVectorF[bound_shared] && featureVectorF[bound_disjoint] &&
-           featureVectorG[bound_disjoint] && featureVectorG[bound_on_interior] && featureVectorG[seg_unshared]))
+      !(featureVectorF[seg_shared] && featureVectorF[interior_poi_shared] && featureVectorF[seg_unshared] &&
+          featureVectorF[bound_on_interior] && featureVectorF[bound_shared] && featureVectorF[bound_disjoint] &&
+          featureVectorG[bound_disjoint] && featureVectorG[bound_on_interior] && featureVectorG[seg_unshared]))
   {
     if (sweep.object == ObjectSelected::OBJ_F)
     {
@@ -399,8 +399,8 @@ void Explore::explore(Line2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std
   sweep.select_first();
 
   while (sweep.status != TraversalStatus::END_OF_F && sweep.status != TraversalStatus::END_OF_BOTH &&
-         !(featureVectorF[seg_inside] && featureVectorF[seg_shared] && featureVectorF[seg_outside] && featureVectorF[poi_shared] &&
-           featureVectorF[bound_inside] && featureVectorF[bound_shared] && featureVectorF[bound_disjoint] && featureVectorG[seg_unshared]))
+      !(featureVectorF[seg_inside] && featureVectorF[seg_shared] && featureVectorF[seg_outside] && featureVectorF[poi_shared] &&
+          featureVectorF[bound_inside] && featureVectorF[bound_shared] && featureVectorF[bound_disjoint] && featureVectorG[seg_unshared]))
   {
     if (sweep.object == ObjectSelected::OBJ_F)
     {
@@ -543,121 +543,168 @@ void Explore::explore(Line2DImpl &spatialObj_F, Region2DImpl  &spatialObj_G, std
   }
 }
 
-//// Region x Region
-//void Explore::explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
-//{
-//  // Indicates what index in the bool vector represents what flag
-//  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
-//
-//  PlaneSweep<RGPAnnotatedHalfSegment2D,RGPAnnotatedHalfSegment2D> sweep(spatialObj_F.getSequence(), spatialObj_G.getSequence());
-//
-//  optional<RGPPoint2D> lastDominantPointF = nullopt;
-//  optional<RGPPoint2D> lastDominantPointG = nullopt;
-//
-//  sweep.select_first();
-//
-//  while (sweep.status == TraversalStatus::END_OF_NONE &&
-//         !(featureVectorF[zero_one] && featureVectorF[one_zero] && featureVectorF[one_two] && featureVectorF[two_one] && featureVectorF[zero_two] && featureVectorF[two_zero] &&
-//           featureVectorF[one_one] && featureVectorF[bound_poi_shared] && featureVectorG[zero_one] && featureVectorG[one_zero] && featureVectorG[one_two] && featureVectorG[two_one]))
-//  {
-//    RGPAnnotatedHalfSegment2D ah;
-//
-//    if (sweep.object == ObjectSelected::OBJ_F)
-//    {
-//      ah = sweep.getEventF();
-//      lastDominantPointF = make_optional(ah.dominantPoint);
-//    }
-//    else if (sweep.object == ObjectSelected::OBJ_G)
-//    {
-//      ah = sweep.getEventG();
-//      lastDominantPointG = make_optional(ah.dominantPoint);
-//    }
-//    else // BOTH
-//    {
-//      ah = sweep.getEventF()
-//      lastDominantPointF = make_optional(ah.dominantPoint);
-//      lastDominantPointG = make_optional(ah.dominantPoint);
-//    }
-//
-//    if (lastDominantPointF == lastDominantPointG || sweep.lookAheadG(ah) || sweep.lookAheadF(ah))
-//    {
-//      featureVectorF[bound_poi_shared] = true;
-//    }
-//
-//    if (h.dominantPoint == h.segment.point2) // Right halfsegment
-//    {
-//      VectorFlag flag;
-//
-//      if (auto overlapNums = sweep.getOverlapNumbersOf(ah.segment))
-//      {
-//        auto [m,n] = *overlapNums;
-//
-//        switch(m)
-//        {
-//        case 0:
-//          switch(n)
-//          {
-//          case 1:
-//            flag = zero_one;
-//            break;
-//          case 2:
-//            flag = zero_two;
-//            break;
-//          default:return;
-//          }
-//          break;
-//        case 1:
-//          switch(m)
-//          {
-//          case 0:
-//            flag = one_zero;
-//            break;
-//          case 1:
-//            flag = one_one;
-//            break;
-//          case 2:
-//            flag = one_two;
-//            break;
-//          default:return;
-//          }
-//          break;
-//        case 2:
-//          switch(m)
-//          {
-//          case 0:
-//            flag = two_zero;
-//            break;
-//          case 1:
-//            flag = two_one;
-//            break;
-//          default:return;
-//          }
-//          break;
-//        default:return;
-//        }
-//      }
-//
-//      if (sweep.object == ObjectSelected::OBJ_F)
-//      {
-//        featureVectorF[flag] = true;
-//      }
-//      else if (sweep.object == ObjectSelected::OBJ_G)
-//      {
-//        featureVectorG[flag] = true;
-//      }
-//      else if (sweep.object == ObjectSelected::BOTH)
-//      {
-//        featureVectorF[flag] = true;
-//        featureVectorG[flag] = true;
-//      }
-//
-//      sweep.remove(ah.segment);
-//    }
-//    else // Left halfsegment
-//    {
-//      sweep.insert(ah.segment);
-//
-//
-//    }
-//  }
-//}
+// Region x Region
+void Explore::explore(Region2D &spatialObj_F, Region2D  &spatialObj_G, std::vector<bool> &featureVectorF, std::vector<bool> &featureVectorG)
+{
+  // Indicates what index in the bool vector represents what flag
+  enum VectorFlag {zero_one, one_zero, one_two, two_one, zero_two, two_zero, one_one, bound_poi_shared};
+
+  PlaneSweep<RGPAnnotatedHalfSegment2D,RGPAnnotatedHalfSegment2D> sweep(spatialObj_F.getSequence(), spatialObj_G.getSequence());
+
+  optional<RGPPoint2D> lastDominantPointF = nullopt;
+  optional<RGPPoint2D> lastDominantPointG = nullopt;
+
+  sweep.select_first();
+
+  while (sweep.status == TraversalStatus::END_OF_NONE &&
+      !(featureVectorF[zero_one] && featureVectorF[one_zero] && featureVectorF[one_two] && featureVectorF[two_one] && featureVectorF[zero_two] && featureVectorF[two_zero] &&
+          featureVectorF[one_one] && featureVectorF[bound_poi_shared] && featureVectorG[zero_one] && featureVectorG[one_zero] && featureVectorG[one_two] && featureVectorG[two_one]))
+  {
+    RGPAnnotatedHalfSegment2D ah;
+
+    if (sweep.object == ObjectSelected::OBJ_F)
+    {
+      ah = sweep.getEventF();
+      lastDominantPointF = make_optional(ah.dominantPoint);
+    }
+    else if (sweep.object == ObjectSelected::OBJ_G)
+    {
+      ah = sweep.getEventG();
+      lastDominantPointG = make_optional(ah.dominantPoint);
+    }
+    else // BOTH
+    {
+      ah = sweep.getEventF()
+      lastDominantPointF = make_optional(ah.dominantPoint);
+      lastDominantPointG = make_optional(ah.dominantPoint);
+    }
+
+    if (lastDominantPointF == lastDominantPointG || sweep.lookAheadG(ah) || sweep.lookAheadF(ah))
+    {
+      featureVectorF[bound_poi_shared] = true;
+    }
+
+    VectorFlag flag;
+
+    if (ah.dominantPoint == ah.segment.point2) // Right halfsegment
+    {
+      if (auto overlapNums = sweep.getOverlapNumbersOf(ah))
+      {
+        auto [m,n] = *overlapNums;
+      }
+
+      setOverlapFlag(flag, m, n);
+
+      if (sweep.object == ObjectSelected::OBJ_F)
+      {
+        featureVectorF[flag] = true;
+      }
+      else if (sweep.object == ObjectSelected::OBJ_G)
+      {
+        featureVectorG[flag] = true;
+      }
+      else if (sweep.object == ObjectSelected::BOTH)
+      {
+        featureVectorF[flag] = true;
+        featureVectorG[flag] = true;
+      }
+
+      sweep.remove(ah.segment);
+    }
+    else // Left halfsegment
+    {
+      sweep.insert(ah);
+
+      int m;
+      int n;
+
+      if (sweep.coincident(ah))
+      {
+        sweep.object = ObjectSelected::BOTH;
+      }
+
+      if (!sweep.predecessorExists(ah))
+      {
+        n = 0;
+      }
+
+      else
+      {
+        if (auto overlapNums = sweep.getOverlapNumbersOfPredecessor(ah))
+        {
+          [m,n] = *overlapNums;
+        }
+      }
+
+      if (sweep.object == ObjectSelected::OBJ_F || sweep.object == ObjectSelected::BOTH)
+      {
+        if (auto attr = sweep.getAttributeOfSegment(ah))
+        {
+          *attr ? ++n : --n;
+        }
+      }
+
+      sweep.setOverlapNumbersForSegment(ah, m, n);
+    }
+
+    sweep.select_next();
+  }
+
+  if (sweep.status == TraversalStatus::END_OF_F)
+  {
+    featureVectorG[zero_one] = true;
+    featureVectorG[one_zero] = true;
+  }
+  else if (sweep.status == TraversalStatus::END_OF_G)
+  {
+    featureVectorF[zero_one] = true;
+    featureVectorF[one_zero] = true;
+  }
+}
+
+void Explore::setOverlapFlag(int& flag, int m, int n)
+{
+  switch(m)
+  {
+  case 0:
+    switch(n)
+    {
+    case 1:
+      flag = zero_one;
+      break;
+    case 2:
+      flag = zero_two;
+      break;
+    default:return;
+    }
+    break;
+  case 1:
+    switch(n)
+    {
+    case 0:
+      flag = one_zero;
+      break;
+    case 1:
+      flag = one_one;
+      break;
+    case 2:
+      flag = one_two;
+      break;
+    default:return;
+    }
+    break;
+  case 2:
+    switch(n)
+    {
+    case 0:
+      flag = two_zero;
+      break;
+    case 1:
+      flag = two_one;
+      break;
+    default:return;
+    }
+    break;
+  default:return;
+  }
+}
