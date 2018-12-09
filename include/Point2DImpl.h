@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "RGPPoint2D.h"
+#include "Line2DImpl.h"
 #include "RGPSegment2D.h"
 
 class Point2DImpl
@@ -27,13 +28,13 @@ class Point2DImpl
 
 		// Methods
 		std::string getPointString();  // Get the point as human readable ASCII string
-		void printAllPoints();
+		void printAllPoints();   // prints all the points in the object
 		bool isEmptyPoint();	// Checks if the Point2D object is empty
 		bool isValidPoint();	// Checks if the Point2D object is empty
 		int getNumberOfPoints();	// Get the total number of RGPPoint2Ds listed
-		iterator begin();
-		iterator end();
-		Point2DImpl getBoundingBox();	
+		iterator begin();  //returns iterator to the first point
+		iterator end();   // return iterator to the last point
+		Line2DImpl getBoundingBox(); //returns the bounding box of the set od points	
 
 		bool add(RGPPoint2D rgpp2d);	// Adds a new RGPPoint2D to the existing Point2D object
 		bool update(iterator it, RGPPoint2D rgpp2d);	// Updates RGPPoint2D existing at specified index
@@ -47,9 +48,9 @@ class Point2DImpl
 	private:
 		struct Point2DImplStore;
 		Point2DImplStore *handle;
-		void pointSort(std::vector<RGPPoint2D> &bar);
+		void pointSort(std::vector<RGPPoint2D> &bar); // private methods for sort
 		void mergeSort(std::vector<RGPPoint2D> &left, std::vector<RGPPoint2D> &right, std::vector<RGPPoint2D> &bars);
-		bool parseStringToVectorOfPoints(std::string st);
+		bool parseStringToVectorOfPoints(std::string st); // private method to parse
 };
 
 #endif //POINT2DIMPL_H
