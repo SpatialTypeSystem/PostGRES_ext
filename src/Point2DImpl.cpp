@@ -136,8 +136,7 @@ Point2DImpl::Point2DImpl(std::string listOfPoint2DString)
 
 Point2DImpl::~Point2DImpl()
 {
-	//TODO
-	//default;
+	delete handle;
 }
 
 //this method checks if the structure is empty
@@ -154,18 +153,6 @@ void Point2DImpl::printAllPoints()
 	for(auto i = x.begin(); i!=x.end(); i++)
 		std::cout<<*i;
 	std::cout<<")";
-}
-
-bool Point2DImpl::isValidPoint()
-{
-	bool validity = false;
-	if(!handle->vectorOfPoints.empty()) 
-	{
-		//Check for validity
-		//TODO
-	}
-
-	return validity;
 }
 
 //this method return total number of points in the Point2D object.
