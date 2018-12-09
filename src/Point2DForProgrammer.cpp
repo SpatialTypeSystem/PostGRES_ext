@@ -4,6 +4,7 @@
 struct Point2DForProgrammer::Point2DProgrammerStore 
 {
 	Point2DImpl *implPointer;
+	// Maintains a dummy copy for iterator to work
 	std::vector<RGPPoint2D> vectorOfPoints;
 
 	Point2DProgrammerStore(std::string pointsString) 
