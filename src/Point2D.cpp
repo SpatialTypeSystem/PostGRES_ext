@@ -89,7 +89,7 @@ bool Point2D::isEmptyPoint()
 
 void Point2D::printAllPoints()
 {
-	handle->implPointer->isEmptyPoint();
+	handle->implPointer->printAllPoints();
 }
 
 int Point2D::getNumberOfPoints()
