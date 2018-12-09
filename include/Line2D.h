@@ -11,11 +11,30 @@ class Line2D{
 public:
 	// Constructors
 	Line2D(std::string listOfLine2DString);
-	Line2D(std::ifstream& file); // Send in file for constructor
 	~Line2D();
 
+	//iterator to run through the list of half segments
+	class iterator
+	{
+		public:
+			iterator(RGPHalfSegment2D*);
+			RGPHalfSegment2D operator*();
+			RGPHalfSegment2D operator++(int);
+			RGPHalfSegment2D operator++();
+			bool operator!=(const iterator&);
+			bool operator==(const iterator&);
+			RGPHalfSegment2D *ptr;
+	};
+		
+	iterator begin(); // return an iterator to the first element
+	iterator end();   // return an iterator to the last element
+		
+	bool add(RGPSegment2D rgpSeg2d);	// Adds a new RGPSegment2D
+	bool update(iterator it, RGPSegment2D rgpSeg2d);	// Updates RGPSegment2D existing at specified index
+	bool remove(iterator it);	// Removes a RGPSegment2D at specified index
+		
 	// Methods
-	std::string getLineString(); // Get the line as human readable ASCII string
+	void printAllLines(); // print all half segments in the vector
 	bool isEmptyLine();
 	bool isValidLine();
 	int getNumberOfSegments();	// Get the total number of RGPSegment2Ds listed
@@ -23,7 +42,7 @@ public:
 	bool operator==(const Line2D &l2d);	// Override of operator == to check equality of two Line2Ds
 	bool operator!=(const Line2D &l2d);	// Override of operator != to check inequality of two Line2Ds
 
-	Line2DImpl getBoundingBox();
+	RGPSegment2D getBoundingBox();
 		
 private:
 	struct Line2DStore;
