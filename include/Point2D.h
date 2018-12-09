@@ -12,7 +12,6 @@
 class Point2D{
 public:
 	// Constructors
-	Point2D(std::ifstream& file);	// Take input from a file, convert the data into a Point2D  
 	Point2D(std::string listOfPoint2DString);	// Read the string as a vector of RGPPoint2D and form a Point2D
 	~Point2D();
 
@@ -31,21 +30,19 @@ public:
 	iterator begin();
 	iterator end();
 
+	// Methods
+	bool isEmptyPoint();	// Checks if the Point2D object is empty
+	bool isValidPoint();	// Checks if the Point2D object is empty
+	int getNumberOfPoints();	// Get the total number of RGPPoint2Ds listed
+	void printAllPoints();
 	bool add(RGPPoint2D rgpp2d);	// Adds a new RGPPoint2D to the existing Point2D object
 	bool update(iterator it, RGPPoint2D rgpp2d);	// Updates RGPPoint2D existing at specified index
 	bool remove(iterator it);	// Removes a RGPPoint2D at specified index
 
 
-	// Methods
-	std::string getPointString();  // Get the point as human readable ASCII string
-	bool isEmptyPoint();	// Checks if the Point2D object is empty
-	bool isValidPoint();	// Checks if the Point2D object is empty
-	int getNumberOfPoints();	// Get the total number of RGPPoint2Ds listed
-
 	bool operator==(const Point2D &p2d);	// Override of operator == to check equality of two Point2Ds
 	bool operator!=(const Point2D &p2d);	// Override of operator != to check inequality of two Point2Ds
-
-	std::vector<RGPSegment2D> getBoundingBox();
+	RGPSegment2D getBoundingBox();
 
 private:
 	struct Point2DStore;
