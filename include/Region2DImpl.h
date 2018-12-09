@@ -61,7 +61,6 @@ private:
 	bool parseWDR(std::string inputString);
 	Number computeDirection(RGPPoint2D pi, RGPPoint2D pj, RGPPoint2D pk); 
 	bool doSegmentsIntersect(RGPSegment2D a, RGPSegment2D b);
-	bool onSegment(RGPPoint2D pi, RGPPoint2D pj, RGPPoint2D pk);
 	bool validateRegion();
 	Number getAreaOfCycle(std::vector<RGPAnnotatedHalfSegment2D> vectorOfSegments);
 	Region2DImplStore *handle;
