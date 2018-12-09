@@ -1,9 +1,8 @@
 #ifndef RGPHALFSEGMENT2D_H
 #define RGPHALFSEGMENT2D_H
 
-#include "RGPSegment2D.h"
 #include "RGPPoint2D.h"
-#include "Optional.h"
+#include "RGPSegment2D.h"
 
 class RGPHalfSegment2D {
 public:

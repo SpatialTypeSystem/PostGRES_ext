@@ -421,3 +421,4 @@ template <class T> std::vector<RGPSegment2D> getFace(T it)
 {
 	// Emtpy
 }
+

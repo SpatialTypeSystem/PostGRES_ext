@@ -66,5 +66,6 @@ RGPAnnotatedHalfSegment2D::RGPAnnotatedHalfSegment2D(RGPSegment2D s,
                                                      bool regAbove)
     : RGPHalfSegment2D::RGPHalfSegment2D(s, dp) {
   this->insideIsAbove = regAbove;
+}
 
 RGPAnnotatedHalfSegment2D::~RGPAnnotatedHalfSegment2D() {}
