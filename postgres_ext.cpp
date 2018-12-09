@@ -9,20 +9,20 @@
 #include "include/Point2D.h"
 #include "include/Region2DImpl.h"
 
-#include "include/Point2DImpl.h"
+#include "include/Point2D.h"
 #include "include/Line2DImpl.h"
 
 int main(void)
 {
 	//adding through strings.
 	std::string str = "((333.33,22.22),(12,6),(3,4),(9,7),(4,5))";
-  	Point2DImpl x(str);
+  	Point2D x(str);
 	std::string str2 = "((9,7),(333.33,22.22),(3,4),(4,5),(12,6))";
-	Point2DImpl y(str2);
+	Point2D y(str2);
 
 	//adding through strings when input format is not correct. Checked all other cases as well
 	std::string str3 = "((333.3322.22),(4,5),(3,4),(4,5))";
-	Point2DImpl z(str3);
+	Point2D z(str3);
 
 	//method to print all the points in our object
 
@@ -51,61 +51,45 @@ int main(void)
 	//get the total number of points in the object
 	std::cout<<"total number of points in x are : "<<x.getNumberOfPoints()<<std::endl;
 
-	//working of Point2DImpl iterator. This covers all methods of iterator like end(), begin(), !=, ==, *
+	//working of Point2D iterator. This covers all methods of iterator like end(), begin(), !=, ==, *
 	std::cout<<"working of iterator and printing all the points in the vector"<<std::endl;
-	for(Point2DImpl::iterator it = x.begin(); it!= x.end();++it)
+	for(Point2D::iterator it = x.begin(); it!= x.end();++it)
 		std::cout<<*it;
 	std::cout<<std::endl;
 
-	//creation of point and adding it to the Point2DImpl object
+	//creation of point and adding it to the Point2D object
 	RGPPoint2D pt(Number("31"),Number("22"));
 	x.add(pt);
 	//output after adding
 	std::cout<<"object after adding point"<<std::endl;
-	for(Point2DImpl::iterator it = x.begin(); it!= x.end();++it)
+	for(Point2D::iterator it = x.begin(); it!= x.end();++it)
 		std::cout<<*it;
 	std::cout<<std::endl;
 
-	//working of remove method for Point2DImpl object
-	Point2DImpl::iterator it = x.begin();
+	//working of remove method for Point2D object
+	Point2D::iterator it = x.begin();
 	it++;
 	it++;
 	x.remove(it);
 	std::cout<<"object after removing point"<<std::endl;
-	for(Point2DImpl::iterator it = x.begin(); it!= x.end();++it)
+	for(Point2D::iterator it = x.begin(); it!= x.end();++it)
 		std::cout<<*it;
 	std::cout<<std::endl;
 
-	//working of update method for Point2DImpl
-	Point2DImpl::iterator it1 = x.begin();
+	//working of update method for Point2D
+	Point2D::iterator it1 = x.begin();
 	it1++;
 	RGPPoint2D pt1(Number("23"),Number("2"));
 	x.update(it1,pt1);
 	std::cout<<"object after updating point"<<std::endl;
-	for(Point2DImpl::iterator it = x.begin(); it!= x.end();++it)
+	for(Point2D::iterator it = x.begin(); it!= x.end();++it)
 		std::cout<<*it;
 	std::cout<<std::endl;	
 	
-	//working of = operator for Point2DImpl
-	x=y;
-	//x was updated multiple times, now it is equal to y
-	std::cout<<"output after doing ="<<std::endl;
-	for(Point2DImpl::iterator it = x.begin(); it!= x.end();++it)
-		std::cout<<*it;
-	std::cout<<std::endl;
-	
-	//working of [] in point2DImpl
-	Point2DImpl t;
-	t = y[2];
-	Point2DImpl::iterator it2 = t.begin();
-	std::cout<<"index works and the point added was "<<*it2<<std::endl;
-
 	//code for getting the bounding box of the set of points
-	Line2DImpl bx;
-	bx = y.getBoundingBox();
+	RGPSegment2D bx = y.getBoundingBox();
 	std::cout<<"segment in the bounding box"<<std::endl;
-	for(Line2DImpl::iterator it = bx.begin(); it!= bx.end();it++)
-		std::cout<<(*it).segment;
+	std::cout<<bx;
 
 	std::cout<<std::endl;
 
